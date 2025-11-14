@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Demo Bank</title>
+    <style>
+        body { font-family: Arial; background:#f0f4f8; padding:20px; }
+        .container { width:350px; margin:auto; background:white; padding:20px; border-radius:10px; box-shadow:0 0 10px gray; }
+        button { width:100%; padding:10px; margin-top:10px; border:none; background:#007bff; color:white; font-size:16px; border-radius:5px; cursor:pointer; }
+        input { width:100%; padding:10px; margin-top:10px; }
+        .hidden { display:none; }
+        h2 { text-align:center; }
+        ul { padding-left:20px; }
+    </style>
+</head>
+<body>
+<div id="loginPage" class="container">
+    <h2>Demo Bank Login</h2>
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+</div>
+
+<div id="dashboard" class="container hidden">
+    <h2>Welcome!</h2>
+    <p><b>Balance:</b> $<span id="balance">1000</span></p>
+    <input id="withdrawAmount" placeholder="Withdraw amount">
+    <button onclick="withdraw()">Withdraw</button>
+    <input id="transferAmount" placeholder="Transfer amount">
+    <input id="transferTo" placeholder="Transfer to user">
+    <button onclick="transfer()">Transfer</button>
+    <h3>Transactions:</h3>
+    <ul id="transactions"></ul>
+    <button style="background:#dc3545" onclick="logout()">Logout</button>
+</div>
+
+<script>
+let balance = 1000;
+let transactions = [];
+
+function login() {
+    let user=document.getElementById("username").value;
+    let pass=document.getElementById("password").value;
+    if(user===""||pass==="") return alert("Enter username and password");
+    document.getElementById("loginPage").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
+}
+
+function updateScreen(){
+    document.getElementById("balance").innerText=balance;
+    let list=document.getElementById("transactions");
+    list.innerHTML="";
+    transactions.forEach(t=>{
+        let item=document.createElement("li");
+        item.innerText=t;
+        list.appendChild(item);
+    });
+}
+
+function withdraw(){
+    let amount=Number(document.getElementById("withdrawAmount").value);
+    if(amount<=0||isNaN(amount)) return alert("Invalid amount");
+    if(amount>balance) return alert("Not enough balance");
+    balance-=amount;
+    transactions.push("Withdrew $"+amount);
+    updateScreen();
+}
+
+function transfer(){
+    let amount=Number(document.getElementById("transferAmount").value);
+    let toUser=document.getElementById("transferTo").value;
+    if(amount<=0||isNaN(amount)) return alert("Invalid amount");
+    if(toUser==="") return alert("Enter user");
+    if(amount>balance) return alert("Not enough balance");
+    balance-=amount;
+    transactions.push("Transferred $"+amount+" to "+toUser);
+    updateScreen();
+}
+
+function logout(){ location.reload(); }
+</script>
+</body>
+</html>
