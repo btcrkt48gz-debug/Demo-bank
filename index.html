@@ -47,18 +47,20 @@
     .account-id { color: rgba(255,255,255,0.95); font-weight:700; }
 
     /* Tiles */
-    .tiles {
+    ./* Tiles wrapper */
+.tiles {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
   justify-content: center;
+  gap: 14px;
   margin-bottom: 14px;
 }
 
-/* Upper row tiles */
+/* Upper row tiles (Transfer, Withdraw) */
 .tile.big {
-  width: calc(50% - 10px);
-  min-width: 140px;
+  flex: 0 0 calc(50% - 12px); /* Always two per row on all phones */
+  max-width: calc(50% - 12px);
+  min-width: 120px;
   background: #fff;
   border-radius: 14px;
   padding: 18px 10px;
@@ -69,9 +71,12 @@
   transition: transform .2s;
 }
 
-/* Lower single tile */
+/* One centered tile (Top Up) */
 .tile.full {
-  width: 70%;
+  flex: 0 0 70%;
+  max-width: 70%;
+  min-width: 140px;
+  margin-top: 8px;
   background: #fff;
   border-radius: 14px;
   padding: 18px 10px;
@@ -82,15 +87,30 @@
   transition: transform .2s;
 }
 
-/* Tile hover animation */
+/* Hover animation */
 .tile:hover {
   transform: translateY(-3px);
 }
 
 /* Icons inside tiles */
 .tile-icon {
-  font-size: 42px;
+  font-size: 38px;
+  display: block;
   margin-bottom: 6px;
+}
+
+/* FORCE layout even on very small screens */
+@media (max-width: 380px) {
+  .tile.big {
+    flex: 0 0 calc(50% - 8px);
+    max-width: calc(50% - 8px);
+  }
+
+  .tile.full {
+    flex: 0 0 80%;
+    max-width: 80%;
+  }
+}
 }
 
     /* Box */
