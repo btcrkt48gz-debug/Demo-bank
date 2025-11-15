@@ -2,91 +2,73 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Premium Bank Demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Premium Bank Full Demo</title>
 <style>
-/* Reset and general */
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:linear-gradient(180deg,#eef6ff,#dbe9ff); color:#07203a;}
-body{display:flex;justify-content:center;padding:12px 8px;}
-
-/* App wrapper */
-.app{width:100%;max-width:920px;background:#fff;border-radius:14px;box-shadow:0 20px 50px rgba(8,23,48,0.08);overflow:hidden;display:flex;flex-direction:column;}
-
-/* Header */
-.header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(90deg,#0b63d8,#1a8cff);color:#fff;position:sticky;top:0;z-index:100;}
+/* ---------- Reset ---------- */
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:linear-gradient(180deg,#eef6ff,#f5f9ff); color:#07203a; display:flex; justify-content:center; padding:0; margin:0;}
+.app{width:100%; max-width:920px; background:#fff; border-radius:14px; box-shadow:0 20px 50px rgba(8,23,48,0.08); overflow:hidden; display:flex; flex-direction:column; min-height:100vh;}
+.header{display:flex; align-items:center; justify-content:space-between; padding:12px 16px; background:linear-gradient(90deg,#0b63d8,#1a8cff); color:#fff; position:sticky; top:0; z-index:100;}
 .h-left{display:flex;align-items:center;gap:12px;}
-.h-left img{width:36px;height:36px;border-radius:6px;object-fit:contain;}
+.h-left img.logo{width:36px;height:36px;object-fit:contain;border-radius:6px;}
 .hamburger{width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;cursor:pointer;}
-.brand{font-weight:700;font-size:18px}
-.h-right{display:flex;gap:10px;align-items:center}
-.icon-btn{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer}
-
-/* Side menu */
+.brand{font-weight:700;font-size:18px;}
+.h-right{display:flex;gap:10px;align-items:center;}
+.icon-btn{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;}
 .menu{position:fixed;top:0;left:0;height:100%;width:260px;background:#fff;box-shadow:10px 0 30px rgba(8,23,48,0.06);transform:translateX(-340px);transition:transform .26s cubic-bezier(.2,.9,.2,1);z-index:120;padding:20px;overflow-y:auto;}
 .menu.open{transform:translateX(0);}
 .menu h3{font-size:16px;margin-bottom:12px;color:#07203a;}
 .menu .m-item{padding:12px 8px;border-radius:10px;cursor:pointer;font-weight:700;color:#07203a;margin-bottom:8px;}
-.menu .m-item:hover{background:#f2f7ff}
-
-/* Screens */
-.screen{padding:18px 20px;display:none;overflow-y:auto; max-height:calc(100vh - 64px);}
-.screen.active{display:block}
-
-/* Login */
-.login-wrap{max-width:520px;margin:36px auto;}
-.login-card{background:linear-gradient(180deg,#fff,#fbfdff);border-radius:12px;padding:22px;box-shadow:0 12px 30px rgba(10,20,60,0.06)}
-.login-title{font-size:22px;font-weight:800;text-align:center;color:#07203a;margin-bottom:6px}
-.login-sub{text-align:center;color:#6b7280;margin-bottom:14px}
-.input{width:100%;padding:12px 14px;margin:8px 0;border-radius:10px;border:1px solid #e6eefc;font-size:15px}
-.btn{width:100%;padding:12px 14px;border-radius:10px;border:none;background:#0b63d8;color:#fff;font-weight:800;cursor:pointer;font-size:15px}
-.btn.secondary{background:#fff;color:#07203a;border:1px solid #e6eefc;font-weight:800}
-.btn.gold{background:#ffc107;color:#07203a;border:none;font-weight:800;cursor:pointer}
-
-/* Dashboard */
-.content{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;padding-bottom:84px}
-.main{flex:1 1 520px;min-width:260px}
-.side{width:300px;min-width:220px;overflow-y:auto}
-
-/* Balance card */
-.balance-card{background:linear-gradient(90deg,#0077ff,#0b63d8);color:white;padding:22px;border-radius:14px;margin-bottom:14px;box-shadow:0 10px 30px rgba(10,50,150,0.12)}
-.balance-card .greet{font-size:13px;opacity:.95}
-.balance-card .bal{font-size:28px;font-weight:800;margin-top:8px}
-.account-row{margin-top:14px;background:rgba(255,255,255,0.09);padding:12px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.account-id{color:rgba(255,255,255,0.95);font-weight:700}
-
-/* Tiles */
-.tiles{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-.tile{background:#fff;border-radius:12px;padding:14px;box-shadow:0 10px 30px rgba(10,20,60,0.04);min-width:140px;flex:1 1 140px;text-align:center;cursor:pointer;font-weight:700}
-.tile img{width:40px;height:40px;margin-bottom:6px}
-
-/* Transactions */
-.tx-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
-.tx{background:linear-gradient(180deg,#fbfeff,#f5f9ff);padding:12px;border-radius:10px;border-left:6px solid #1a73e8;display:flex;justify-content:space-between;align-items:center;font-weight:700;cursor:pointer}
-.tx small{opacity:.7;}
-
-/* Transaction & confirmation pages */
-.page-title{font-size:18px;font-weight:800;margin-bottom:10px}
-.confirm-card{background:#fff;padding:18px;border-radius:12px;box-shadow:0 10px 30px rgba(10,20,60,0.04);text-align:center}
-.loader{width:64px;height:64px;border-radius:50%;margin:18px auto;position:relative}
-.loader:before,.loader:after{content:"";position:absolute;inset:0;border-radius:50%}
-.loader:before{border:6px solid rgba(11,99,216,0.08)}
-.loader:after{border-top-color:#0b63d8;transform:rotate(120deg);animation:spin 1s linear infinite;border-right-color:transparent;border-bottom-color:transparent;border-left-color:transparent}
+.menu .m-item:hover{background:#f2f7ff;}
+.screen{padding:18px 20px;display:none; flex:1; overflow-y:auto;}
+.screen.active{display:flex; flex-direction:column;}
+.login-wrap{max-width:520px;margin:36px auto; width:100%;}
+.login-card{background:linear-gradient(180deg,#fff,#fbfdff);border-radius:12px;padding:22px;box-shadow:0 12px 30px rgba(10,20,60,0.06);}
+.login-title{font-size:24px;font-weight:800;text-align:center;color:#07203a;margin-bottom:6px;}
+.login-sub{text-align:center;color:#6b7280;margin-bottom:14px;}
+.content{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;padding-bottom:84px;}
+.main{flex:1 1 520px;min-width:260px;}
+.side{width:300px;min-width:220px;}
+.balance-card{background:linear-gradient(90deg,#0077ff,#0b63d8);color:white;padding:22px;border-radius:14px;margin-bottom:14px;box-shadow:0 10px 30px rgba(10,50,150,0.12);}
+.balance-card .greet{font-size:14px;opacity:.95;}
+.balance-card .bal{font-size:28px;font-weight:800;margin-top:8px;}
+.account-row{margin-top:14px;background:rgba(255,255,255,0.09);padding:12px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.account-id{color:rgba(255,255,255,0.95);font-weight:700;}
+.tiles{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+.tile{background:#fff;border-radius:12px;padding:14px;box-shadow:0 10px 30px rgba(10,20,60,0.04);min-width:140px;flex:1 1 140px;text-align:center;cursor:pointer;font-weight:700; display:flex; flex-direction:column; align-items:center;}
+.tile img{width:40px;height:40px;margin-bottom:6px;}
+.box{background:#fff;border-radius:12px;padding:14px;box-shadow:0 10px 30px rgba(10,20,60,0.04);margin-bottom:14px;}
+.input{width:100%;padding:12px 14px;margin:8px 0;border-radius:10px;border:1px solid #e6eefc;font-size:15px;}
+.btn{width:100%;padding:12px 14px;border-radius:10px;border:none;background:#0b63d8;color:#fff;font-weight:800;cursor:pointer;font-size:15px;}
+.btn.secondary{background:#fff;color:#07203a;border:1px solid #e6eefc;font-weight:800;}
+.btn.gold{background:#ffc107;color:#07203a;border:none;font-weight:800;cursor:pointer;}
+.tx-list{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.tx{background:linear-gradient(180deg,#fbfeff,#f5f9ff);padding:12px;border-radius:10px;border-left:6px solid #1a73e8;display:flex;justify-content:space-between;align-items:center;font-weight:700; cursor:pointer;}
+.tx:hover{background:#eef6ff;}
+.page-title{font-size:20px;font-weight:800;margin-bottom:10px;}
+.confirm-card{background:#fff;padding:18px;border-radius:12px;box-shadow:0 10px 30px rgba(10,20,60,0.04);text-align:center;}
+.loader{width:64px;height:64px;border-radius:50%;margin:18px auto;position:relative;}
+.loader:before,.loader:after{content:"";position:absolute;inset:0;border-radius:50%;}
+.loader:before{border:6px solid rgba(11,99,216,0.08);}
+.loader:after{border-top-color:#0b63d8;transform:rotate(120deg);animation:spin 1s linear infinite;border-right-color:transparent;border-bottom-color:transparent;border-left-color:transparent;}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* Bottom navigation */
 .bottom-nav{position:fixed;left:0;right:0;bottom:0;display:flex;gap:6px;justify-content:center;padding:10px 12px;background:transparent;}
 .bottom-bar{max-width:920px;width:100%;display:flex;justify-content:space-between;background:#fff;padding:10px 14px;border-radius:14px;box-shadow:0 8px 30px rgba(8,23,48,0.08);margin:0 12px;}
-.nav-item{flex:1 1 0;text-align:center;padding:6px 8px;cursor:pointer;color:#6b7280;font-weight:700}
-.nav-item.active{color:#0b63d8}
-.center-fab{width:56px;height:56px;border-radius:50%;background:#0b63d8;color:#fff;display:flex;align-items:center;justify-content:center;margin-top:-24px;box-shadow:0 8px 26px rgba(11,99,216,0.2);cursor:pointer;font-weight:800}
-.small{color:#6b7280;font-size:13px}
-@media(max-width:720px){.side{width:100%}.content{padding-bottom:120px}.balance-card .bal{font-size:24px}.menu{width:86%;max-width:320px}}
+.nav-item{flex:1 1 0;text-align:center;padding:6px 8px;cursor:pointer;color:#6b7280;font-weight:700;}
+.nav-item.active{color:#0b63d8;}
+.center-fab{width:56px;height:56px;border-radius:50%;background:#0b63d8;color:#fff;display:flex;align-items:center;justify-content:center;margin-top:-24px;box-shadow:0 8px 26px rgba(11,99,216,0.2);cursor:pointer;font-weight:800;}
+.small{color:#6b7280;font-size:13px;}
+@media(max-width:720px){.side{width:100%;}.content{padding-bottom:120px}.balance-card .bal{font-size:24px}.menu{width:86%;max-width:320px;}}
+img.profile-pic{width:80px;height:80px;border-radius:50%;object-fit:cover;}
+
+/* Scrollable content */
+.screen{overflow-y:auto;}
 </style>
 </head>
 <body>
 
-<!-- Side Menu -->
+<!-- Side menu -->
 <div id="sideMenu" class="menu" aria-hidden="true">
 <h3>Premium Bank</h3>
 <div class="m-item" onclick="nav('dashboard')">Home / Dashboard</div>
@@ -97,165 +79,186 @@ body{display:flex;justify-content:center;padding:12px 8px;}
 <div class="m-item" onclick="doLogout()">Logout</div>
 </div>
 
-<div class="app">
+<div class="app" id="appRoot">
 
 <!-- Header -->
 <div id="topHeader" class="header" style="display:none">
 <div class="h-left">
-<img src="https://via.placeholder.com/36x36.png?text=B" alt="Logo">
-<div class="brand">Premium Bank</div>
-<div id="hambBtn" class="hamburger" title="Menu">
-<svg width="18" height="12" viewBox="0 0 18 12" fill="none"><rect x="0" y="0" width="18" height="2" rx="1" fill="white"></rect><rect x="0" y="5" width="18" height="2" rx="1" fill="white"></rect><rect x="0" y="10" width="18" height="2" rx="1" fill="white"></rect></svg>
-</div>
+  <div id="hambBtn" class="hamburger" title="Menu">
+    <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="18" height="2" rx="1" fill="white"></rect>
+      <rect x="0" y="5" width="18" height="2" rx="1" fill="white"></rect>
+      <rect x="0" y="10" width="18" height="2" rx="1" fill="white"></rect>
+    </svg>
+  </div>
+  <img src="https://via.placeholder.com/36x36.png?text=B" class="logo" alt="Bank Logo">
+  <div class="brand">Premium Bank</div>
 </div>
 <div class="h-right">
-<div id="hdrBalance" style="font-weight:800">Balance: $<span id="hdrBal">1000</span></div>
-<div class="icon-btn" title="Notifications">🔔</div>
-<div id="profileBtn" class="icon-btn" title="Profile" onclick="nav('profile')">🙂</div>
+  <div id="hdrBalance" style="font-weight:800">Balance: $<span id="hdrBal">0</span></div>
+  <div class="icon-btn" title="Notifications">🔔</div>
+  <div id="profileBtn" class="icon-btn" title="Profile" onclick="nav('profile')">🙂</div>
 </div>
 </div>
 
-<!-- LOGIN -->
+<!-- LOGIN SCREEN -->
 <div id="screen-login" class="screen active">
-<div class="login-wrap">
-<div class="login-card">
-<div class="login-title">Welcome to Premium Bank</div>
-<div class="login-sub">Enter your credentials</div>
-<input id="loginUser" class="input" placeholder="Username"/>
-<input id="loginPass" class="input" type="password" placeholder="Password"/>
-<div style="display:flex; gap:10px; margin-top:8px">
-<button class="btn" onclick="doLogin()">Sign In</button>
-</div>
-</div>
-</div>
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-title">Welcome to Premium Bank</div>
+      <div class="login-sub">Enter your credentials to login</div>
+      <input id="loginUser" class="input" placeholder="Username"/>
+      <input id="loginPass" class="input" type="password" placeholder="Password"/>
+      <div style="display:flex; gap:10px; margin-top:8px">
+        <button class="btn" onclick="doLogin()">Sign In</button>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- DASHBOARD -->
+<!-- DASHBOARD SCREEN -->
 <div id="screen-dashboard" class="screen">
 <div class="content">
-<main class="main">
-<div class="balance-card">
-<div style="display:flex;justify-content:space-between;align-items:center">
-<div>
-<div class="greet" id="greeting">Hello,</div>
-<div style="font-weight:800" id="userName">David</div>
-</div>
-<div style="text-align:right">
-<div class="small">Today</div>
-<div style="font-weight:700" id="liveDateTime"></div>
-</div>
-</div>
-<div class="bal">$<span id="balance">1000</span></div>
-<div class="account-row">
-<div>
-<div style="font-size:12px;opacity:.9">Your account</div>
-<div class="account-id">0062••••</div>
-</div>
+  <main class="main">
+    <div class="balance-card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div class="greet" id="greeting">Hello,</div>
+          <div style="font-weight:800" id="userName">David</div>
+        </div>
+        <div style="text-align:right">
+          <div class="small">Today</div>
+          <div style="font-weight:700" id="liveDateTime"></div>
+        </div>
+      </div>
+      <div class="bal">$<span id="balance">0</span></div>
+    </div>
+
+    <div class="tiles">
+      <div class="tile" onclick="nav('transfer')"><img src="https://via.placeholder.com/40.png?text=→" alt="Send"><br>Send Money</div>
+      <div class="tile" onclick="nav('withdraw')"><img src="https://via.placeholder.com/40.png?text=$" alt="Withdraw"><br>Withdraw</div>
+      <div class="tile" onclick="nav('topup')"><img src="https://via.placeholder.com/40.png?text=+" alt="Top Up"><br>Top Up</div>
+    </div>
+
+    <div class="box">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-weight:800">Recent Transactions</div>
+        <div class="small">Last 5</div>
+      </div>
+      <div id="txPreview" class="tx-list" style="margin-top:10px"></div>
+    </div>
+  </main>
 </div>
 </div>
 
-<div class="tiles">
-<div class="tile" onclick="nav('transfer')"><img src="https://via.placeholder.com/40.png?text=S" alt="Send"><br>Send Money</div>
-<div class="tile" onclick="nav('withdraw')"><img src="https://via.placeholder.com/40.png?text=W" alt="Withdraw"><br>Withdraw</div>
-<div class="tile" onclick="nav('topup')"><img src="https://via.placeholder.com/40.png?text=T" alt="Top Up"><br>Top Up</div>
-</div>
-
+<!-- Profile Screen -->
+<div id="screen-profile" class="screen">
+<div class="page-title">Profile & Settings</div>
 <div class="box">
-<div style="display:flex;justify-content:space-between;align-items:center">
-<div style="font-weight:800">Recent Transactions</div>
-<div class="small">Last 5</div>
-</div>
-<div id="txPreview" class="tx-list" style="margin-top:10px"></div>
-</div>
-</main>
+  <div style="text-align:center;margin-bottom:12px">
+    <img id="profilePic" src="https://via.placeholder.com/80.png?text=🙂" class="profile-pic" alt="Profile">
+    <input type="file" id="profileUpload" style="margin-top:8px"/>
+  </div>
+  <div><strong>Name:</strong> <input id="profileName" class="input"/></div>
+  <div><strong>Email:</strong> <input id="profileEmail" class="input"/></div>
+  <div><strong>Phone:</strong> <input id="profilePhone" class="input"/></div>
+  <div style="margin-top:10px">
+    <button class="btn" onclick="saveProfile()">Save Changes</button>
+  </div>
 </div>
 </div>
 
-<!-- Bottom Nav -->
-<div id="bottomNav" class="bottom-nav" style="display:none">
-<div class="bottom-bar">
-<div class="nav-item" onclick="nav('dashboard')">Home</div>
-<div class="nav-item" onclick="nav('transfer')">Transfer</div>
-<div style="display:flex;align-items:center;justify-content:center;width:80px">
-<div class="center-fab" onclick="nav('transfer')">⇄</div>
+<!-- Transactions Screen -->
+<div id="screen-transactions" class="screen">
+<div class="page-title">Transactions</div>
+<div class="box">
+  <div id="txList" class="tx-list"></div>
 </div>
-<div class="nav-item" onclick="nav('withdraw')">Withdraw</div>
-<div class="nav-item" onclick="nav('profile')">Profile</div>
 </div>
+
+<!-- Transfer / Withdraw / TopUp screens, loading, and confirmation screens would be similar -->
+
 </div>
 
 <script>
-// Hamburger toggle
+// Hamburger
 const sideMenu = document.getElementById('sideMenu');
 const hambBtn = document.getElementById('hambBtn');
 hambBtn.addEventListener('click', e=>{e.stopPropagation(); sideMenu.classList.toggle('open'); sideMenu.setAttribute('aria-hidden',!sideMenu.classList.contains('open'))})
 document.addEventListener('click', e=>{if(!sideMenu.contains(e.target)&&!hambBtn.contains(e.target)) sideMenu.classList.remove('open');});
 
 // State
-let balance = localStorage.getItem('bank_balance')?Number(localStorage.getItem('bank_balance')):1000;
-let transactions = localStorage.getItem('bank_tx')?JSON.parse(localStorage.getItem('bank_tx')):[];
+let balance = Number(localStorage.getItem('balance')) || 1000;
+let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+let profile = JSON.parse(localStorage.getItem('profile')) || {name:'David',email:'demo@example.com',phone:'',pic:''};
 
-// Live time
-function updateTime(){
-const now=new Date();
-const h=now.getHours();
-let greet='Hello';
-if(h<12) greet='Good morning';
-else if(h<18) greet='Good afternoon';
-else greet='Good evening';
-document.getElementById('greeting').innerText=greet+',';
-document.getElementById('userName').innerText='David';
-document.getElementById('liveDateTime').innerText=now.toLocaleString();
+// Update UI
+function updateUI(){
+  document.getElementById('balance').innerText = balance.toFixed(2);
+  document.getElementById('hdrBal').innerText = balance.toFixed(2);
+  document.getElementById('userName').value = profile.name;
+  document.getElementById('profileName').value = profile.name;
+  document.getElementById('profileEmail').value = profile.email;
+  document.getElementById('profilePhone').value = profile.phone;
+  document.getElementById('profilePic').src = profile.pic||'https://via.placeholder.com/80.png?text=🙂';
+  updateTxPreview();
 }
-setInterval(updateTime,1000);
+function updateTxPreview(){
+  const c = document.getElementById('txPreview'); if(!c) return; c.innerHTML='';
+  transactions.slice(-5).reverse().forEach(tx=>{
+    const d = document.createElement('div');
+    d.className='tx'; d.innerText=tx.desc; 
+    d.addEventListener('click', ()=>{alert(`Amount: $${tx.amount}\nTo: ${tx.to}\nDate: ${tx.date}\nStatus: ${tx.status}`)});
+    c.appendChild(d);
+  });
+}
+
+// Profile save
+function saveProfile(){
+  profile.name = document.getElementById('profileName').value;
+  profile.email = document.getElementById('profileEmail').value;
+  profile.phone = document.getElementById('profilePhone').value;
+  const file = document.getElementById('profileUpload').files[0];
+  if(file){
+    const reader = new FileReader();
+    reader.onload = function(e){ profile.pic = e.target.result; localStorage.setItem('profile',JSON.stringify(profile)); updateUI();}
+    reader.readAsDataURL(file);
+  } else {
+    localStorage.setItem('profile',JSON.stringify(profile));
+    updateUI();
+  }
+}
 
 // Navigation
 function hideAll(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'))}
-function nav(page){
-hideAll();
-const map={'dashboard':'screen-dashboard','login':'screen-login'};
-document.getElementById(map[page]||'screen-dashboard').classList.add('active');
-document.getElementById('hdrBal').innerText=balance;
-document.getElementById('balance').innerText=balance;
-updateTxPreview();
-showHeader(page!=='login');
-}
+function nav(page){hideAll();document.getElementById('screen-'+page).classList.add('active'); updateUI(); showHeader(page!=='login');}
 
-// Show header
+// Header
 function showHeader(show){document.getElementById('topHeader').style.display=show?'flex':'none';document.getElementById('bottomNav').style.display=show?'flex':'none';}
 
 // Login
-function doLogin(){
-localStorage.setItem('bank_logged','1');
-localStorage.setItem('bank_balance',balance);
-localStorage.setItem('bank_tx',JSON.stringify(transactions));
-showHeader(true);nav('dashboard');}
+function doLogin(){localStorage.setItem('demo_logged','1'); nav('dashboard'); updateUI();}
 
-// Transactions preview
-function updateTxPreview(){
-const c=document.getElementById('txPreview');
-c.innerHTML='';
-transactions.slice(-5).reverse().forEach((t,i)=>{
-const d=document.createElement('div');
-d.className='tx';
-d.innerHTML=`${t.desc} <small>${t.date}</small>`;
-d.onclick=()=>alert(`Transaction Details:\nAmount: ${t.amount}\nTo/From: ${t.desc}\nDate: ${t.date}\nStatus: ${t.status}`);
-c.appendChild(d);
-});
+// Live date/time
+function updateTime(){
+  const now = new Date();
+  let greet = 'Hello';
+  const h = now.getHours();
+  if(h<12) greet='Good morning';
+  else if(h<18) greet='Good afternoon';
+  else greet='Good evening';
+  document.getElementById('greeting').innerText = greet+',';
+  document.getElementById('liveDateTime').innerText = now.toLocaleString();
+}
+setInterval(updateTime,1000);
+window.onload = ()=>{
+  if(localStorage.getItem('demo_logged')==='1') nav('dashboard');
+  updateUI();
+  updateTime();
 }
 
 // Logout
-function doLogout(){
-localStorage.removeItem('bank_logged');nav('login');showHeader(false);
-}
-
-// Init
-window.onload=()=>{
-const logged=localStorage.getItem('bank_logged')==='1';
-showHeader(logged);
-nav(logged?'dashboard':'login');
-updateTime();
-}
+function doLogout(){localStorage.removeItem('demo_logged'); nav('login');}
 </script>
 </body>
 </html>
