@@ -5,84 +5,109 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Premium Bank — Full Demo</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#eef6ff,#fbfcff);color:#07203a;display:flex;justify-content:center;padding:20px;}
-.app{width:100%;max-width:920px;background:#fff;border-radius:14px;box-shadow:0 20px 50px rgba(8,23,48,0.08);overflow:hidden;display:flex;flex-direction:column;}
-.header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(90deg,#0b63d8,#1a8cff);color:#fff;}
-.h-left{display:flex;align-items:center;gap:12px}
-.h-left img{width:36px;height:36px;object-fit:contain;border-radius:6px}
-.hamburger{width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;cursor:pointer}
-.brand{font-weight:700;font-size:18px}
-.h-right{display:flex;gap:10px;align-items:center}
-.icon-btn{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer}
-.menu{position:fixed;top:0;left:0;height:100%;width:260px;background:#fff;box-shadow:10px 0 30px rgba(8,23,48,0.06);transform:translateX(-340px);transition:transform .26s cubic-bezier(.2,.9,.2,1);z-index:120;padding:20px;}
+/* ---------- Reset ---------- */
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:#eef6ff;color:#07203a;}
+body{display:flex;justify-content:center;padding:20px;}
+
+/* ---------- App wrapper ---------- */
+.app{width:100%;max-width:920px;background:#fff;border-radius:16px;box-shadow:0 20px 50px rgba(8,23,48,0.08);overflow:hidden;display:flex;flex-direction:column;}
+
+/* ---------- Header ---------- */
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px;background:linear-gradient(90deg,#0b63d8,#1a8cff);color:#fff;}
+.h-left{display:flex;align-items:center;gap:12px;}
+.h-left img{width:40px;height:40px;object-fit:contain;border-radius:8px;}
+.hamburger{width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.brand{font-weight:700;font-size:18px;}
+.h-right{display:flex;gap:10px;align-items:center;}
+.icon-btn{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+
+/* ---------- Side Menu ---------- */
+.menu{position:fixed;top:0;left:0;height:100%;width:260px;background:#fff;box-shadow:10px 0 30px rgba(8,23,48,0.06);transform:translateX(-340px);transition:transform .3s ease;z-index:120;padding:20px;}
 .menu.open{transform:translateX(0);}
-.menu h3{font-size:16px;margin-bottom:12px;color:#07203a;}
-.menu .m-item{padding:12px 8px;border-radius:10px;cursor:pointer;font-weight:700;color:#07203a;margin-bottom:8px;}
+.menu h3{font-size:18px;margin-bottom:16px;color:#07203a;}
+.menu .m-item{padding:12px 10px;border-radius:10px;cursor:pointer;font-weight:700;color:#07203a;margin-bottom:10px;}
 .menu .m-item:hover{background:#f2f7ff;}
-.screen{padding:18px 20px;display:none}
-.screen.active{display:block}
-.login-wrap{max-width:400px;margin:50px auto}
-.login-card{background:#fff;border-radius:12px;padding:30px;box-shadow:0 12px 30px rgba(10,20,60,0.06);text-align:center}
-.login-card img{width:80px;height:80px;object-fit:contain;margin-bottom:14px}
-.login-title{font-size:22px;font-weight:800;color:#07203a;margin-bottom:6px}
-.login-sub{text-align:center;color:#6b7280;margin-bottom:20px}
-.input{width:100%;padding:12px 14px;margin:8px 0;border-radius:10px;border:1px solid #e6eefc;font-size:15px}
-.btn{width:100%;padding:12px 14px;border-radius:10px;border:none;background:#0b63d8;color:#fff;font-weight:800;cursor:pointer;font-size:15px}
-.btn.secondary{background:#fff;color:#07203a;border:1px solid #e6eefc;font-weight:800}
-.btn.gold{background:#ffc107;color:#07203a;border:none;font-weight:800;cursor:pointer}
-.content{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;padding-bottom:84px}
-.main{flex:1 1 520px;min-width:260px}
-.side{width:300px;min-width:220px}
-.balance-card{background:linear-gradient(90deg,#0077ff,#0b63d8);color:white;padding:22px;border-radius:14px;margin-bottom:14px;box-shadow:0 10px 30px rgba(10,50,150,0.12)}
-.balance-card .greet{font-size:14px;opacity:.95}
-.balance-card .bal{font-size:28px;font-weight:800;margin-top:8px}
-.account-row{margin-top:14px;background:rgba(255,255,255,0.09);padding:12px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.account-id{color:rgba(255,255,255,0.95);font-weight:700}
-.tiles{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-.tile{background:#fff;border-radius:12px;padding:14px;box-shadow:0 10px 30px rgba(10,20,60,0.04);min-width:140px;flex:1 1 140px;text-align:center;cursor:pointer;font-weight:700}
-.tile img{width:40px;height:40px;margin-bottom:6px}
-.box{background:#fff;border-radius:12px;padding:14px;box-shadow:0 10px 30px rgba(10,20,60,0.04);margin-bottom:14px}
-.tx-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
-.tx{background:linear-gradient(180deg,#fbfeff,#f5f9ff);padding:12px;border-radius:10px;border-left:6px solid #1a73e8;display:flex;justify-content:space-between;align-items:center;font-weight:700;cursor:pointer}
-.page-title{font-size:18px;font-weight:800;margin-bottom:10px;text-align:center}
-.confirm-card{background:#fff;padding:18px;border-radius:12px;box-shadow:0 10px 30px rgba(10,20,60,0.04);text-align:center}
-.loader{width:64px;height:64px;border-radius:50%;margin:18px auto;position:relative}
-.loader:before,.loader:after{content:"";position:absolute;inset:0;border-radius:50%}
-.loader:before{border:6px solid rgba(11,99,216,0.08)}
-.loader:after{border-top-color:#0b63d8;transform:rotate(120deg);animation:spin 1s linear infinite;border-right-color:transparent;border-bottom-color:transparent;border-left-color:transparent}
-@keyframes spin{to{transform:rotate(360deg)}}
-.bottom-nav{position:fixed;left:0;right:0;bottom:0;display:flex;gap:6px;justify-content:center;padding:10px 12px;}
-.bottom-bar{max-width:920px;width:100%;display:flex;justify-content:space-between;background:linear-gradient(90deg,#fff,#fff);padding:10px 14px;border-radius:14px;box-shadow:0 8px 30px rgba(8,23,48,0.08);margin:0 12px;}
-.nav-item{flex:1 1 0;text-align:center;padding:6px 8px;cursor:pointer;color:#6b7280;font-weight:700}
-.nav-item.active{color:#0b63d8}
-.center-fab{width:56px;height:56px;border-radius:50%;background:#0b63d8;color:#fff;display:flex;align-items:center;justify-content:center;margin-top:-24px;box-shadow:0 8px 26px rgba(11,99,216,0.2);cursor:pointer;font-weight:800}
-.small{color:#6b7280;font-size:13px}
-@media(max-width:720px){.side{width:100%}.content{padding-bottom:120px}.balance-card .bal{font-size:24px}.menu{width:86%;max-width:320px}}
+
+/* ---------- Screens ---------- */
+.screen{display:none;padding:18px 20px;}
+.screen.active{display:block;}
+
+/* ---------- Login ---------- */
+.login-wrap{max-width:480px;margin:60px auto;}
+.login-card{background:linear-gradient(180deg,#fff,#fbfdff);border-radius:16px;padding:28px;box-shadow:0 12px 30px rgba(10,20,60,0.06);}
+.login-title{font-size:24px;font-weight:800;text-align:center;color:#07203a;margin-bottom:8px;}
+.login-sub{text-align:center;color:#6b7280;margin-bottom:20px;}
+.input{width:100%;padding:12px 14px;margin:10px 0;border-radius:10px;border:1px solid #e6eefc;font-size:15px;}
+.btn{width:100%;padding:14px 0;border-radius:12px;border:none;background:#0b63d8;color:#fff;font-weight:800;cursor:pointer;font-size:16px;margin-top:10px;}
+.btn.secondary{background:#fff;color:#07203a;border:1px solid #e6eefc;}
+
+/* ---------- Dashboard ---------- */
+.content{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;padding-bottom:100px;}
+.main{flex:1 1 520px;min-width:260px;}
+.balance-card{background:linear-gradient(135deg,#0077ff,#1a8cff);color:white;padding:24px;border-radius:16px;margin-bottom:20px;box-shadow:0 10px 30px rgba(10,50,150,0.12);}
+.balance-card .greet{font-size:14px;opacity:.95;}
+.balance-card .bal{font-size:32px;font-weight:800;margin-top:12px;}
+.account-row{margin-top:16px;background:rgba(255,255,255,0.09);padding:12px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.account-id{color:rgba(255,255,255,0.95);font-weight:700;}
+
+/* ---------- Tiles ---------- */
+.tiles{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;}
+.tile{background:#fff;border-radius:16px;padding:18px;box-shadow:0 10px 30px rgba(10,20,60,0.04);flex:1 1 140px;text-align:center;cursor:pointer;font-weight:700;transition:all 0.2s;}
+.tile:hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(10,20,60,0.1);}
+.tile img{width:50px;height:50px;margin-bottom:10px;}
+
+/* ---------- Box / Transactions ---------- */
+.box{background:#fff;border-radius:16px;padding:18px;box-shadow:0 10px 30px rgba(10,20,60,0.04);margin-bottom:20px;}
+.tx-list{display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+.tx{background:linear-gradient(180deg,#f9faff,#f0f6ff);padding:14px;border-radius:12px;border-left:6px solid #1a73e8;display:flex;justify-content:space-between;align-items:center;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.tx:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.05);}
+
+/* ---------- Pages: Transfer / Withdraw / Topup ---------- */
+.page-title{font-size:20px;font-weight:800;margin-bottom:12px;text-align:center;}
+.confirm-card{background:#fff;padding:20px;border-radius:16px;box-shadow:0 10px 30px rgba(10,20,60,0.04);text-align:center;}
+
+/* ---------- Loader ---------- */
+.loader{width:64px;height:64px;border-radius:50%;margin:20px auto;position:relative;}
+.loader:before,.loader:after{content:"";position:absolute;inset:0;border-radius:50%;}
+.loader:before{border:6px solid rgba(11,99,216,0.08);}
+.loader:after{border-top-color:#0b63d8;transform:rotate(120deg);animation:spin 1s linear infinite;border-right-color:transparent;border-bottom-color:transparent;border-left-color:transparent;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ---------- Bottom Navigation ---------- */
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;padding:12px;}
+.bottom-bar{max-width:920px;width:100%;display:flex;justify-content:space-between;background:#fff;padding:10px 14px;border-radius:16px;box-shadow:0 8px 30px rgba(8,23,48,0.08);margin:0 12px;}
+.nav-item{flex:1 1 0;text-align:center;padding:6px 8px;cursor:pointer;color:#6b7280;font-weight:700;}
+.nav-item.active{color:#0b63d8;}
+.center-fab{width:56px;height:56px;border-radius:50%;background:#0b63d8;color:#fff;display:flex;align-items:center;justify-content:center;margin-top:-24px;box-shadow:0 8px 26px rgba(11,99,216,0.2);cursor:pointer;font-weight:800;}
+.small{color:#6b7280;font-size:13px;}
+
+/* ---------- Responsive ---------- */
+@media(max-width:720px){.side{width:100%;}.content{padding-bottom:120px;}.balance-card .bal{font-size:28px;}.menu{width:86%;max-width:320px;}}
 </style>
 </head>
 <body>
 
+<!-- Side menu -->
 <div id="sideMenu" class="menu" aria-hidden="true">
-<h3>Premium Bank</h3>
-<div class="m-item" onclick="nav('dashboard')">Home / Dashboard</div>
-<div class="m-item" onclick="nav('transactions')">Transactions</div>
-<div class="m-item" onclick="nav('profile')">Profile & Settings</div>
-<div class="m-item" onclick="nav('help')">Help</div>
-<div style="height:10px"></div>
-<div class="m-item" onclick="doLogout()">Logout</div>
+  <h3>Premium Bank</h3>
+  <div class="m-item" onclick="nav('dashboard')">Home / Dashboard</div>
+  <div class="m-item" onclick="nav('transactions')">Transactions</div>
+  <div class="m-item" onclick="nav('profile')">Profile & Settings</div>
+  <div class="m-item" onclick="nav('help')">Help</div>
+  <div style="height:10px"></div>
+  <div class="m-item" onclick="doLogout()">Logout</div>
 </div>
 
 <div class="app" id="appRoot">
 
-<!-- HEADER -->
+<!-- Header -->
 <div id="topHeader" class="header" style="display:none">
   <div class="h-left">
-    <img src="https://via.placeholder.com/36x36?text=B" alt="Logo">
+    <img src="https://via.placeholder.com/40x40.png?text=B" alt="Logo">
     <div class="brand">Premium Bank</div>
-    <div id="hambBtn" class="hamburger">
-      <svg width="18" height="12"><rect width="18" height="2" fill="white"></rect><rect y="5" width="18" height="2" fill="white"></rect><rect y="10" width="18" height="2" fill="white"></rect></svg>
+    <div id="hambBtn" class="hamburger" title="Menu">
+      <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="0" width="18" height="2" rx="1" fill="white"></rect><rect x="0" y="5" width="18" height="2" rx="1" fill="white"></rect><rect x="0" y="10" width="18" height="2" rx="1" fill="white"></rect></svg>
     </div>
   </div>
   <div class="h-right">
@@ -96,19 +121,16 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear
 <div id="screen-login" class="screen active">
   <div class="login-wrap">
     <div class="login-card">
-      <img src="https://via.placeholder.com/80x80?text=B" alt="Bank Logo">
       <div class="login-title">Welcome to Premium Bank</div>
-      <div class="login-sub">Enter your credentials to continue</div>
+      <div class="login-sub">Enter your credentials</div>
       <input id="loginUser" class="input" placeholder="Username"/>
       <input id="loginPass" class="input" type="password" placeholder="Password"/>
-      <div style="display:flex; gap:10px; margin-top:12px">
-        <button class="btn" onclick="doLogin()">Sign In</button>
-      </div>
+      <button class="btn" onclick="doLogin()">Sign In</button>
     </div>
   </div>
 </div>
 
-<!-- DASHBOARD -->
+<!-- DASHBOARD SCREEN -->
 <div id="screen-dashboard" class="screen">
   <div class="content">
     <main class="main">
@@ -124,12 +146,18 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear
           </div>
         </div>
         <div class="bal">$<span id="balance">1000</span></div>
+        <div class="account-row">
+          <div>
+            <div style="font-size:12px;opacity:.9">Your account</div>
+            <div class="account-id">0062••••</div>
+          </div>
+        </div>
       </div>
 
       <div class="tiles">
-        <div class="tile" onclick="nav('transfer')"><img src="https://via.placeholder.com/40?text=→" alt="Send"><br>Send Money</div>
-        <div class="tile" onclick="nav('withdraw')"><img src="https://via.placeholder.com/40?text=-" alt="Withdraw"><br>Withdraw</div>
-        <div class="tile" onclick="nav('topup')"><img src="https://via.placeholder.com/40?text=+" alt="Top Up"><br>Top Up</div>
+        <div class="tile" onclick="nav('transfer')"><img src="https://via.placeholder.com/50.png?text=S"><br>Send Money</div>
+        <div class="tile" onclick="nav('withdraw')"><img src="https://via.placeholder.com/50.png?text=W"><br>Withdraw</div>
+        <div class="tile" onclick="nav('topup')"><img src="https://via.placeholder.com/50.png?text=T"><br>Top Up</div>
       </div>
 
       <div class="box">
@@ -143,57 +171,7 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear
   </div>
 </div>
 
-<!-- TRANSACTIONS PAGE -->
-<div id="screen-transactions" class="screen">
-  <div class="page-title">Transactions</div>
-  <div class="box">
-    <div id="txList" class="tx-list"></div>
-    <div style="margin-top:12px"><div class="back" onclick="nav('dashboard')">← Back to dashboard</div></div>
-  </div>
-</div>
-
-<!-- PROFILE SCREEN -->
-<div id="screen-profile" class="screen">
-  <div class="content" style="flex-direction:column;align-items:center;">
-    <div class="login-card" style="max-width:400px;width:100%;text-align:center;">
-      <div style="margin-bottom:12px">
-        <img id="profilePic" src="https://via.placeholder.com/100?text=Profile" alt="Profile" style="width:100px;height:100px;border-radius:50%;object-fit:cover;cursor:pointer" onclick="changeProfilePic()">
-      </div>
-      <div style="margin-bottom:8px;font-weight:700;font-size:18px" id="profileName">David</div>
-      <input id="profileNameInput" class="input" placeholder="Name" style="margin-bottom:8px">
-      <input id="profileEmailInput" class="input" placeholder="Email" style="margin-bottom:8px">
-      <button class="btn" onclick="saveProfile()">Save Profile</button>
-    </div>
-  </div>
-</div>
-
-<!-- TRANSFER/ WITHDRAW / TOPUP PAGES -->
-<div id="screen-transfer" class="screen">
-  <div class="page-title">Send Money</div>
-  <div class="box">
-    <input id="transferName" class="input" placeholder="Recipient Name">
-    <input id="transferAmount" class="input" placeholder="Amount" type="number">
-    <button class="btn" onclick="doTransfer()">Continue</button>
-  </div>
-</div>
-
-<div id="screen-withdraw" class="screen">
-  <div class="page-title">Withdraw</div>
-  <div class="box">
-    <input id="withdrawAmount" class="input" placeholder="Amount" type="number">
-    <button class="btn" onclick="doWithdraw()">Continue</button>
-  </div>
-</div>
-
-<div id="screen-topup" class="screen">
-  <div class="page-title">Top Up</div>
-  <div class="box">
-    <input id="topupAmount" class="input" placeholder="Amount" type="number">
-    <button class="btn" onclick="doTopup()">Continue</button>
-  </div>
-</div>
-
-<!-- BOTTOM NAV -->
+<!-- Bottom navigation -->
 <div id="bottomNav" class="bottom-nav" style="display:none">
   <div class="bottom-bar">
     <div class="nav-item" onclick="nav('dashboard')">Home</div>
@@ -207,17 +185,17 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear
 </div>
 
 <script>
-// Hamburger
+/* ---------- Hamburger Menu ---------- */
 const sideMenu = document.getElementById('sideMenu');
 const hambBtn = document.getElementById('hambBtn');
 hambBtn.addEventListener('click', e=>{e.stopPropagation(); sideMenu.classList.toggle('open'); sideMenu.setAttribute('aria-hidden',!sideMenu.classList.contains('open'))})
 document.addEventListener('click', e=>{if(!sideMenu.contains(e.target)&&!hambBtn.contains(e.target)) sideMenu.classList.remove('open');});
 
-// State
-let balance = Number(localStorage.getItem('balance')||1000);
-let transactions = JSON.parse(localStorage.getItem('transactions')||'[]');
+/* ---------- State ---------- */
+let balance = localStorage.getItem('balance') ? Number(localStorage.getItem('balance')) : 1000;
+let transactions = localStorage.getItem('transactions') ? JSON.parse(localStorage.getItem('transactions')) : [];
 
-// Live time
+/* ---------- Time & Greeting ---------- */
 function updateTime(){
   const now = new Date();
   const hours = now.getHours();
@@ -226,157 +204,66 @@ function updateTime(){
   else if(hours<18) greet='Good afternoon';
   else greet='Good evening';
   document.getElementById('greeting').innerText = greet+',';
-  document.getElementById('userName').innerText = localStorage.getItem('profile_name')||'David';
+  document.getElementById('userName').innerText='David';
   document.getElementById('liveDateTime').innerText = now.toLocaleString();
 }
 setInterval(updateTime,1000);
 
-// Navigation
+/* ---------- Navigation ---------- */
 function hideAll(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'))}
 function nav(page){
   hideAll();
-  const map = {dashboard:'screen-dashboard',login:'screen-login',profile:'screen-profile',transactions:'screen-transactions',transfer:'screen-transfer',withdraw:'screen-withdraw',topup:'screen-topup'};
-  document.getElementById(map[page]||'screen-dashboard').classList.add('active');
+  const map = {
+    dashboard:'screen-dashboard',
+    login:'screen-login',
+    transfer:'screen-dashboard', // add proper pages later
+    withdraw:'screen-dashboard',
+    topup:'screen-dashboard',
+    profile:'screen-dashboard',
+    transactions:'screen-dashboard'
+  };
+  const id = map[page] || 'screen-dashboard';
+  document.getElementById(id).classList.add('active');
   document.getElementById('hdrBal').innerText = balance;
   document.getElementById('balance').innerText = balance;
   updateTxPreview();
   showHeader(page!=='login');
 }
+function showHeader(show){
+  document.getElementById('topHeader').style.display = show?'flex':'none';
+  document.getElementById('bottomNav').style.display = show?'flex':'none';
+}
 
-// Header
-function showHeader(show){document.getElementById('topHeader').style.display=show?'flex':'none';document.getElementById('bottomNav').style.display=show?'flex':'none';}
-
-// Login
+/* ---------- Login ---------- */
 function doLogin(){
-  localStorage.setItem('demo_logged','1');
-  nav('dashboard');
+  localStorage.setItem('demo_b2_logged','1');
+  localStorage.setItem('balance', balance);
+  localStorage.setItem('transactions', JSON.stringify(transactions));
   showHeader(true);
-  loadProfile();
+  nav('dashboard');
 }
 
-// Transactions
+/* ---------- Transactions ---------- */
 function updateTxPreview(){
-  const c=document.getElementById('txPreview');
-  if(!c) return;
-  c.innerHTML='';
+  const c=document.getElementById('txPreview'); c.innerHTML='';
   transactions.slice(-5).reverse().forEach(t=>{
-    const d=document.createElement('div');
-    d.className='tx';
-    d.innerText=t.desc;
-    d.addEventListener('click',()=>alert(`Transaction Details:\nAmount: ${t.amount}\nTo/From: ${t.name}\nDate: ${t.date}\nStatus: ${t.status}`));
-    c.appendChild(d);
+    const d=document.createElement('div'); d.className='tx'; d.innerText=t; c.appendChild(d);
   });
 }
 
-function updateTxList(){
-  const c=document.getElementById('txList');
-  if(!c) return;
-  c.innerHTML='';
-  transactions.slice().reverse().forEach(t=>{
-    const d=document.createElement('div');
-    d.className='tx';
-    d.innerText=t.desc;
-    d.addEventListener('click',()=>alert(`Transaction Details:\nAmount: ${t.amount}\nTo/From: ${t.name}\nDate: ${t.date}\nStatus: ${t.status}`));
-    c.appendChild(d);
-  });
-}
-
-// Logout
+/* ---------- Logout ---------- */
 function doLogout(){
-  localStorage.removeItem('demo_logged');
-  nav('login');
+  localStorage.removeItem('demo_b2_logged');
   showHeader(false);
+  nav('login');
 }
 
-// Profile
-function loadProfile(){
-  const name = localStorage.getItem('profile_name')||'David';
-  const email = localStorage.getItem('profile_email')||'';
-  const pic = localStorage.getItem('profile_pic')||'https://via.placeholder.com/100?text=Profile';
-  document.getElementById('profileName').innerText = name;
-  document.getElementById('profileNameInput').value = name;
-  document.getElementById('profileEmailInput').value = email;
-  document.getElementById('profilePic').src = pic;
-}
-function changeProfilePic(){
-  const url = prompt('Enter new profile picture URL:');
-  if(url) document.getElementById('profilePic').src=url;
-}
-function saveProfile(){
-  const name = document.getElementById('profileNameInput').value||'David';
-  const email = document.getElementById('profileEmailInput').value||'';
-  const pic = document.getElementById('profilePic').src;
-  localStorage.setItem('profile_name',name);
-  localStorage.setItem('profile_email',email);
-  localStorage.setItem('profile_pic',pic);
-  loadProfile();
-  alert('Profile updated!');
-}
-
-// Operations
-function doTransfer(){
-  const name = document.getElementById('transferName').value||'Unknown';
-  const amount = Number(document.getElementById('transferAmount').value||0);
-  if(amount<=0 || amount>balance){alert('Invalid amount'); return;}
-  showLoader('Sending...');
-  setTimeout(()=>{
-    balance -= amount;
-    const t = {desc:`Sent $${amount} to ${name}`,amount,name,date:new Date().toLocaleString(),status:'Completed'};
-    transactions.push(t);
-    saveState();
-    nav('dashboard');
-    alert(`✔ You sent $${amount} to ${name} on ${t.date}`);
-  },1500);
-}
-
-function doWithdraw(){
-  const amount = Number(document.getElementById('withdrawAmount').value||0);
-  if(amount<=0 || amount>balance){alert('Invalid amount'); return;}
-  showLoader('Withdrawing...');
-  setTimeout(()=>{
-    balance -= amount;
-    const t = {desc:`Withdrew $${amount}`,amount,name:'Bank',date:new Date().toLocaleString(),status:'Completed'};
-    transactions.push(t);
-    saveState();
-    nav('dashboard');
-    alert(`✔ You withdrew $${amount} on ${t.date}`);
-  },1500);
-}
-
-function doTopup(){
-  const amount = Number(document.getElementById('topupAmount').value||0);
-  if(amount<=0){alert('Invalid amount'); return;}
-  showLoader('Top Up...');
-  setTimeout(()=>{
-    balance += amount;
-    const t = {desc:`Top Up $${amount}`,amount,name:'Bank',date:new Date().toLocaleString(),status:'Completed'};
-    transactions.push(t);
-    saveState();
-    nav('dashboard');
-    alert(`✔ You topped up $${amount} on ${t.date}`);
-  },1500);
-}
-
-function saveState(){
-  localStorage.setItem('balance',balance);
-  localStorage.setItem('transactions',JSON.stringify(transactions));
-  updateTxPreview();
-  updateTxList();
-}
-
-function showLoader(msg){
-  alert(msg+' (Loading...)');
-}
-
-// Init
-window.onload = ()=>{
-  const logged = localStorage.getItem('demo_logged')==='1';
+/* ---------- Init ---------- */
+window.onload=()=>{
+  const logged = localStorage.getItem('demo_b2_logged')==='1';
   showHeader(logged);
   nav(logged?'dashboard':'login');
   updateTime();
-  updateTxPreview();
-  updateTxList();
-  loadProfile();
 }
 </script>
 </body>
