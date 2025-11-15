@@ -47,10 +47,51 @@
     .account-id { color: rgba(255,255,255,0.95); font-weight:700; }
 
     /* Tiles */
-    .tiles { display: flex; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
-    .tile { background: linear-gradient(135deg, #f7f9ff, #e0f0ff); border-radius:12px; padding:20px; box-shadow:0 10px 30px rgba(10,20,60,0.08); min-width:140px; flex:1 1 140px; text-align:center; cursor:pointer; transition: transform .2s; }
-    .tile:hover { transform: translateY(-4px); box-shadow:0 12px 35px rgba(10,20,60,0.15); }
-    .tile img { width: 40px; height: 40px; margin-bottom:6px; }
+    .tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+/* Upper row tiles */
+.tile.big {
+  width: calc(50% - 10px);
+  min-width: 140px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px 10px;
+  text-align: center;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(10,20,60,0.06);
+  transition: transform .2s;
+}
+
+/* Lower single tile */
+.tile.full {
+  width: 70%;
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px 10px;
+  text-align: center;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(10,20,60,0.06);
+  transition: transform .2s;
+}
+
+/* Tile hover animation */
+.tile:hover {
+  transform: translateY(-3px);
+}
+
+/* Icons inside tiles */
+.tile-icon {
+  font-size: 42px;
+  margin-bottom: 6px;
+}
 
     /* Box */
     .box { background: #fff; border-radius:12px; padding:14px; box-shadow:0 10px 30px rgba(10,20,60,0.04); margin-bottom:14px; }
