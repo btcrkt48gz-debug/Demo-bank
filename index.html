@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Premium Demo Bank — Full Demo</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#eef6ff,#fbfcff);color:#07203a;display:flex;justify-content:center;padding:22px 12px;}
+.app{width:100%;max-width:920px;background:#fff;border-radius:14px;box-shadow:0 20px 50px rgba(8,23,48,0.08);overflow:hidden;display:flex;flex-direction:column;}
+.header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(90deg,#0b63d8,#1a8cff);color:#fff}
+.h-left{display:flex;align-items:center;gap:12px}
+.hamburger{width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:130}
+.brand{font-weight:700;font-size:18px}
+.h-right{display:flex;gap:10px;align-items:center}
+.icon-btn{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.menu{position:fixed;top:0;left:0;height:100%;width:260px;background:#fff;box-shadow:10px 0 30px rgba(8,23,48,0.06);transform:translateX(-340px);transition:transform .26s cubic-bezier(.2,.9,.2,1);z-index:120;padding:20px;}
+.menu.open{transform:translateX(0);}
+.menu h3{font-size:16px;margin-bottom:12px;color:#07203a;}
+.menu .m-item{padding:12px 8px;border-radius:10px;cursor:pointer;font-weight:700;color:#07203a;margin-bottom:8px;}
+.menu .m-item:hover{background:#f2f7ff;}
+.screen{padding:18px 20px;display:none}
+.screen.active{display:block}
+.login-wrap{max-width:520px;margin:36px auto}
+.login-card{background:linear-gradient(180deg,#fff,#fbfdff);border-radius:12px;padding:22px;box-shadow:0 12px 30px rgba(10,20,60,0.06)}
+.login-title{font-size:20px;font-weight:800;text-align:center;color:#07203a;margin-bottom:6px}
+.login-sub{text-align:center;color:#6b7280;margin-bottom:14px}
+.input{width:100%;padding:12px 14px;margin:8px 0;border-radius:10px;border:1px solid #e6eefc;font-size:15px}
+.btn{width:100%;padding:12px 14px;border-radius:10px;border:none;background:#0b63d8;color:#fff;font-weight:800;cursor:pointer;font-size:15px}
+.btn.secondary{background:#fff;color:#07203a;border:1px solid #e6eefc;font-weight:800}
+.content{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;padding-bottom:84px}
+.main{flex:1 1 520px;min-width:260px}
+.side{width:300px;min-width:220px}
+.balance-card{background:linear-gradient(90deg,#0077ff,#0b63d8);color:white;padding:22px;border-radius:14px;margin-bottom:14px;box-shadow:0 10px 30px rgba(10,50,150,0.12)}
+.balance-card .greet{font-size:13px;opacity:.95}
+.balance-card .bal{font-size:28px;font-weight:800;margin-top:8px}
+.account-row{margin-top:14px;background:rgba(255,255,255,0.09);padding:12px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.account-id{color:rgba(255,255,255,0.95);font-weight:700}
+.tiles{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.tile{background:#fff;border-radius:12px;padding:14px;box-shadow:0 10px 30px rgba(10,20,60,0.04);min-width:140px;flex:1 1 140px;text-align:center;cursor:pointer;font-weight:700}
+.box{background:#fff;border-radius:12px;padding:14px;box-shadow:0 10px 30px rgba(10,20,60,0.04);margin-bottom:14px}
+.tx-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.tx{background:linear-gradient(180deg,#fbfeff,#f5f9ff);padding:12px;border-radius:10px;border-left:6px solid #1a73e8;display:flex;justify-content:space-between;align-items:center;font-weight:700}
+.page-title{font-size:18px;font-weight:800;margin-bottom:10px}
+.confirm-card{background:#fff;padding:18px;border-radius:12px;box-shadow:0 10px 30px rgba(10,20,60,0.04);text-align:center}
+.loader{width:64px;height:64px;border-radius:50%;margin:18px auto;position:relative}
+.loader:before,.loader:after{content:"";position:absolute;inset:0;border-radius:50%}
+.loader:before{border:6px solid rgba(11,99,216,0.08)}
+.loader:after{border-top-color:#0b63d8;transform:rotate(120deg);animation:spin 1s linear infinite;border-right-color:transparent;border-bottom-color:transparent;border-left-color:transparent}
+@keyframes spin{to{transform:rotate(360deg)}}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;display:flex;gap:6px;justify-content:center;padding:10px 12px}
+.bottom-bar{max-width:920px;width:100%;display:flex;justify-content:space-around;background:#fff;padding:10px 14px;border-radius:14px;box-shadow:0 8px 30px rgba(8,23,48,0.08);margin:0 12px}
+.nav-item{flex:1 1 0;text-align:center;padding:6px 8px;cursor:pointer;color:#6b7280;font-weight:700}
+.nav-item.active{color:#0b63d8}
+.center-fab{width:56px;height:56px;border-radius:50%;background:#0b63d8;color:#fff;display:flex;align-items:center;justify-content:center;margin-top:-28px;box-shadow:0 8px 26px rgba(11,99,216,0.2);cursor:pointer;font-weight:800}
+.small{color:#6b7280;font-size:13px}
+@media (max-width:720px){.side{width:100%}.content{padding-bottom:120px}.center-fab{width:60px;height:60px;margin-top:-30px;}}
+</style>
+</head>
+<body>
+<!-- Side Menu -->
+<div id="sideMenu" class="menu" aria-hidden="true">
+<h3>Premium Bank</h3>
+<div class="m-item" onclick="nav('dashboard')">Dashboard</div>
+<div class="m-item" onclick="nav('transactions')">Transactions</div>
+<div class="m-item" onclick="nav('profile')">Profile</div>
+<div class="m-item" onclick="nav('help')">Help</div>
+<div style="height:10px"></div>
+<div class="m-item" onclick="doLogout()">Logout</div>
+</div>
+
+<div class="app" id="appRoot">
+
+<!-- Header -->
+<div id="topHeader" class="header" style="display:none">
+<div class="h-left">
+<div id="hambBtn" class="hamburger" title="Menu" onclick="toggleSideMenu()">☰</div>
+<div class="brand">Premium Bank</div>
+</div>
+<div class="h-right">
+<div id="hdrBalance">Balance: $<span id="hdrBal">1000</span></div>
+<div class="icon-btn" onclick="nav('profile')">🙂</div>
+</div>
+</div>
+
+<!-- Login -->
+<div id="screen-login" class="screen active">
+<div class="login-wrap">
+<div class="login-card">
+<div class="login-title">Welcome to Premium Bank</div>
+<div class="login-sub">Use any username & password for demo</div>
+<input id="loginUser" class="input" placeholder="Username"/>
+<input id="loginPass" class="input" type="password" placeholder="Password"/>
+<div style="display:flex; gap:10px; margin-top:8px">
+<button class="btn" onclick="doLogin()">Sign In</button>
+<button class="btn secondary" onclick="quickDemo()">Quick demo</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Dashboard -->
+<div id="screen-dashboard" class="screen">
+<div class="content">
+<main class="main">
+<div class="balance-card">
+<div class="greet">Hello, Demo User</div>
+<div class="bal">$<span id="balance">1000</span></div>
+<div class="account-row">
+<div>
+<div class="account-id">0062••••</div>
+</div>
+<div style="display:flex;gap:8px">
+<button class="btn secondary" onclick="nav('transactions')">Transactions</button>
+<button class="btn secondary" onclick="nav('topup-select')">Top Up</button>
+</div>
+</div>
+</div>
+
+<div class="tiles">
+<div class="tile" onclick="nav('transfer')">Send Money</div>
+<div class="tile" onclick="nav('withdraw')">Withdraw</div>
+</div>
+
+<div class="box">
+<div style="font-weight:800;margin-bottom:6px">Recent Transactions</div>
+<div id="txPreview" class="tx-list"></div>
+</div>
+</main>
+</div>
+</div>
+
+<!-- Top Up select card -->
+<div id="screen-topup-select" class="screen">
+<div class="page-title">Top Up — Select Card</div>
+<div class="box">
+<label>Select card:</label>
+<select id="topupCard" class="input">
+<option value="Debit Card 1">Debit Card 1</option>
+<option value="Debit Card 2">Debit Card 2</option>
+</select>
+<input id="topupAmount" class="input" placeholder="Amount"/>
+<button class="btn" onclick="goToTopUpReview()">Continue</button>
+<div class="small back" onclick="nav('dashboard')">← Back</div>
+</div>
+</div>
+
+<!-- Top Up review -->
+<div id="screen-topup-review" class="screen">
+<div class="page-title">Top Up — Review</div>
+<div class="box">
+<div>Top up <strong>$<span id="tuAmt">0</span></strong> to <strong id="tuCard">—</strong></div>
+<button class="btn" onclick="doTopUp()">Confirm</button>
+<div class="small back" onclick="nav('dashboard')">← Cancel</div>
+</div>
+</div>
+
+<!-- Loading -->
+<div id="screen-loading" class="screen">
+<div style="text-align:center;padding:30px">
+<div class="loader"></div>
+<div class="small" style="margin-top:12px">Processing transaction…</div>
+</div>
+</div>
+
+<!-- Confirm -->
+<div id="screen-confirm" class="screen">
+<div class="confirm-card">
+<div id="confirmTitle" style="font-weight:800;font-size:18px">Success</div>
+<div class="small" id="confirmText" style="margin-top:8px">Details</div>
+<button class="btn secondary" onclick="nav('dashboard')" style="margin-top:12px">Back to Dashboard</button>
+</div>
+</div>
+
+<!-- Bottom nav -->
+<div id="bottomNav" class="bottom-nav" style="display:none">
+<div class="bottom-bar">
+<div class="nav-item" onclick="nav('dashboard')">Home</div>
+<div class="nav-item" onclick="nav('transfer')">Transfer</div>
+<div class="center-fab" onclick="nav('transfer')">⇄</div>
+<div class="nav-item" onclick="nav('withdraw')">Withdraw</div>
+<div class="nav-item" onclick="nav('profile')">Profile</div>
+</div>
+</div>
+
+<script>
+let balance=1000, transactions=[];
+const el=id=>document.getElementById(id);
+function showHeader(show){el('topHeader').style.display=show?'flex':'none';el('bottomNav').style.display=show?'flex':'none';}
+function toggleSideMenu(){const m=el('sideMenu');m.classList.toggle('open');m.setAttribute('aria-hidden',!m.classList.contains('open'));}
+function hideAll(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));}
+function nav(page){toggleSideMenu(false);const map={dashboard:'screen-dashboard',login:'screen-login',transfer:'screen-dashboard',withdraw:'screen-dashboard',loading:'screen-loading',confirm:'screen-confirm',transactions:'screen-dashboard',profile:'screen-dashboard',topup:'screen-dashboard','topup-select':'screen-topup-select','topup-review':'screen-topup-review'};hideAll();const t=el(map[page]||page);if(t)t.classList.add('active');el('hdrBal')&&(el('hdrBal').innerText=String(balance));el('balance')&&(el('balance').innerText=String(balance));updateTxPreview();}
+function doLogin(){localStorage.setItem('demo_b2_logged','1');showHeader(true);nav('dashboard');}
+function quickDemo(){localStorage.setItem('demo_b2_logged','1');showHeader(true);nav('dashboard');transactions=["Sample Tx1","Sample Tx2"];updateTxPreview();}
+function updateTxPreview(){const c=el('txPreview');if(!c)return;c.innerHTML='';transactions.slice(-5).reverse().forEach(it=>{const d=document.createElement('div');d.className='tx';const left=document.createElement('div');left.innerText=it;const right=document.createElement('div');right.style.opacity='0.7';d.appendChild(left);d.appendChild(right);c.appendChild(d);});}
+function doLogout(){localStorage.removeItem('demo_b2_logged');nav('login');showHeader(false);toggleSideMenu(false);}
+function updateTime(){const now=new Date();const h=now.getHours();const greet=h<12?'Good morning':h<18?'Good afternoon':'Good evening';document.querySelectorAll('.balance-card .greet').forEach(e=>e.innerText=`${greet}, Demo User`);setTimeout(updateTime,1000);}
+function goToTopUpReview(){const amt=Number(el('topupAmount').value);const card=el('topupCard').value;if(!amt||amt<=0){alert('Enter valid amount');return;}el('tuAmt').innerText=amt;el('tuCard').innerText=card;nav('topup-review');}
+function doTopUp(){const amt=Number(el('tuAmt').innerText);balance+=amt;transactions.push(`Topped up $${amt} to ${el('tuCard').innerText}`);nav('loading');setTimeout(()=>{nav('confirm');el('confirmTitle').innerText='Top Up Successful';el('confirmText').innerText=`You topped up $${amt} to ${el('tuCard').innerText}.`;el('balance').innerText=balance;el('hdrBal').innerText=balance;updateTxPreview();},800);}
+window.addEventListener('load',()=>{const logged=localStorage.getItem('demo_b2_logged')==='1';showHeader(logged);nav(logged?'dashboard':'login');updateTime();});
+</script>
+</body>
+</html>
