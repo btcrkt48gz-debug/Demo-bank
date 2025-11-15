@@ -96,7 +96,7 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear
   </div>
 </div>
 
-<!-- Login Screen -->
+<!-- LOGIN SCREEN -->
 <div id="screen-login" class="screen active">
   <div class="login-wrap">
     <div class="login-card">
@@ -113,7 +113,7 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear
   </div>
 </div>
 
-<!-- Dashboard Screen -->
+<!-- DASHBOARD SCREEN -->
 <div id="screen-dashboard" class="screen">
   <div class="content">
     <main class="main">
@@ -133,9 +133,6 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear
           <div>
             <div style="font-size:12px;opacity:.9">Your account</div>
             <div class="account-id">0062••••</div>
-          </div>
-          <div style="display:flex;gap:8px">
-            <button class="btn secondary" onclick="nav('transactions')">Transactions</button>
           </div>
         </div>
       </div>
@@ -171,62 +168,49 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear
 </div>
 
 <script>
-// ---------- Helper ----------
-const el = id => document.getElementById(id);
-
-// ---------- Hamburger ----------
-const sideMenu = el('sideMenu');
-const hambBtn = el('hambBtn');
-function toggleMenu(){sideMenu.classList.toggle('open'); sideMenu.setAttribute('aria-hidden', !sideMenu.classList.contains('open'))}
-hambBtn.addEventListener('click', e=>{e.stopPropagation(); toggleMenu();});
+// Hamburger
+const sideMenu = document.getElementById('sideMenu');
+const hambBtn = document.getElementById('hambBtn');
+hambBtn.addEventListener('click', e=>{e.stopPropagation(); sideMenu.classList.toggle('open'); sideMenu.setAttribute('aria-hidden',!sideMenu.classList.contains('open'))})
 document.addEventListener('click', e=>{if(!sideMenu.contains(e.target)&&!hambBtn.contains(e.target)) sideMenu.classList.remove('open');});
 
-// ---------- State ----------
+// State
 let balance = 1000;
 let transactions = [];
 
-// ---------- Live Time & Greeting ----------
+// Live time and greeting
 function updateTime(){
   const now = new Date();
   const hours = now.getHours();
   let greet = 'Hello';
-  if(hours < 12) greet = 'Good morning';
-  else if(hours < 18) greet = 'Good afternoon';
-  else greet = 'Good evening';
-  el('greeting').innerText = greet + ',';
-  el('userName').innerText = 'David';
-  el('liveDateTime').innerText = now.toLocaleString();
+  if(hours<12) greet='Good morning';
+  else if(hours<18) greet='Good afternoon';
+  else greet='Good evening';
+  document.getElementById('greeting').innerText = greet+',';
+  document.getElementById('userName').innerText='David';
+  document.getElementById('liveDateTime').innerText = now.toLocaleString();
 }
 setInterval(updateTime,1000);
 
-// ---------- Navigation ----------
+// Navigation
 function hideAll(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'))}
-function nav(page){
-  hideAll();
-  const map = {dashboard:'screen-dashboard',login:'screen-login',transfer:'screen-dashboard',withdraw:'screen-dashboard',topup:'screen-dashboard'};
-  el(map[page]||page).classList.add('active');
-  el('hdrBal').innerText = balance;
-  el('balance').innerText = balance;
-  updateTxPreview();
-  showHeader(page!=='login');
-}
+function nav(page){hideAll();document.getElementById(page==='dashboard'?'screen-dashboard':page==='login'?'screen-login':'screen-dashboard').classList.add('active');document.getElementById('hdrBal').innerText=balance;document.getElementById('balance').innerText=balance;updateTxPreview();showHeader(page!=='login');}
 
-// ---------- Show header & bottom nav ----------
-function showHeader(show){el('topHeader').style.display=show?'flex':'none';el('bottomNav').style.display=show?'flex':'none';}
+// Show header
+function showHeader(show){document.getElementById('topHeader').style.display=show?'flex':'none';document.getElementById('bottomNav').style.display=show?'flex':'none';}
 
-// ---------- Login ----------
+// Login
 function doLogin(){localStorage.setItem('demo_b2_logged','1');showHeader(true);nav('dashboard')}
 function quickDemo(){localStorage.setItem('demo_b2_logged','1');transactions=["Transferred $15 to Mary","Withdrew $20","Deposit $100"];showHeader(true);nav('dashboard')}
 
-// ---------- Transaction Preview ----------
-function updateTxPreview(){const c=el('txPreview');c.innerHTML='';transactions.slice(-5).reverse().forEach(t=>{const d=document.createElement('div');d.className='tx';d.innerText=t;c.appendChild(d);})}
+// Transactions
+function updateTxPreview(){const c=document.getElementById('txPreview');c.innerHTML='';transactions.slice(-5).reverse().forEach(t=>{const d=document.createElement('div');d.className='tx';d.innerText=t;c.appendChild(d);})}
 
-// ---------- Logout ----------
+// Logout
 function doLogout(){localStorage.removeItem('demo_b2_logged');nav('login');showHeader(false)}
 
-// ---------- Init ----------
-window.onload = ()=>{const logged = localStorage.getItem('demo_b2_logged')==='1';showHeader(logged);nav(logged?'dashboard':'login');updateTime();}
-
+// Init
+window.onload=()=>{const logged = localStorage.getItem('demo_b2_logged')==='1';showHeader(logged);nav(logged?'dashboard':'login');updateTime();}
 </script>
 </body>
 </html>
