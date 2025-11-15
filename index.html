@@ -9,9 +9,10 @@
 html,body{height:100%}
 body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#eef6ff,#fbfcff);color:#07203a;display:flex;justify-content:center;padding:22px 12px;}
 .app{width:100%;max-width:920px;background:#fff;border-radius:14px;box-shadow:0 20px 50px rgba(8,23,48,0.08);overflow:hidden;display:flex;flex-direction:column;}
-.header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(90deg,#0b63d8,#1a8cff);color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(90deg,#0b63d8,#1a8cff);color:#fff;}
 .h-left{display:flex;align-items:center;gap:12px}
-.hamburger{width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:130}
+.h-left img{width:36px;height:36px;object-fit:contain;border-radius:6px}
+.hamburger{width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;cursor:pointer}
 .brand{font-weight:700;font-size:18px}
 .h-right{display:flex;gap:10px;align-items:center}
 .icon-btn{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer}
@@ -26,9 +27,6 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear
 .login-card{background:linear-gradient(180deg,#fff,#fbfdff);border-radius:12px;padding:22px;box-shadow:0 12px 30px rgba(10,20,60,0.06)}
 .login-title{font-size:20px;font-weight:800;text-align:center;color:#07203a;margin-bottom:6px}
 .login-sub{text-align:center;color:#6b7280;margin-bottom:14px}
-.input{width:100%;padding:12px 14px;margin:8px 0;border-radius:10px;border:1px solid #e6eefc;font-size:15px}
-.btn{width:100%;padding:12px 14px;border-radius:10px;border:none;background:#0b63d8;color:#fff;font-weight:800;cursor:pointer;font-size:15px}
-.btn.secondary{background:#fff;color:#07203a;border:1px solid #e6eefc;font-weight:800}
 .content{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;padding-bottom:84px}
 .main{flex:1 1 520px;min-width:260px}
 .side{width:300px;min-width:220px}
@@ -39,7 +37,12 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear
 .account-id{color:rgba(255,255,255,0.95);font-weight:700}
 .tiles{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
 .tile{background:#fff;border-radius:12px;padding:14px;box-shadow:0 10px 30px rgba(10,20,60,0.04);min-width:140px;flex:1 1 140px;text-align:center;cursor:pointer;font-weight:700}
+.tile img{width:40px;height:40px;margin-bottom:6px}
 .box{background:#fff;border-radius:12px;padding:14px;box-shadow:0 10px 30px rgba(10,20,60,0.04);margin-bottom:14px}
+.input{width:100%;padding:12px 14px;margin:8px 0;border-radius:10px;border:1px solid #e6eefc;font-size:15px}
+.btn{width:100%;padding:12px 14px;border-radius:10px;border:none;background:#0b63d8;color:#fff;font-weight:800;cursor:pointer;font-size:15px}
+.btn.secondary{background:#fff;color:#07203a;border:1px solid #e6eefc;font-weight:800}
+.btn.gold{background:#ffc107;color:#07203a;border:none;font-weight:800;cursor:pointer}
 .tx-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
 .tx{background:linear-gradient(180deg,#fbfeff,#f5f9ff);padding:12px;border-radius:10px;border-left:6px solid #1a73e8;display:flex;justify-content:space-between;align-items:center;font-weight:700}
 .page-title{font-size:18px;font-weight:800;margin-bottom:10px}
@@ -49,195 +52,181 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear
 .loader:before{border:6px solid rgba(11,99,216,0.08)}
 .loader:after{border-top-color:#0b63d8;transform:rotate(120deg);animation:spin 1s linear infinite;border-right-color:transparent;border-bottom-color:transparent;border-left-color:transparent}
 @keyframes spin{to{transform:rotate(360deg)}}
-.bottom-nav{position:fixed;left:0;right:0;bottom:0;display:flex;gap:6px;justify-content:center;padding:10px 12px}
-.bottom-bar{max-width:920px;width:100%;display:flex;justify-content:space-around;background:#fff;padding:10px 14px;border-radius:14px;box-shadow:0 8px 30px rgba(8,23,48,0.08);margin:0 12px}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;display:flex;gap:6px;justify-content:center;padding:10px 12px;}
+.bottom-bar{max-width:920px;width:100%;display:flex;justify-content:space-between;background:linear-gradient(90deg,#fff,#fff);padding:10px 14px;border-radius:14px;box-shadow:0 8px 30px rgba(8,23,48,0.08);margin:0 12px;}
 .nav-item{flex:1 1 0;text-align:center;padding:6px 8px;cursor:pointer;color:#6b7280;font-weight:700}
 .nav-item.active{color:#0b63d8}
-.center-fab{width:56px;height:56px;border-radius:50%;background:#0b63d8;color:#fff;display:flex;align-items:center;justify-content:center;margin-top:-28px;box-shadow:0 8px 26px rgba(11,99,216,0.2);cursor:pointer;font-weight:800}
+.center-fab{width:56px;height:56px;border-radius:50%;background:#0b63d8;color:#fff;display:flex;align-items:center;justify-content:center;margin-top:-24px;box-shadow:0 8px 26px rgba(11,99,216,0.2);cursor:pointer;font-weight:800}
 .small{color:#6b7280;font-size:13px}
-@media (max-width:720px){.side{width:100%}.content{padding-bottom:120px}.center-fab{width:60px;height:60px;margin-top:-30px;}}
+@media(max-width:720px){.side{width:100%}.content{padding-bottom:120px}.balance-card .bal{font-size:24px}.menu{width:86%;max-width:320px}}
 </style>
 </head>
 <body>
+
+<!-- Side menu -->
 <div id="sideMenu" class="menu" aria-hidden="true">
-<h3>Premium Bank</h3>
-<div class="m-item" onclick="nav('dashboard')">Dashboard</div>
-<div class="m-item" onclick="nav('transactions')">Transactions</div>
-<div class="m-item" onclick="nav('profile')">Profile</div>
-<div class="m-item" onclick="nav('help')">Help</div>
-<div style="height:10px"></div>
-<div class="m-item" onclick="doLogout()">Logout</div>
+  <h3>Premium Bank</h3>
+  <div class="m-item" onclick="nav('dashboard')">Home / Dashboard</div>
+  <div class="m-item" onclick="nav('transactions')">Transactions</div>
+  <div class="m-item" onclick="nav('profile')">Profile & Settings</div>
+  <div class="m-item" onclick="nav('help')">Help</div>
+  <div style="height:10px"></div>
+  <div class="m-item" onclick="doLogout()">Logout</div>
 </div>
 
 <div class="app" id="appRoot">
+
+<!-- Header -->
 <div id="topHeader" class="header" style="display:none">
-<div class="h-left"><div id="hambBtn" class="hamburger" title="Menu" onclick="toggleSideMenu()">☰</div><div class="brand">Premium Bank</div></div>
-<div class="h-right"><div id="hdrBalance">Balance: $<span id="hdrBal">1000</span></div><div class="icon-btn" onclick="nav('profile')">🙂</div></div>
+  <div class="h-left">
+    <img src="logo.png" alt="Logo">
+    <div class="brand">Premium Bank</div>
+    <div id="hambBtn" class="hamburger" title="Menu">
+      <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="18" height="2" rx="1" fill="white"></rect>
+        <rect x="0" y="5" width="18" height="2" rx="1" fill="white"></rect>
+        <rect x="0" y="10" width="18" height="2" rx="1" fill="white"></rect>
+      </svg>
+    </div>
+  </div>
+  <div class="h-right">
+    <div id="hdrBalance" style="font-weight:800">Balance: $<span id="hdrBal">1000</span></div>
+    <div class="icon-btn" title="Notifications">🔔</div>
+    <div id="profileBtn" class="icon-btn" title="Profile" onclick="nav('profile')">🙂</div>
+  </div>
 </div>
 
+<!-- Login Screen -->
 <div id="screen-login" class="screen active">
-<div class="login-wrap">
-<div class="login-card">
-<div class="login-title">Welcome to Premium Bank</div>
-<div class="login-sub">Use any username & password for demo</div>
-<input id="loginUser" class="input" placeholder="Username"/>
-<input id="loginPass" class="input" type="password" placeholder="Password"/>
-<div style="display:flex; gap:10px; margin-top:8px">
-<button class="btn" onclick="doLogin()">Sign In</button>
-<button class="btn secondary" onclick="quickDemo()">Quick demo</button>
-</div>
-</div>
-</div>
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-title">Welcome to Premium Bank</div>
+      <div class="login-sub">Use any username & password for demo</div>
+      <input id="loginUser" class="input" placeholder="Username (any)"/>
+      <input id="loginPass" class="input" type="password" placeholder="Password (any)"/>
+      <div style="display:flex; gap:10px; margin-top:8px">
+        <button class="btn" onclick="doLogin()">Sign In</button>
+        <button class="btn secondary" onclick="quickDemo()">Quick demo</button>
+      </div>
+      <div style="margin-top:10px" class="small">Tip: Quick demo logs you in and preloads sample data.</div>
+    </div>
+  </div>
 </div>
 
-<!-- Dashboard -->
+<!-- Dashboard Screen -->
 <div id="screen-dashboard" class="screen">
-<div class="content">
-<main class="main">
-<div class="balance-card">
-<div class="greet">Hello, Demo User</div>
-<div class="bal">$<span id="balance">1000</span></div>
-<div class="account-row">
-<div><div class="account-id">0062••••</div></div>
-<div style="display:flex;gap:8px">
-<button class="btn secondary" onclick="nav('transactions')">Transactions</button>
-<button class="btn secondary" onclick="nav('topup-select')">Top Up</button>
-</div>
-</div>
+  <div class="content">
+    <main class="main">
+      <div class="balance-card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div class="greet" id="greeting">Hello,</div>
+            <div style="font-weight:800" id="userName">David</div>
+          </div>
+          <div style="text-align:right">
+            <div class="small">Today</div>
+            <div style="font-weight:700" id="liveDateTime"></div>
+          </div>
+        </div>
+        <div class="bal">$<span id="balance">1000</span></div>
+        <div class="account-row">
+          <div>
+            <div style="font-size:12px;opacity:.9">Your account</div>
+            <div class="account-id">0062••••</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn secondary" onclick="nav('transactions')">Transactions</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tiles">
+        <div class="tile" onclick="nav('transfer')"><img src="send.png" alt="Send"><br>Send Money</div>
+        <div class="tile" onclick="nav('withdraw')"><img src="withdraw.png" alt="Withdraw"><br>Withdraw</div>
+        <div class="tile" onclick="nav('topup')"><img src="topup.png" alt="Top Up"><br>Top Up</div>
+      </div>
+
+      <div class="box">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:800">Recent Transactions</div>
+          <div class="small">Last 5</div>
+        </div>
+        <div id="txPreview" class="tx-list" style="margin-top:10px"></div>
+      </div>
+    </main>
+  </div>
 </div>
 
-<div class="tiles">
-<div class="tile" onclick="nav('transfer-input')">Send Money</div>
-<div class="tile" onclick="nav('withdraw-input')">Withdraw</div>
-</div>
-
-<div class="box">
-<div style="font-weight:800;margin-bottom:6px">Recent Transactions</div>
-<div id="txPreview" class="tx-list"></div>
-</div>
-</main>
-</div>
-</div>
-
-<!-- Transfer Input -->
-<div id="screen-transfer-input" class="screen">
-<div class="page-title">Transfer — Enter Details</div>
-<div class="box">
-<input id="transferTo" class="input" placeholder="Recipient"/>
-<input id="transferAmount" class="input" placeholder="Amount"/>
-<button class="btn" onclick="goToTransferReview()">Continue</button>
-<div class="small back" onclick="nav('dashboard')">← Back</div>
-</div>
-</div>
-
-<!-- Transfer Review -->
-<div id="screen-transfer-review" class="screen">
-<div class="page-title">Transfer — Review</div>
-<div class="box">
-<div>Send <strong>$<span id="tAmt">0</span></strong> to <strong id="tTo">—</strong></div>
-<button class="btn" onclick="doTransfer()">Confirm</button>
-<div class="small back" onclick="nav('transfer-input')">← Cancel</div>
-</div>
-</div>
-
-<!-- Withdraw Input -->
-<div id="screen-withdraw-input" class="screen">
-<div class="page-title">Withdraw — Enter Amount</div>
-<div class="box">
-<input id="withdrawAmount" class="input" placeholder="Amount"/>
-<button class="btn" onclick="goToWithdrawReview()">Continue</button>
-<div class="small back" onclick="nav('dashboard')">← Back</div>
-</div>
-</div>
-
-<!-- Withdraw Review -->
-<div id="screen-withdraw-review" class="screen">
-<div class="page-title">Withdraw — Review</div>
-<div class="box">
-<div>Withdraw <strong>$<span id="wAmt">0</span></strong> to <strong>Debit Card</strong></div>
-<button class="btn" onclick="doWithdraw()">Confirm</button>
-<div class="small back" onclick="nav('withdraw-input')">← Cancel</div>
-</div>
-</div>
-
-<!-- TopUp Input -->
-<div id="screen-topup-select" class="screen">
-<div class="page-title">Top Up — Select Card</div>
-<div class="box">
-<label>Select card:</label>
-<select id="topupCard" class="input">
-<option value="Debit Card 1">Debit Card 1</option>
-<option value="Debit Card 2">Debit Card 2</option>
-</select>
-<input id="topupAmount" class="input" placeholder="Amount"/>
-<button class="btn" onclick="goToTopUpReview()">Continue</button>
-<div class="small back" onclick="nav('dashboard')">← Back</div>
-</div>
-</div>
-
-<div id="screen-topup-review" class="screen">
-<div class="page-title">Top Up — Review</div>
-<div class="box">
-<div>Top up <strong>$<span id="tuAmt">0</span></strong> to <strong id="tuCard">—</strong></div>
-<button class="btn" onclick="doTopUp()">Confirm</button>
-<div class="small back" onclick="nav('topup-select')">← Cancel</div>
-</div>
-</div>
-
-<!-- Loading -->
-<div id="screen-loading" class="screen">
-<div style="text-align:center;padding:30px">
-<div class="loader"></div>
-<div class="small" style="margin-top:12px">Processing transaction…</div>
-</div>
-</div>
-
-<!-- Confirm -->
-<div id="screen-confirm" class="screen">
-<div class="confirm-card">
-<div id="confirmTitle" style="font-weight:800;font-size:18px">Success</div>
-<div class="small" id="confirmText" style="margin-top:8px">Details</div>
-<button class="btn secondary" onclick="nav('dashboard')" style="margin-top:12px">Back to Dashboard</button>
-</div>
-</div>
-
-<!-- Bottom nav -->
+<!-- Bottom navigation -->
 <div id="bottomNav" class="bottom-nav" style="display:none">
-<div class="bottom-bar">
-<div class="nav-item" onclick="nav('dashboard')">Home</div>
-<div class="nav-item" onclick="nav('transfer-input')">Transfer</div>
-<div class="center-fab" onclick="nav('transfer-input')">⇄</div>
-<div class="nav-item" onclick="nav('withdraw-input')">Withdraw</div>
-<div class="nav-item" onclick="nav('profile')">Profile</div>
-</div>
+  <div class="bottom-bar">
+    <div class="nav-item" id="navHome" onclick="nav('dashboard')">Home</div>
+    <div class="nav-item" onclick="nav('transfer')">Transfer</div>
+    <div style="display:flex;align-items:center;justify-content:center;width:80px">
+      <div class="center-fab" onclick="nav('transfer')">⇄</div>
+    </div>
+    <div class="nav-item" onclick="nav('withdraw')">Withdraw</div>
+    <div class="nav-item" onclick="nav('profile')">Profile</div>
+  </div>
 </div>
 
 <script>
-let balance=1000, transactions=[];
-const el=id=>document.getElementById(id);
+// ---------- Helper ----------
+const el = id => document.getElementById(id);
+
+// ---------- Hamburger ----------
+const sideMenu = el('sideMenu');
+const hambBtn = el('hambBtn');
+function toggleMenu(){sideMenu.classList.toggle('open'); sideMenu.setAttribute('aria-hidden', !sideMenu.classList.contains('open'))}
+hambBtn.addEventListener('click', e=>{e.stopPropagation(); toggleMenu();});
+document.addEventListener('click', e=>{if(!sideMenu.contains(e.target)&&!hambBtn.contains(e.target)) sideMenu.classList.remove('open');});
+
+// ---------- State ----------
+let balance = 1000;
+let transactions = [];
+
+// ---------- Live Time & Greeting ----------
+function updateTime(){
+  const now = new Date();
+  const hours = now.getHours();
+  let greet = 'Hello';
+  if(hours < 12) greet = 'Good morning';
+  else if(hours < 18) greet = 'Good afternoon';
+  else greet = 'Good evening';
+  el('greeting').innerText = greet + ',';
+  el('userName').innerText = 'David';
+  el('liveDateTime').innerText = now.toLocaleString();
+}
+setInterval(updateTime,1000);
+
+// ---------- Navigation ----------
+function hideAll(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'))}
+function nav(page){
+  hideAll();
+  const map = {dashboard:'screen-dashboard',login:'screen-login',transfer:'screen-dashboard',withdraw:'screen-dashboard',topup:'screen-dashboard'};
+  el(map[page]||page).classList.add('active');
+  el('hdrBal').innerText = balance;
+  el('balance').innerText = balance;
+  updateTxPreview();
+  showHeader(page!=='login');
+}
+
+// ---------- Show header & bottom nav ----------
 function showHeader(show){el('topHeader').style.display=show?'flex':'none';el('bottomNav').style.display=show?'flex':'none';}
-function toggleSideMenu(){const m=el('sideMenu');m.classList.toggle('open');m.setAttribute('aria-hidden',!m.classList.contains('open'));}
-function hideAll(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));}
-function nav(page){toggleSideMenu(false);const map={'dashboard':'screen-dashboard','login':'screen-login','transfer-input':'screen-transfer-input','transfer-review':'screen-transfer-review','withdraw-input':'screen-withdraw-input','withdraw-review':'screen-withdraw-review','topup-select':'screen-topup-select','topup-review':'screen-topup-review','loading':'screen-loading','confirm':'screen-confirm'};hideAll();const t=el(map[page]||page);if(t)t.classList.add('active');el('hdrBal')&&(el('hdrBal').innerText=String(balance));el('balance')&&(el('balance').innerText=String(balance));updateTxPreview();}
-function doLogin(){localStorage.setItem('demo_b2_logged','1');showHeader(true);nav('dashboard');updateTime();}
-function quickDemo(){localStorage.setItem('demo_b2_logged','1');showHeader(true);nav('dashboard');transactions=["Sample Tx1","Sample Tx2"];updateTxPreview();updateTime();}
-function updateTxPreview(){const c=el('txPreview');if(!c)return;c.innerHTML='';transactions.slice(-5).reverse().forEach(it=>{const d=document.createElement('div');d.className='tx';const left=document.createElement('div');left.innerText=it;const right=document.createElement('div');right.style.opacity='0.7';d.appendChild(left);d.appendChild(right);c.appendChild(d);});}
-function doLogout(){localStorage.removeItem('demo_b2_logged');nav('login');showHeader(false);toggleSideMenu(false);}
-function updateTime(){const now=new Date();const h=now.getHours();const greet=h<12?'Good morning':h<18?'Good afternoon':'Good evening';document.querySelectorAll('.balance-card .greet').forEach(e=>e.innerText=`${greet}, Demo User`);setTimeout(updateTime,1000);}
 
-// Transfer
-function goToTransferReview(){const amt=Number(el('transferAmount').value);const to=el('transferTo').value;if(!amt||!to){alert('Enter recipient and valid amount');return;}el('tAmt').innerText=amt;el('tTo').innerText=to;nav('transfer-review');}
-function doTransfer(){const amt=Number(el('tAmt').innerText);const to=el('tTo').innerText;nav('loading');setTimeout(()=>{balance-=amt;transactions.push(`Transferred $${amt} to ${to}`);nav('confirm');el('confirmTitle').innerText='Transfer Sent';el('confirmText').innerText=`You sent $${amt} to ${to}.`;el('balance').innerText=balance;el('hdrBal').innerText=balance;updateTxPreview();},800);}
+// ---------- Login ----------
+function doLogin(){localStorage.setItem('demo_b2_logged','1');showHeader(true);nav('dashboard')}
+function quickDemo(){localStorage.setItem('demo_b2_logged','1');transactions=["Transferred $15 to Mary","Withdrew $20","Deposit $100"];showHeader(true);nav('dashboard')}
 
-// Withdraw
-function goToWithdrawReview(){const amt=Number(el('withdrawAmount').value);if(!amt||amt<=0){alert('Enter valid amount');return;}el('wAmt').innerText=amt;nav('withdraw-review');}
-function doWithdraw(){const amt=Number(el('wAmt').innerText);nav('loading');setTimeout(()=>{balance-=amt;transactions.push(`Withdrew $${amt} to Debit Card`);nav('confirm');el('confirmTitle').innerText='Withdraw Complete';el('confirmText').innerText=`You withdrew $${amt} to Debit Card.`;el('balance').innerText=balance;el('hdrBal').innerText=balance;updateTxPreview();},800);}
+// ---------- Transaction Preview ----------
+function updateTxPreview(){const c=el('txPreview');c.innerHTML='';transactions.slice(-5).reverse().forEach(t=>{const d=document.createElement('div');d.className='tx';d.innerText=t;c.appendChild(d);})}
 
-// TopUp
-function goToTopUpReview(){const amt=Number(el('topupAmount').value);const card=el('topupCard').value;if(!amt||amt<=0){alert('Enter valid amount');return;}el('tuAmt').innerText=amt;el('tuCard').innerText=card;nav('topup-review');}
-function doTopUp(){const amt=Number(el('tuAmt').innerText);balance+=amt;transactions.push(`Topped up $${amt} to ${el('tuCard').innerText}`);nav('loading');setTimeout(()=>{nav('confirm');el('confirmTitle').innerText='Top Up Successful';el('confirmText').innerText=`You topped up $${amt} to ${el('tuCard').innerText}.`;el('balance').innerText=balance;el('hdrBal').innerText=balance;updateTxPreview();},800);}
+// ---------- Logout ----------
+function doLogout(){localStorage.removeItem('demo_b2_logged');nav('login');showHeader(false)}
 
-window.addEventListener('load',()=>{const logged=localStorage.getItem('demo_b2_logged')==='1';showHeader(logged);nav(logged?'dashboard':'login');updateTime();});
+// ---------- Init ----------
+window.onload = ()=>{const logged = localStorage.getItem('demo_b2_logged')==='1';showHeader(logged);nav(logged?'dashboard':'login');updateTime();}
+
 </script>
 </body>
 </html>
