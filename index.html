@@ -171,8 +171,14 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear
 // Hamburger
 const sideMenu = document.getElementById('sideMenu');
 const hambBtn = document.getElementById('hambBtn');
-hambBtn.addEventListener('click', e=>{e.stopPropagation(); sideMenu.classList.toggle('open'); sideMenu.setAttribute('aria-hidden',!sideMenu.classList.contains('open'))})
-document.addEventListener('click', e=>{if(!sideMenu.contains(e.target)&&!hambBtn.contains(e.target)) sideMenu.classList.remove('open');});
+hambBtn.addEventListener('click', e=>{
+  e.stopPropagation(); 
+  sideMenu.classList.toggle('open'); 
+  sideMenu.setAttribute('aria-hidden',!sideMenu.classList.contains('open'))
+})
+document.addEventListener('click', e=>{
+  if(!sideMenu.contains(e.target)&&!hambBtn.contains(e.target)) sideMenu.classList.remove('open');
+});
 
 // State
 let balance = 1000;
@@ -194,23 +200,129 @@ setInterval(updateTime,1000);
 
 // Navigation
 function hideAll(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'))}
-function nav(page){hideAll();document.getElementById(page==='dashboard'?'screen-dashboard':page==='login'?'screen-login':'screen-dashboard').classList.add('active');document.getElementById('hdrBal').innerText=balance;document.getElementById('balance').innerText=balance;updateTxPreview();showHeader(page!=='login');}
+function nav(page){
+  hideAll();
+  const map = {
+    dashboard:'screen-dashboard',
+    login:'screen-login',
+    transfer:'screen-transfer-input',
+    withdraw:'screen-withdraw-input',
+    topup:'screen-topup-select'
+  };
+  const id = map[page] || 'screen-dashboard';
+  document.getElementById(id).classList.add('active');
+  document.getElementById('hdrBal').innerText = balance;
+  document.getElementById('balance').innerText = balance;
+  updateTxPreview();
+  showHeader(page!=='login');
+}
 
 // Show header
-function showHeader(show){document.getElementById('topHeader').style.display=show?'flex':'none';document.getElementById('bottomNav').style.display=show?'flex':'none';}
+function showHeader(show){
+  document.getElementById('topHeader').style.display = show?'flex':'none';
+  document.getElementById('bottomNav').style.display = show?'flex':'none';
+}
 
 // Login
-function doLogin(){localStorage.setItem('demo_b2_logged','1');showHeader(true);nav('dashboard')}
-function quickDemo(){localStorage.setItem('demo_b2_logged','1');transactions=["Transferred $15 to Mary","Withdrew $20","Deposit $100"];showHeader(true);nav('dashboard')}
+function doLogin(){
+  localStorage.setItem('demo_b2_logged','1');
+  showHeader(true);
+  nav('dashboard')
+}
+function quickDemo(){
+  localStorage.setItem('demo_b2_logged','1');
+  transactions=["Transferred $15 to Mary","Withdrew $20","Deposit $100"];
+  showHeader(true);
+  nav('dashboard')
+}
 
 // Transactions
-function updateTxPreview(){const c=document.getElementById('txPreview');c.innerHTML='';transactions.slice(-5).reverse().forEach(t=>{const d=document.createElement('div');d.className='tx';d.innerText=t;c.appendChild(d);})}
+function updateTxPreview(){
+  const c=document.getElementById('txPreview');
+  c.innerHTML='';
+  transactions.slice(-5).reverse().forEach(t=>{
+    const d=document.createElement('div');
+    d.className='tx';
+    d.innerText=t;
+    c.appendChild(d);
+  })
+}
 
 // Logout
-function doLogout(){localStorage.removeItem('demo_b2_logged');nav('login');showHeader(false)}
+function doLogout(){
+  localStorage.removeItem('demo_b2_logged');
+  nav('login');
+  showHeader(false)
+}
+
+// ----------- Transfer / Withdraw / Top Up flow -----------
+// Example for Transfer
+function startTransfer(){
+  // Show a prompt input for amount and recipient
+  const amt = prompt('Enter transfer amount:');
+  const to = prompt('Enter recipient name:');
+  if(!amt || !to) return;
+  // Confirm screen
+  if(confirm(`Send $${amt} to ${to}?`)){
+    balance -= Number(amt);
+    transactions.push(`Transferred $${amt} to ${to}`);
+    updateTxPreview();
+    alert('Transfer completed!');
+    nav('dashboard');
+  }
+}
+
+// Withdraw
+function startWithdraw(){
+  const amt = prompt('Enter amount to withdraw:');
+  if(!amt) return;
+  if(Number(amt)>balance){alert('Not enough balance'); return;}
+  if(confirm(`Withdraw $${amt}?`)){
+    balance -= Number(amt);
+    transactions.push(`Withdrew $${amt}`);
+    updateTxPreview();
+    alert('Withdraw completed!');
+    nav('dashboard');
+  }
+}
+
+// Top Up
+function startTopUp(){
+  const card = prompt('Enter card to top up:');
+  const amt = prompt('Enter amount to top up:');
+  if(!card || !amt) return;
+  if(confirm(`Top up $${amt} to card ${card}?`)){
+    balance += Number(amt);
+    transactions.push(`Top up $${amt} to card ${card}`);
+    updateTxPreview();
+    alert('Top up completed!');
+    nav('dashboard');
+  }
+}
+
+// Add event listeners for dashboard tiles
+document.querySelectorAll('.tile').forEach(tile=>{
+  const txt = tile.innerText.toLowerCase();
+  if(txt.includes('send')) tile.onclick=startTransfer;
+  if(txt.includes('withdraw')) tile.onclick=startWithdraw;
+  if(txt.includes('top up')) tile.onclick=startTopUp;
+});
+
+// Profile picture (optional)
+// Add an <input type="file" id="profilePicInput"> somewhere in your profile page
+function setProfilePic(file){
+  const reader = new FileReader();
+  reader.onload = function(e){
+    document.querySelector('#topHeader img').src = e.target.result;
+  }
+  reader.readAsDataURL(file);
+}
 
 // Init
-window.onload=()=>{const logged = localStorage.getItem('demo_b2_logged')==='1';showHeader(logged);nav(logged?'dashboard':'login');updateTime();}
+window.onload=()=>{
+  const logged = localStorage.getItem('demo_b2_logged')==='1';
+  showHeader(logged);
+  nav(logged?'dashboard':'login');
+  updateTime();
+}
 </script>
-</body>
-</html>
