@@ -130,7 +130,7 @@ html,body{height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
       </div>
 
       <div class="tiles">
-        <div class="tile" onclick="nav('transfer')"><img src="https://via.placeholder.com/50.png?text=S"><br>Send Money</div>
+        <div class="tile" onclick="nav('send')"><img src="https://via.placeholder.com/50.png?text=S"><br>Send Money</div>
         <div class="tile" onclick="nav('withdraw')"><img src="https://via.placeholder.com/50.png?text=W"><br>Withdraw</div>
         <div class="tile" onclick="nav('topup')"><img src="https://via.placeholder.com/50.png?text=T"><br>Top Up</div>
       </div>
@@ -146,13 +146,52 @@ html,body{height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
   </div>
 </div>
 
+<!-- SEND MONEY -->
+<div id="screen-send" class="screen">
+  <div class="main">
+    <div class="page-title">Send Money</div>
+    <input id="sendName" class="input" placeholder="Recipient Name"/>
+    <input id="sendAmount" class="input" placeholder="Amount"/>
+    <button class="btn" onclick="doSend()">Continue</button>
+  </div>
+</div>
+
+<!-- WITHDRAW -->
+<div id="screen-withdraw" class="screen">
+  <div class="main">
+    <div class="page-title">Withdraw</div>
+    <input id="withAmount" class="input" placeholder="Amount"/>
+    <button class="btn" onclick="doWithdraw()">Continue</button>
+  </div>
+</div>
+
+<!-- TOPUP -->
+<div id="screen-topup" class="screen">
+  <div class="main">
+    <div class="page-title">Top Up</div>
+    <input id="topupAmount" class="input" placeholder="Amount"/>
+    <button class="btn" onclick="doTopup()">Continue</button>
+  </div>
+</div>
+
+<!-- CONFIRMATION -->
+<div id="screen-confirm" class="screen">
+  <div class="main">
+    <div class="confirm-card">
+      <div class="loader"></div>
+      <div id="confirmMsg" style="font-weight:800;margin-top:12px;"></div>
+      <button class="btn" onclick="nav('dashboard')">Back to Dashboard</button>
+    </div>
+  </div>
+</div>
+
 <!-- Bottom navigation -->
 <div id="bottomNav" class="bottom-nav" style="display:none">
   <div class="bottom-bar">
     <div class="nav-item" onclick="nav('dashboard')">Home</div>
-    <div class="nav-item" onclick="nav('transfer')">Transfer</div>
+    <div class="nav-item" onclick="nav('send')">Send</div>
     <div style="display:flex;align-items:center;justify-content:center;width:80px">
-      <div class="center-fab" onclick="nav('transfer')">⇄</div>
+      <div class="center-fab" onclick="nav('send')">⇄</div>
     </div>
     <div class="nav-item" onclick="nav('withdraw')">Withdraw</div>
     <div class="nav-item" onclick="nav('profile')">Profile</div>
@@ -164,11 +203,17 @@ html,body{height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
 const sideMenu = document.getElementById('sideMenu');
 const hambBtn = document.getElementById('hambBtn');
 hambBtn.addEventListener('click', e=>{e.stopPropagation(); sideMenu.classList.toggle('open'); sideMenu.setAttribute('aria-hidden',!sideMenu.classList.contains('open'))})
-document.addEventListener('click', e=>{if(!sideMenu.contains(e.target)&&!hambBtn.contains(e.target)) sideMenu.classList.remove('open');});
+document.addEventListener('click', e=>{if(!sideMenu.contains(e.target)&&!hambBtn.contains(e.target)) sideMenu.classList.remove('open');})
 
 // State
 let balance = Number(localStorage.getItem('bank_balance')||1000);
 let transactions = JSON.parse(localStorage.getItem('bank_tx')||'[]');
+
+// Update localStorage
+function saveState(){
+  localStorage.setItem('bank_balance',balance);
+  localStorage.setItem('bank_tx',JSON.stringify(transactions));
+}
 
 // Live time & greeting
 function updateTime(){
@@ -188,7 +233,7 @@ setInterval(updateTime,1000);
 function hideAll(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'))}
 function nav(page){
   hideAll();
-  const map = {dashboard:'screen-dashboard',login:'screen-login',transfer:'screen-dashboard',withdraw:'screen-dashboard',topup:'screen-dashboard',profile:'screen-dashboard'}
+  const map = {dashboard:'screen-dashboard',login:'screen-login',send:'screen-send',withdraw:'screen-withdraw',topup:'screen-topup',profile:'screen-dashboard'}
   const target = document.getElementById(map[page]||'screen-dashboard');
   target.classList.add('active');
   document.getElementById('hdrBal').innerText = balance;
@@ -211,13 +256,57 @@ function doLogin(){
 function updateTxPreview(){
   const c = document.getElementById('txPreview'); c.innerHTML='';
   transactions.slice(-5).reverse().forEach(t=>{
-    const d = document.createElement('div'); d.className='tx'; d.innerText=t.details; d.addEventListener('click',()=>{alert(`Transaction:\n${t.details}\nAmount: $${t.amount}\nStatus: ${t.status}\nDate: ${t.date}`)})
+    const d = document.createElement('div'); d.className='tx'; d.innerText=t.details;
+    d.addEventListener('click',()=>{alert(`Transaction:\n${t.details}\nAmount: $${t.amount}\nStatus: ${t.status}\nDate: ${t.date}`)})
     c.appendChild(d);
   });
 }
 
 // Logout
 function doLogout(){localStorage.removeItem('bank_logged');nav('login');showHeader(false)}
+
+// Send Money
+function doSend(){
+  const name = document.getElementById('sendName').value;
+  const amt = Number(document.getElementById('sendAmount').value);
+  if(!name||amt<=0||amt>balance){alert('Invalid input or insufficient funds');return;}
+  nav('screen-confirm');
+  setTimeout(()=>{
+    balance -= amt;
+    const now = new Date().toLocaleString();
+    transactions.push({details:`Sent $${amt} to ${name}`,amount:amt,status:'Completed',date:now});
+    saveState();
+    document.getElementById('confirmMsg').innerText = `✔ Sent $${amt} to ${name} on ${now}`;
+  },1500)
+}
+
+// Withdraw
+function doWithdraw(){
+  const amt = Number(document.getElementById('withAmount').value);
+  if(amt<=0||amt>balance){alert('Invalid amount or insufficient funds');return;}
+  nav('screen-confirm');
+  setTimeout(()=>{
+    balance -= amt;
+    const now = new Date().toLocaleString();
+    transactions.push({details:`Withdrew $${amt}`,amount:amt,status:'Completed',date:now});
+    saveState();
+    document.getElementById('confirmMsg').innerText = `✔ Withdrew $${amt} on ${now}`;
+  },1500)
+}
+
+// Topup
+function doTopup(){
+  const amt = Number(document.getElementById('topupAmount').value);
+  if(amt<=0){alert('Invalid amount');return;}
+  nav('screen-confirm');
+  setTimeout(()=>{
+    balance += amt;
+    const now = new Date().toLocaleString();
+    transactions.push({details:`Topped up $${amt}`,amount:amt,status:'Completed',date:now});
+    saveState();
+    document.getElementById('confirmMsg').innerText = `✔ Topped up $${amt} on ${now}`;
+  },1500)
+}
 
 // Init
 window.onload = ()=>{
