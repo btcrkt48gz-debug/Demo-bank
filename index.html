@@ -139,11 +139,24 @@
         <div class="bal">$<span id="balance">0</span></div>
       </div>
 
-      <div class="tiles">
-        <div class="tile" onclick="nav('transfer')"><img src="https://via.placeholder.com/40?text=S"><br>Send Money</div>
-        <div class="tile" onclick="nav('withdraw')"><img src="https://via.placeholder.com/40?text=W"><br>Withdraw</div>
-        <div class="tile" onclick="nav('topup')"><img src="https://via.placeholder.com/40?text=T"><br>Top Up</div>
-      </div>
+    <div class="tiles">
+
+  <div class="tile big" onclick="nav('transfer')">
+    <div class="tile-icon">🪁</div>
+    <div>Send Money</div>
+  </div>
+
+  <div class="tile big" onclick="nav('withdraw')">
+    <div class="tile-icon">🏧</div>
+    <div>Withdraw</div>
+  </div>
+
+  <div class="tile full" onclick="nav('topup')">
+    <div class="tile-icon">➕</div>
+    <div>Top Up</div>
+  </div>
+
+</div>
 
       <div class="box">
         <div style="display:flex;justify-content:space-between;align-items:center">
