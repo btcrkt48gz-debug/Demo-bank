@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Premium Demo Bank — B2</title>
+<style>
+/* ---------- Reset ---------- */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,#eef6ff,#fbfcff);
+  color:#07203a;
+  display:flex;
+  justify-content:center;
+  padding:22px 12px;
+}
+
+/* ---------- App wrapper ---------- */
+.app {
+  width:100%;
+  max-width:920px;
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 20px 50px rgba(8,23,48,0.08);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ---------- Top header (hidden until login) ---------- */
+.header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 16px;
+  background:linear-gradient(90deg,#0b63d8,#1a8cff);
+  color:#fff;
+}
+.h-left{display:flex;align-items:center;gap:12px}
+.hamburger{width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.brand{font-weight:700;font-size:18px}
+.h-right{display:flex;gap:10px;align-items:center}
+.icon-btn{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer}
+
+/* ---------- Side menu ---------- */
+.menu{
+  position:fixed; top:0; left:0; height:100%; width:260px;
+  background:#fff; box-shadow:10px 0 30px rgba(8,23,48,0.06);
+  transform:translateX(-340px); transition:transform .26s cubic-bezier(.2,.9,.2,1);
+  z-index:120; padding:20px;
+}
+.menu.open{ transform:translateX(0); }
+.menu h3{ font-size:16px; margin-bottom:12px; color:#07203a; }
+.menu .m-item{ padding:12px 8px; border-radius:10px; cursor:pointer; font-weight:700; color:#07203a; margin-bottom:8px }
+.menu .m-item:hover{ background:#f2f7ff }
+
+/* ---------- screens ---------- */
+.screen{ padding:18px 20px; display:none }
+.screen.active{ display:block }
+
+/* ---------- Login ---------- */
+.login-wrap{ max-width:520px; margin:36px auto }
+.login-card{ background:linear-gradient(180deg,#fff,#fbfdff); border-radius:12px; padding:22px; box-shadow:0 12px 30px rgba(10,20,60,0.06) }
+.login-title{ font-size:20px; font-weight:800; text-align:center; color:#07203a; margin-bottom:6px }
+.login-sub{ text-align:center; color:#6b7280; margin-bottom:14px }
+
+/* ---------- layout (dashboard) ---------- */
+.content{ display:flex; gap:18px; align-items:flex-start; flex-wrap:wrap; padding-bottom:84px } /* bottom padding room for nav */
+
+/* main/side */
+.main{ flex:1 1 520px; min-width:260px }
+.side{ width:300px; min-width:220px }
+
+/* ---------- balance card ---------- */
+.balance-card{
+  background:linear-gradient(90deg,#0077ff,#0b63d8);
+  color:white; padding:22px; border-radius:14px; margin-bottom:14px; box-shadow:0 10px 30px rgba(10,50,150,0.12)
+}
+.balance-card .greet{ font-size:13px; opacity:.95 }
+.balance-card .bal{ font-size:28px; font-weight:800; margin-top:8px }
+
+/* account row */
+.account-row{ margin-top:14px; background:rgba(255,255,255,0.09); padding:12px; border-radius:10px; display:flex;justify-content:space-between; align-items:center; gap:10px }
+.account-id{ color:rgba(255,255,255,0.95); font-weight:700 }
+
+/* ---------- tiles ---------- */
+.tiles{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:14px }
+.tile{ background:#fff; border-radius:12px; padding:14px; box-shadow:0 10px 30px rgba(10,20,60,0.04); min-width:140px; flex:1 1 140px; text-align:center; cursor:pointer; font-weight:700 }
+
+/* ---------- box ---------- */
+.box{ background:#fff; border-radius:12px; padding:14px; box-shadow:0 10px 30px rgba(10,20,60,0.04); margin-bottom:14px }
+
+/* ---------- inputs & buttons ---------- */
+.input{ width:100%; padding:12px 14px; margin:8px 0; border-radius:10px; border:1px solid #e6eefc; font-size:15px }
+.btn{ width:100%; padding:12px 14px; border-radius:10px; border:none; background:#0b63d8; color:#fff; font-weight:800; cursor:pointer; font-size:15px }
+.btn.secondary{ background:#fff; color:#07203a; border:1px solid #e6eefc; font-weight:800 }
+
+/* ---------- transactions ---------- */
+.tx-list{ display:flex; flex-direction:column; gap:8px; margin-top:10px }
+.tx{ background:linear-gradient(180deg,#fbfeff,#f5f9ff); padding:12px; border-radius:10px; border-left:6px solid #1a73e8; display:flex; justify-content:space-between; align-items:center; font-weight:700 }
+
+/* ---------- pages: review/loading/confirm ---------- */
+.page-title{ font-size:18px; font-weight:800; margin-bottom:10px }
+.confirm-card{ background:#fff; padding:18px; border-radius:12px; box-shadow:0 10px 30px rgba(10,20,60,0.04); text-align:center }
+.loader{ width:64px; height:64px; border-radius:50%; margin:18px auto; position:relative }
+.loader:before,.loader:after{ content:""; position:absolute; inset:0; border-radius:50% }
+.loader:before{ border:6px solid rgba(11,99,216,0.08) }
+.loader:after{ border-top-color:#0b63d8; transform:rotate(120deg); animation:spin 1s linear infinite; border-right-color:transparent; border-bottom-color:transparent; border-left-color:transparent }
+@keyframes spin{ to{ transform:rotate(360deg) } }
+
+/* ---------- bottom navigation (visible after login) ---------- */
+.bottom-nav{
+  position:fixed; left:0; right:0; bottom:0; display:flex; gap:6px; justify-content:center; padding:10px 12px;
+}
+.bottom-bar{
+  max-width:920px; width:100%; display:flex; justify-content:space-between; background:linear-gradient(90deg,#fff,#fff); padding:10px 14px; border-radius:14px; box-shadow:0 8px 30px rgba(8,23,48,0.08); margin:0 12px;
+}
+.nav-item{ flex:1 1 0; text-align:center; padding:6px 8px; cursor:pointer; color:#6b7280; font-weight:700 }
+.nav-item.active{ color:#0b63d8 }
+.center-fab{ width:56px; height:56px; border-radius:50%; background:#0b63d8; color:#fff; display:flex; align-items:center; justify-content:center; margin-top:-24px; box-shadow:0 8px 26px rgba(11,99,216,0.2); cursor:pointer; font-weight:800 }
+
+/* ---------- small ---------- */
+.small{ color:#6b7280; font-size:13px }
+
+/* ---------- responsive ---------- */
+@media (max-width:720px){
+  .side{ width:100% }
+  .content{ padding-bottom:120px }
+  .balance-card .bal{ font-size:24px }
+  .menu{ width:86%; max-width:320px }
+}
+</style>
+</head>
+<body>
+
+<!-- side menu -->
+<div id="sideMenu" class="menu" aria-hidden="true">
+  <h3>Premium Bank</h3>
+  <div class="m-item" onclick="nav('dashboard')">Home / Dashboard</div>
+  <div class="m-item" onclick="nav('transactions')">Transactions</div>
+  <div class="m-item" onclick="nav('profile')">Profile & Settings</div>
+  <div class="m-item" onclick="nav('help')">Help</div>
+  <div style="height:10px"></div>
+  <div class="m-item" onclick="doLogout()">Logout</div>
+</div>
+
+<div class="app" id="appRoot">
+
+  <!-- header (hidden until logged) -->
+  <div id="topHeader" class="header" style="display:none">
+    <div class="h-left">
+      <div id="hambBtn" class="hamburger" title="Menu" onclick="toggleMenu()">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="18" height="2" rx="1" fill="white"></rect>
+          <rect x="0" y="5" width="18" height="2" rx="1" fill="white"></rect>
+          <rect x="0" y="10" width="18" height="2" rx="1" fill="white"></rect>
+        </svg>
+      </div>
+      <div class="brand">Premium Bank</div>
+    </div>
+    <div class="h-right">
+      <div id="hdrBalance" style="font-weight:800">Balance: $<span id="hdrBal">1000</span></div>
+      <div class="icon-btn" title="Notifications">🔔</div>
+      <div id="profileBtn" class="icon-btn" title="Profile" onclick="nav('profile')">🙂</div>
+    </div>
+  </div>
+
+  <!-- ========== LOGIN PAGE ========== -->
+  <div id="screen-login" class="screen active">
+    <div class="login-wrap">
+      <div class="login-card">
+        <div class="login-title">Welcome to Premium Bank</div>
+        <div class="login-sub">Use any username & password for demo</div>
+        <input id="loginUser" class="input" placeholder="Username (any)"/>
+        <input id="loginPass" class="input" type="password" placeholder="Password (any)"/>
+        <div style="display:flex; gap:10px; margin-top:8px">
+          <button class="btn" onclick="doLogin()">Sign In</button>
+          <button class="btn secondary" onclick="quickDemo()">Quick demo</button>
+        </div>
+        <div style="margin-top:10px" class="small">Tip: Quick demo logs you in and preloads sample data.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== DASHBOARD ========== -->
+  <div id="screen-dashboard" class="screen">
+    <div class="content">
+      <main class="main">
+        <div class="balance-card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div class="greet">Good evening,</div>
+              <div style="font-weight:800">Demo User</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:12px;opacity:.9" class="small">Today</div>
+              <div style="font-weight:700">Sun, Aug 10</div>
+            </div>
+          </div>
+          <div class="bal">$<span id="balance">1000</span></div>
+          <div class="account-row">
+            <div>
+              <div style="font-size:12px;opacity:.9">Your account</div>
+              <div class="account-id">0062••••</div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="btn secondary" onclick="nav('transactions')">Transactions</button>
+              <button class="btn" style="margin-left:6px" onclick="nav('topup')">Top up</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="tiles">
+          <div class="tile" onclick="nav('cards')">Cards</div>
+          <div class="tile" onclick="nav('transfer')">Send Money</div>
+          <div class="tile" onclick="nav('withdraw')">Withdraw</div>
+        </div>
+
+        <div class="box">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="font-weight:800">Recent Transactions</div>
+            <div class="small">Last 5</div>
+          </div>
+          <div id="txPreview" class="tx-list" style="margin-top:10px"></div>
+        </div>
+      </main>
+
+      <aside class="side">
+        <div class="box">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div style="font-weight:800">Account Summary</div>
+            <div class="small">ID: 000123</div>
+          </div>
+          <div style="display:flex;gap:8px;margin-bottom:8px">
+            <div style="flex:1;background:#f7fbff;padding:10px;border-radius:8px;text-align:center">
+              <div class="small">Accounts</div><div style="font-weight:800">1</div>
+            </div>
+            <div style="flex:1;background:#fff9ef;padding:10px;border-radius:8px;text-align:center">
+              <div class="small">Tier</div><div style="font-weight:800;color:#a97300">Premium</div>
+            </div>
+          </div>
+
+          <div style="margin-top:8px">
+            <div style="font-weight:800;margin-bottom:6px">Quick Actions</div>
+            <button class="btn secondary" onclick="prefillTransfer(10,'Mary')">Send $10</button>
+            <button class="btn secondary" style="margin-top:8px" onclick="prefillWithdraw(20)">Withdraw $20</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ========== TRANSFER REVIEW ========= -->
+  <div id="screen-transfer" class="screen">
+    <div class="page-title">Transfer — Review</div>
+    <div class="box">
+      <div style="margin-bottom:10px">Sending <strong>$<span id="tAmt">0</span></strong> to <strong id="tTo">—</strong></div>
+      <div class="small">Destination: demo recipient</div>
+      <div style="margin-top:14px">
+        <button class="btn" onclick="doTransfer()">Confirm Transfer</button>
+        <div class="back" style="margin-top:10px;cursor:pointer;color:#0b63d8;font-weight:700" onclick="nav('dashboard')">← Back to dashboard</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== WITHDRAW REVIEW ========= -->
+  <div id="screen-withdraw" class="screen">
+    <div class="page-title">Withdraw — Review</div>
+    <div class="box">
+      <div style="margin-bottom:10px">Withdrawing <strong>$<span id="wAmt">0</span></strong> to <strong>Debit Card</strong></div>
+      <div class="small">Destination: Debit Card</div>
+      <div style="margin-top:14px">
+        <button class="btn" onclick="doWithdraw()">Confirm Withdraw</button>
+        <div class="back" style="margin-top:10px;cursor:pointer;color:#0b63d8;font-weight:700" onclick="nav('dashboard')">← Back to dashboard</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== LOADING ========= -->
+  <div id="screen-loading" class="screen">
+    <div style="text-align:center;padding:30px">
+      <div class="loader" aria-hidden="true"></div>
+      <div style="font-weight:800;margin-top:12px">Processing transaction…</div>
+      <div class="small" style="margin-top:8px">This simulates a real bank delay.</div>
+    </div>
+  </div>
+
+  <!-- ========== CONFIRM ========= -->
+  <div id="screen-confirm" class="screen">
+    <div class="confirm-card">
+      <div style="font-weight:800;font-size:18px" id="confirmTitle">Success</div>
+      <div class="small" id="confirmText" style="margin-top:8px">Details shown here</div>
+      <div style="margin-top:18px">
+        <button class="btn secondary" onclick="nav('dashboard')">Back to Dashboard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== TRANSACTIONS ========= -->
+  <div id="screen-transactions" class="screen">
+    <div class="page-title">Transactions</div>
+    <div class="box">
+      <div id="txList" class="tx-list"></div>
+      <div style="margin-top:12px"><div class="back" onclick="nav('dashboard')">← Back to dashboard</div></div>
+    </div>
+  </div>
+
+  <!-- ========== PROFILE ========= -->
+  <div id="screen-profile" class="screen">
+    <div class="page-title">Profile & Settings</div>
+    <div class="box">
+      <div style="margin-bottom:8px"><strong>Demo User</strong></div>
+      <div class="small">Email: demo@example.com</div>
+      <div style="margin-top:12px;display:flex;gap:10px">
+        <button class="btn secondary" onclick="nav('dashboard')">Edit Profile</button>
+        <button class="btn gold" onclick="doLogout()">Logout</button>
+      </div>
+      <div style="margin-top:12px" class="small">Back to <span class="back" onclick="nav('dashboard')">dashboard</span></div>
+    </div>
+  </div>
+
+  <!-- ========== Misc pages (cards/topup) - simple placeholders ========= -->
+  <div id="screen-cards" class="screen">
+    <div class="page-title">Cards</div>
+    <div class="box small">Card management is stubbed in this demo. Back to <span class="back" onclick="nav('dashboard')">dashboard</span>.</div>
+  </div>
+  <div id="screen-topup" class="screen">
+    <div class="page-title">Top up</div>
+    <div class="box small">Top up is demo only. Back to <span class="back" onclick="nav('dashboard')">dashboard</span>.</div>
+  </div>
+  <div id="screen-help" class="screen">
+    <div class="page-title">Help</div>
+    <div class="box small">This is a demo. No real transactions occur.</div>
+    <div style="margin-top:12px" class="back" onclick="nav('dashboard')">← Back to dashboard</div>
+  </div>
+
+</div>
+
+<!-- bottom navigation (visible after login) -->
+<div id="bottomNav" class="bottom-nav" style="display:none">
+  <div class="bottom-bar">
+    <div class="nav-item" id="navHome" onclick="nav('dashboard')">Home</div>
+    <div class="nav-item" id="navTransfer" onclick="prefillTransferQuick()">Transfer</div>
+    <div style="display:flex;align-items:center;justify-content:center;width:80px"><div class="center-fab" onclick="nav('transfer')">⇄</div></div>
+    <div class="nav-item" id="navWithdraw" onclick="prefillWithdrawQuick()">Withdraw</div>
+    <div class="nav-item" id="navProfile" onclick="nav('profile')">Profile</div>
+  </div>
+</div>
+
+<script>
+/* ---------- localStorage keys ---------- */
+const KEY_BAL='demo_b2_balance';
+const KEY_TX='demo_b2_tx';
+const KEY_LOG='demo_b2_logged';
+
+/* ---------- state ---------- */
+let balance=1000;
+let transactions=[];
+
+/* ---------- helpers ---------- */
+const el=(id)=>document.getElementById(id);
+function showHeader(show){
+  el('topHeader').style.display = show ? 'flex' : 'none';
+  el('bottomNav').style.display = show ? 'block' : 'none';
+}
+function toggleSideMenu(open){
+  const menu = el('sideMenu');
+  if(open === undefined) menu.classList.toggle('open');
+  else if(open) menu.classList.add('open'); else menu.classList.remove('open');
+  menu.setAttribute('aria-hidden', !menu.classList.contains('open'));
+}
+
+/* ---------- navigation ---------- */
+function hideAll(){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); }
+function nav(page){
+  toggleSideMenu(false);
+  // page may be 'dashboard' etc
+  const map = {
+    dashboard:'screen-dashboard',
+    login:'screen-login',
+    transfer:'screen-transfer',
+    withdraw:'screen-withdraw',
+    loading:'screen-loading',
+    confirm:'screen-confirm',
+    transactions:'screen-transactions',
+    profile:'screen-profile',
+    cards:'screen-cards',
+    topup:'screen-topup',
+    help:'screen-help'
+  };
+  const id = map[page] || page;
+  hideAll();
+  const target = el(id);
+  if(target) target.classList.add('active');
+  // update header balance display
+  el('hdrBal') && (el('hdrBal').innerText = String(balance));
+  el('balance') && (el('balance').innerText = String(balance));
+  updateTxPreview();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---------- login / demo ---------- */
+function doLogin(){
+  const u = el('loginUser').value.trim();
+  const p = el('loginPass').value.trim();
+  if(!u||!p) return alert('Enter username & password (any values work)');
+  localStorage.setItem(KEY_LOG,'1');
+  showHeader(true);
+  nav('dashboard');
+}
+function quickDemo(){
+  localStorage.setItem(KEY_LOG,'1');
+  if(!localStorage.getItem(KEY_TX)){
+    transactions = ["Withdrew $20 to debit card","Transferred $15 to Mary","Withdrew $200"];
+    localStorage.setItem(KEY_TX, JSON.stringify(transactions));
+  }
+  if(!localStorage.getItem(KEY_BAL)) localStorage.setItem(KEY_BAL,String(balance));
+  showHeader(true);
+  nav('dashboard');
+}
+
+/* ---------- load/save ---------- */
+function loadState(){
+  const b = localStorage.getItem(KEY_BAL);
+  balance = b !== null ? Number(b) : 1000;
+  const t = localStorage.getItem(KEY_TX);
+  transactions = t ? JSON.parse(t) : [];
+  const logged = localStorage.getItem(KEY_LOG) === '1';
+  showHeader(logged);
+  nav(logged ? 'dashboard' : 'login');
+  updateAll();
+}
+function saveState(){ localStorage.setItem(KEY_BAL, String(balance)); localStorage.setItem(KEY_TX, JSON.stringify(transactions)); }
+
+/* ---------- UI updates ---------- */
+function updateAll(){
+  el('balance') && (el('balance').innerText = String(balance));
+  el('hdrBal') && (el('hdrBal').innerText = String(balance));
+  updateTxPreview(); updateTxList();
+}
+function updateTxPreview(){
+  const c = el('txPreview'); if(!c) return; c.innerHTML=''; const items = transactions.slice(-5).reverse();
+  items.forEach(it=>{
+    const d = document.createElement('div'); d.className='tx'; const left=document.createElement('div'); left.innerText=it; const right=document.createElement('div'); right.style.opacity='0.7';
+    const m = it.match(/\$([0-9]+(?:\.[0-9]+)?)/); right.innerText = m ? ('$'+m[1]) : ''; d.appendChild(left); d.appendChild(right); c.appendChild(d);
+  });
+}
+function updateTxList(){
+  const list = el('txList'); if(!list) return; list.innerHTML=''; (transactions.slice().reverse()).forEach(it=>{
+    const d = document.createElement('div'); d.className='tx'; const left=document.createElement('div'); left.innerText=it; const right=document.createElement('div'); right.style.opacity='0.7';
+    const m = it.match(/\$([0-9]+(?:\.[0-9]+)?)/); right.innerText = m ? ('$'+m[1]) : ''; d.appendChild(left); d.appendChild(right); list.appendChild(d);
+  });
+}
+
+/* ---------- quick prefill from bottom nav and sidebar ---------- */
+function prefillTransferQuick(){ el('transferAmount').value = ''; el('transferTo').value=''; // open transfer screen but not fill
+  nav('transfer'); }
+function prefillWithdrawQuick(){ el('withdrawAmount').value = ''; nav('withdraw'); }
+function prefillTransfer(x,to){ el('transferAmount').value = String(x); el('transferTo').value = to; nav('transfer'); }
+function prefillWithdraw(x){ el('withdrawAmount').value = String(x); nav('withdraw'); }
+
+/* ---------- go-to review from dashboard quick actions ---------- */
+document.addEventListener('click', function(ev){
+  // attach quick tile actions without separate handlers
+  const t = ev.target;
+  if(t.closest && t.closest('.tile')){
+    const txt = t.closest('.tile').innerText.trim().toLowerCase();
+    if(txt.includes('send')) nav('transfer');
+    if(txt.includes('withdraw')) nav('withdraw');
+    if(txt.includes('cards')) nav('cards');
+  }
+});
+
+/* ---------- performing actions: review -> loading -> confirm ---------- */
+function doTransfer(){
+  const amt = Number(el('tAmt').innerText || el('transferAmount').value);
+  const to = el('tTo').innerText && el('tTo').innerText !== '—' ? el('tTo').innerText : el('transferTo').value.trim();
+  if(!amt || amt<=0) return alert('Enter a valid transfer amount');
+  if(!to) return alert('Enter recipient');
+  // show loading
+  nav('loading');
+  setTimeout(()=> {
+    balance = Math.round((balance - amt)*100)/100;
+    transactions.push(`Transferred $${amt} to ${to}`);
+    saveState();
+    el('confirmTitle').innerText='Transfer sent';
+    el('confirmText').innerText = `You sent $${amt} to ${to}.`;
+    updateAll();
+    nav('confirm');
+  }, 800 + Math.random()*800);
+}
+
+function doWithdraw(){
+  const amt = Number(el('wAmt').innerText || el('withdrawAmount').value);
+  if(!amt || amt<=0) return alert('Enter a valid withdraw amount');
+  if(amt > balance) return alert('Not enough balance');
+  nav('loading');
+  setTimeout(()=> {
+    balance = Math.round((balance - amt)*100)/100;
+    transactions.push(`Withdrew $${amt} to Debit Card`);
+    saveState();
+    el('confirmTitle').innerText='Withdraw complete';
+    el('confirmText').innerText = `You withdrew $${amt} to your debit card.`;
+    updateAll();
+    nav('confirm');
+  }, 800 + Math.random()*800);
+}
+
+/* ---------- navigation shortcuts from dashboard to review (use values typed on dashboard) ---------- */
+function goToTransferReview(){
+  const v = Number(el('transferAmount').value); const to = el('transferTo').value.trim();
+  if(!v || v<=0) return alert('Enter valid transfer amount'); if(!to) return alert('Enter recipient'); el('tAmt').innerText=String(v); el('tTo').innerText=to; nav('transfer');
+}
+function goToWithdrawReview(){
+  const v = Number(el('withdrawAmount').value); if(!v||v<=0) return alert('Enter valid withdraw amount'); el('wAmt').innerText=String(v); nav('withdraw');
+}
+
+/* ---------- logout ---------- */
+function doLogout(){ localStorage.removeItem(KEY_LOG); nav('login'); showHeader(false); toggleSideMenu(false); }
+
+/* ---------- wire some dashboard buttons to go-to-review ---------- */
+(function wireDashboardButtons(){
+  // quick: dashboard 'Withdraw' and 'Transfer' buttons use these functions
+  // We use event delegation via 'click' listener above for tiles; but also wire specific buttons
+  document.addEventListener('click', function(e){
+    if(e.target && e.target.matches && e.target.matches('button')) {
+      // find dataset or id-based actions
+    }
+  });
+})();
+
+/* ---------- close menu when click outside ---------- */
+document.addEventListener('click', function(ev){
+  const menu = el('sideMenu');
+  if(menu.classList.contains('open') && !menu.contains(ev.target) && !ev.target.closest('.hamburger')){
+    menu.classList.remove('open'); menu.setAttribute('aria-hidden','true');
+  }
+});
+
+/* ---------- init: load state ---------- */
+function init(){
+  const b = localStorage.getItem(KEY_BAL);
+  balance = b !== null ? Number(b) : 1000;
+  const t = localStorage.getItem(KEY_TX);
+  transactions = t ? JSON.parse(t) : [];
+  const logged = localStorage.getItem(KEY_LOG) === '1';
+  showHeader(logged);
+  nav(logged ? 'dashboard' : 'login');
+  updateAll();
+}
+init();
+</script>
+</body>
+</html>
