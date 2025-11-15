@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Premium Bank Demo</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#e0eafc,#cfdef3);color:#07203a;}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;}
+html,body{height:100%;background:linear-gradient(180deg,#e0eafc,#cfdef3);color:#07203a;overflow-x:hidden;}
 body{display:flex;justify-content:center;padding:20px;}
 .app{width:100%;max-width:900px;background:#fff;border-radius:16px;box-shadow:0 15px 40px rgba(0,0,0,0.1);overflow:hidden;display:flex;flex-direction:column;}
 .header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(90deg,#1a73e8,#4285f4);color:#fff;position:sticky;top:0;z-index:10;}
@@ -16,12 +16,12 @@ body{display:flex;justify-content:center;padding:20px;}
 .brand{font-weight:700;font-size:18px;}
 .h-right{display:flex;gap:10px;align-items:center;}
 .icon-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;}
-.menu{position:fixed;top:0;left:0;height:100%;width:260px;background:#fff;box-shadow:5px 0 20px rgba(0,0,0,0.1);transform:translateX(-300px);transition:transform 0.3s ease;z-index:20;padding:20px;}
+.menu{position:fixed;top:0;left:0;height:100%;width:260px;background:#fff;box-shadow:5px 0 20px rgba(0,0,0,0.1);transform:translateX(-300px);transition:transform 0.3s ease;z-index:20;padding:20px;overflow-y:auto;}
 .menu.open{transform:translateX(0);}
 .menu h3{font-size:18px;margin-bottom:16px;color:#07203a;}
 .menu .m-item{padding:12px 8px;border-radius:10px;cursor:pointer;font-weight:700;color:#07203a;margin-bottom:10px;}
 .menu .m-item:hover{background:#f0f4ff;}
-.screen{display:none;padding:20px;overflow-y:auto;}
+.screen{display:none;padding:20px;overflow-y:auto;max-height:80vh;}
 .screen.active{display:block;}
 .login-card{max-width:450px;margin:40px auto;padding:30px;background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.08);text-align:center;}
 .login-card img{width:80px;margin-bottom:16px;}
@@ -78,7 +78,9 @@ body{display:flex;justify-content:center;padding:20px;}
   </div>
 </div>
 
-<!-- Login Screen -->
+<!-- Screens -->
+
+<!-- Login -->
 <div id="screen-login" class="screen active">
   <div class="login-card">
     <img src="https://via.placeholder.com/80" alt="Logo">
@@ -121,7 +123,52 @@ body{display:flex;justify-content:center;padding:20px;}
   </div>
 </div>
 
-<!-- Bottom navigation -->
+<!-- Transfer Page -->
+<div id="screen-transfer" class="screen">
+  <div class="page-title">Send Money</div>
+  <input id="transferName" class="input" placeholder="Recipient Name">
+  <input id="transferAmount" class="input" type="number" placeholder="Amount">
+  <button class="btn" onclick="doTransfer()">Continue</button>
+</div>
+
+<!-- Withdraw Page -->
+<div id="screen-withdraw" class="screen">
+  <div class="page-title">Withdraw Money</div>
+  <input id="withdrawAmount" class="input" type="number" placeholder="Amount">
+  <button class="btn" onclick="doWithdraw()">Continue</button>
+</div>
+
+<!-- Top Up Page -->
+<div id="screen-topup" class="screen">
+  <div class="page-title">Top Up</div>
+  <input id="topupAmount" class="input" type="number" placeholder="Amount">
+  <button class="btn" onclick="doTopUp()">Continue</button>
+</div>
+
+<!-- Loading Screen -->
+<div id="screen-loading" class="screen">
+  <div class="loader"></div>
+  <div style="text-align:center;margin-top:10px;">Processing...</div>
+</div>
+
+<!-- Confirmation Screen -->
+<div id="screen-confirm" class="screen">
+  <div class="confirm-card">
+    <div style="font-size:48px;color:green;">✔</div>
+    <div id="confirmMessage" style="margin-top:10px;font-weight:700;"></div>
+    <div id="confirmTime" style="margin-top:6px;color:#555;font-size:14px;"></div>
+    <button class="btn" onclick="nav('dashboard')">Back to Dashboard</button>
+  </div>
+</div>
+
+<!-- Transaction Details -->
+<div id="screen-transaction" class="screen">
+  <div class="page-title">Transaction Details</div>
+  <div id="txDetails" class="box"></div>
+  <button class="btn secondary" onclick="nav('dashboard')">Back</button>
+</div>
+
+<!-- Bottom nav -->
 <div class="bottom-nav" id="bottomNav" style="display:none;">
   <div class="nav-item" onclick="nav('dashboard')">Home</div>
   <div class="nav-item" onclick="nav('transfer')">Transfer</div>
@@ -186,13 +233,49 @@ function doLogin(){
 // Update transactions preview
 function updateTxPreview(){
   const c=document.getElementById('txPreview'); c.innerHTML='';
-  transactions.slice(-5).reverse().forEach(t=>{
-    const d=document.createElement('div'); d.className='tx'; d.innerText=t; c.appendChild(d);
+  transactions.slice(-5).reverse().forEach((t,i)=>{
+    const d=document.createElement('div'); d.className='tx'; d.innerText=t.amount+' → '+t.to;
+    d.onclick=()=>showTxDetail(transactions.length-1-i); c.appendChild(d);
   });
 }
 
 // Logout
 function doLogout(){localStorage.removeItem('logged');nav('login');showHeader(false);}
+
+// Transaction details
+function showTxDetail(index){
+  const t = transactions[index];
+  const det = document.getElementById('txDetails');
+  det.innerHTML = `
+    <p><strong>Type:</strong> ${t.type}</p>
+    <p><strong>To/From:</strong> ${t.to}</p>
+    <p><strong>Amount:</strong> $${t.amount}</p>
+    <p><strong>Status:</strong> ${t.status}</p>
+    <p><strong>Date:</strong> ${t.time}</p>
+  `;
+  nav('transaction');
+}
+
+// Perform transactions
+function doTransfer(){performTransaction('Transfer', document.getElementById('transferName').value.trim(), Number(document.getElementById('transferAmount').value));}
+function doWithdraw(){performTransaction('Withdraw','Self',Number(document.getElementById('withdrawAmount').value));}
+function doTopUp(){performTransaction('Top Up','Self',Number(document.getElementById('topupAmount').value));}
+
+function performTransaction(type,to,amount){
+  if(!amount || amount<=0){alert('Enter valid amount'); return;}
+  hideAll(); document.getElementById('screen-loading').classList.add('active');
+  setTimeout(()=>{
+    balance = type==='Withdraw' ? balance-amount : balance+amount;
+    balance = Math.max(balance,0);
+    localStorage.setItem('balance',balance);
+    const now = new Date().toLocaleString();
+    const t = {type,to,amount,status:'Completed',time:now};
+    transactions.push(t); localStorage.setItem('transactions',JSON.stringify(transactions));
+    document.getElementById('confirmMessage').innerText=`${type} $${amount} to ${to} successful!`;
+    document.getElementById('confirmTime').innerText=`${now}`;
+    nav('confirm');
+  },1000);
+}
 
 // Init
 window.onload=()=>{
