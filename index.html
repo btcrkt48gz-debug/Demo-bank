@@ -3,101 +3,69 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Premium Bank — Full Demo</title>
+<title>Premium Bank Demo</title>
 <style>
-/* ---------- Reset ---------- */
-*{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:#eef6ff;color:#07203a;}
-body{display:flex;justify-content:center;padding:20px;}
-
-/* ---------- App wrapper ---------- */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#eef6ff,#fbfcff);color:#07203a;display:flex;justify-content:center;padding:20px;}
 .app{width:100%;max-width:920px;background:#fff;border-radius:16px;box-shadow:0 20px 50px rgba(8,23,48,0.08);overflow:hidden;display:flex;flex-direction:column;}
-
-/* ---------- Header ---------- */
-.header{display:flex;align-items:center;justify-content:space-between;padding:16px;background:linear-gradient(90deg,#0b63d8,#1a8cff);color:#fff;}
-.h-left{display:flex;align-items:center;gap:12px;}
-.h-left img{width:40px;height:40px;object-fit:contain;border-radius:8px;}
-.hamburger{width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;cursor:pointer;}
-.brand{font-weight:700;font-size:18px;}
-.h-right{display:flex;gap:10px;align-items:center;}
-.icon-btn{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;}
-
-/* ---------- Side Menu ---------- */
-.menu{position:fixed;top:0;left:0;height:100%;width:260px;background:#fff;box-shadow:10px 0 30px rgba(8,23,48,0.06);transform:translateX(-340px);transition:transform .3s ease;z-index:120;padding:20px;}
+.header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(90deg,#0b63d8,#1a8cff);color:#fff;}
+.h-left{display:flex;align-items:center;gap:12px}
+.h-left img{width:36px;height:36px;object-fit:contain;border-radius:6px}
+.hamburger{width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.brand{font-weight:700;font-size:18px}
+.h-right{display:flex;gap:10px;align-items:center}
+.icon-btn{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.menu{position:fixed;top:0;left:0;height:100%;width:260px;background:#fff;box-shadow:10px 0 30px rgba(8,23,48,0.06);transform:translateX(-340px);transition:transform .26s cubic-bezier(.2,.9,.2,1);z-index:120;padding:20px;}
 .menu.open{transform:translateX(0);}
-.menu h3{font-size:18px;margin-bottom:16px;color:#07203a;}
-.menu .m-item{padding:12px 10px;border-radius:10px;cursor:pointer;font-weight:700;color:#07203a;margin-bottom:10px;}
+.menu h3{font-size:16px;margin-bottom:12px;color:#07203a;}
+.menu .m-item{padding:12px 8px;border-radius:10px;cursor:pointer;font-weight:700;color:#07203a;margin-bottom:8px;}
 .menu .m-item:hover{background:#f2f7ff;}
-
-/* ---------- Screens ---------- */
-.screen{display:none;padding:18px 20px;}
-.screen.active{display:block;}
-
-/* ---------- Login ---------- */
-.login-wrap{max-width:480px;margin:60px auto;}
-.login-card{background:linear-gradient(180deg,#fff,#fbfdff);border-radius:16px;padding:28px;box-shadow:0 12px 30px rgba(10,20,60,0.06);}
-.login-title{font-size:24px;font-weight:800;text-align:center;color:#07203a;margin-bottom:8px;}
-.login-sub{text-align:center;color:#6b7280;margin-bottom:20px;}
-.input{width:100%;padding:12px 14px;margin:10px 0;border-radius:10px;border:1px solid #e6eefc;font-size:15px;}
-.btn{width:100%;padding:14px 0;border-radius:12px;border:none;background:#0b63d8;color:#fff;font-weight:800;cursor:pointer;font-size:16px;margin-top:10px;}
-.btn.secondary{background:#fff;color:#07203a;border:1px solid #e6eefc;}
-.btn.gold{background:#ffc107;color:#07203a;border:none;font-weight:800;cursor:pointer;}
-
-/* ---------- Dashboard ---------- */
-.content{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;padding-bottom:100px;}
-.main{flex:1 1 520px;min-width:260px;}
-.balance-card{background:linear-gradient(135deg,#0077ff,#1a8cff);color:white;padding:24px;border-radius:16px;margin-bottom:20px;box-shadow:0 10px 30px rgba(10,50,150,0.12);}
-.balance-card .greet{font-size:14px;opacity:.95;}
-.balance-card .bal{font-size:32px;font-weight:800;margin-top:12px;}
-.account-row{margin-top:16px;background:rgba(255,255,255,0.09);padding:12px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
-.account-id{color:rgba(255,255,255,0.95);font-weight:700;}
-
-/* ---------- Tiles ---------- */
-.tiles{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;}
-.tile{background:#fff;border-radius:16px;padding:18px;box-shadow:0 10px 30px rgba(10,20,60,0.04);flex:1 1 140px;text-align:center;cursor:pointer;font-weight:700;transition:all 0.2s;}
-.tile:hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(10,20,60,0.1);}
-.tile img{width:50px;height:50px;margin-bottom:10px;}
-
-/* ---------- Box / Transactions ---------- */
-.box{background:#fff;border-radius:16px;padding:18px;box-shadow:0 10px 30px rgba(10,20,60,0.04);margin-bottom:20px;}
-.tx-list{display:flex;flex-direction:column;gap:10px;margin-top:10px;}
-.tx{background:linear-gradient(180deg,#f9faff,#f0f6ff);padding:14px;border-radius:12px;border-left:6px solid #1a73e8;display:flex;justify-content:space-between;align-items:center;font-weight:700;cursor:pointer;transition:all 0.2s;}
-.tx:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.05);}
-
-/* ---------- Transaction Detail ---------- */
-.tx-detail{background:#fff;border-radius:16px;padding:20px;box-shadow:0 10px 30px rgba(10,20,60,0.04);margin-top:20px;}
-
-/* ---------- Pages: Transfer / Withdraw / Topup ---------- */
-.page-title{font-size:20px;font-weight:800;margin-bottom:12px;text-align:center;}
-.confirm-card{background:#fff;padding:20px;border-radius:16px;box-shadow:0 10px 30px rgba(10,20,60,0.04);text-align:center;}
-
-/* ---------- Loader ---------- */
-.loader{width:64px;height:64px;border-radius:50%;margin:20px auto;position:relative;}
-.loader:before,.loader:after{content:"";position:absolute;inset:0;border-radius:50%;}
-.loader:before{border:6px solid rgba(11,99,216,0.08);}
-.loader:after{border-top-color:#0b63d8;transform:rotate(120deg);animation:spin 1s linear infinite;border-right-color:transparent;border-bottom-color:transparent;border-left-color:transparent;}
-@keyframes spin{to{transform:rotate(360deg);}}
-
-/* ---------- Bottom Navigation ---------- */
-.bottom-nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;padding:12px;}
-.bottom-bar{max-width:920px;width:100%;display:flex;justify-content:space-between;background:#fff;padding:10px 14px;border-radius:16px;box-shadow:0 8px 30px rgba(8,23,48,0.08);margin:0 12px;}
-.nav-item{flex:1 1 0;text-align:center;padding:6px 8px;cursor:pointer;color:#6b7280;font-weight:700;}
-.nav-item.active{color:#0b63d8;}
-.center-fab{width:56px;height:56px;border-radius:50%;background:#0b63d8;color:#fff;display:flex;align-items:center;justify-content:center;margin-top:-24px;box-shadow:0 8px 26px rgba(11,99,216,0.2);cursor:pointer;font-weight:800;}
-.small{color:#6b7280;font-size:13px;}
-
-/* ---------- Responsive ---------- */
-@media(max-width:720px){.side{width:100%;}.content{padding-bottom:120px;}.balance-card .bal{font-size:28px;}.menu{width:86%;max-width:320px;}}
+.screen{padding:18px 20px;display:none}
+.screen.active{display:block}
+.login-wrap{max-width:520px;margin:36px auto}
+.login-card{background:linear-gradient(135deg,#1a73e8,#0b63d8);color:#fff;border-radius:12px;padding:32px;box-shadow:0 12px 30px rgba(10,20,60,0.06)}
+.login-card input{width:100%;padding:12px 14px;margin:8px 0;border:none;border-radius:10px;background:rgba(255,255,255,0.1);color:#fff;font-size:15px}
+.btn{width:100%;padding:12px 14px;border-radius:10px;border:none;background:#ffc107;color:#07203a;font-weight:800;cursor:pointer;font-size:15px;margin-top:10px}
+.btn.secondary{background:#fff;color:#07203a;border:1px solid #e6eefc}
+.content{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;padding-bottom:84px}
+.main{flex:1 1 520px;min-width:260px}
+.side{width:300px;min-width:220px}
+.balance-card{background:linear-gradient(135deg,#0077ff,#1a8cff);color:white;padding:22px;border-radius:16px;margin-bottom:14px;box-shadow:0 10px 30px rgba(10,50,150,0.15)}
+.balance-card .greet{font-size:16px;opacity:.95}
+.balance-card .bal{font-size:36px;font-weight:900;margin-top:10px}
+.account-row{margin-top:14px;background:rgba(255,255,255,0.09);padding:12px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.account-id{color:rgba(255,255,255,0.95);font-weight:700}
+.tiles{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.tile{background:#fff;border-radius:12px;padding:14px;box-shadow:0 10px 30px rgba(10,20,60,0.04);min-width:140px;flex:1 1 140px;text-align:center;cursor:pointer;font-weight:700;transition:all 0.2s}
+.tile img{width:50px;height:50px;margin-bottom:6px}
+.tile:hover{transform:translateY(-4px);box-shadow:0 12px 35px rgba(10,20,60,0.1)}
+.box{background:#fff;border-radius:12px;padding:14px;box-shadow:0 10px 30px rgba(10,20,60,0.04);margin-bottom:14px}
+.input{width:100%;padding:12px 14px;margin:8px 0;border-radius:10px;border:1px solid #e6eefc;font-size:15px}
+.tx-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.tx{background:linear-gradient(180deg,#fbfeff,#f5f9ff);padding:12px;border-radius:10px;border-left:6px solid #1a73e8;display:flex;justify-content:space-between;align-items:center;font-weight:700;cursor:pointer;transition:all 0.2s}
+.tx:hover{background:linear-gradient(180deg,#e6f0ff,#d9e6ff)}
+.page-title{font-size:18px;font-weight:800;margin-bottom:10px}
+.confirm-card{background:#fff;padding:18px;border-radius:12px;box-shadow:0 10px 30px rgba(10,20,60,0.04);text-align:center}
+.loader{width:64px;height:64px;border-radius:50%;margin:18px auto;position:relative}
+.loader:before,.loader:after{content:"";position:absolute;inset:0;border-radius:50%}
+.loader:before{border:6px solid rgba(11,99,216,0.08)}
+.loader:after{border-top-color:#0b63d8;transform:rotate(120deg);animation:spin 1s linear infinite;border-right-color:transparent;border-bottom-color:transparent;border-left-color:transparent}
+@keyframes spin{to{transform:rotate(360deg)}}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;display:flex;gap:6px;justify-content:center;padding:10px 12px;}
+.bottom-bar{max-width:920px;width:100%;display:flex;justify-content:space-between;background:linear-gradient(90deg,#fff,#fff);padding:10px 14px;border-radius:14px;box-shadow:0 8px 30px rgba(8,23,48,0.08);margin:0 12px;}
+.nav-item{flex:1 1 0;text-align:center;padding:6px 8px;cursor:pointer;color:#6b7280;font-weight:700}
+.nav-item.active{color:#0b63d8}
+.center-fab{width:56px;height:56px;border-radius:50%;background:#0b63d8;color:#fff;display:flex;align-items:center;justify-content:center;margin-top:-24px;box-shadow:0 8px 26px rgba(11,99,216,0.2);cursor:pointer;font-weight:800}
+.small{color:#6b7280;font-size:13px}
+@media(max-width:720px){.side{width:100%}.content{padding-bottom:120px}.balance-card .bal{font-size:28px}.menu{width:86%;max-width:320px}}
 </style>
 </head>
 <body>
-
-<!-- Side menu -->
 <div id="sideMenu" class="menu" aria-hidden="true">
   <h3>Premium Bank</h3>
-  <div class="m-item" onclick="nav('dashboard')">Home / Dashboard</div>
+  <div class="m-item" onclick="nav('dashboard')">Dashboard</div>
   <div class="m-item" onclick="nav('transactions')">Transactions</div>
-  <div class="m-item" onclick="nav('profile')">Profile & Settings</div>
+  <div class="m-item" onclick="nav('profile')">Profile</div>
   <div class="m-item" onclick="nav('help')">Help</div>
   <div style="height:10px"></div>
   <div class="m-item" onclick="doLogout()">Logout</div>
@@ -108,10 +76,10 @@ body{display:flex;justify-content:center;padding:20px;}
 <!-- Header -->
 <div id="topHeader" class="header" style="display:none">
   <div class="h-left">
-    <img src="https://via.placeholder.com/40x40.png?text=B" alt="Logo">
+    <img src="https://via.placeholder.com/36.png?text=B" alt="Logo">
     <div class="brand">Premium Bank</div>
     <div id="hambBtn" class="hamburger" title="Menu">
-      <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="0" width="18" height="2" rx="1" fill="white"></rect><rect x="0" y="5" width="18" height="2" rx="1" fill="white"></rect><rect x="0" y="10" width="18" height="2" rx="1" fill="white"></rect></svg>
+      <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><rect x="0" y="0" width="18" height="2" rx="1" fill="white"></rect><rect x="0" y="5" width="18" height="2" rx="1" fill="white"></rect><rect x="0" y="10" width="18" height="2" rx="1" fill="white"></rect></svg>
     </div>
   </div>
   <div class="h-right">
@@ -121,12 +89,15 @@ body{display:flex;justify-content:center;padding:20px;}
   </div>
 </div>
 
-<!-- LOGIN SCREEN -->
+<!-- LOGIN -->
 <div id="screen-login" class="screen active">
   <div class="login-wrap">
     <div class="login-card">
-      <div class="login-title">Welcome to Premium Bank</div>
-      <div class="login-sub">Enter your credentials</div>
+      <div style="text-align:center;margin-bottom:20px;">
+        <img src="https://via.placeholder.com/80.png?text=B" alt="Logo" style="border-radius:12px;margin-bottom:12px;">
+        <div class="login-title">Premium Bank</div>
+        <div class="login-sub">Secure Login</div>
+      </div>
       <input id="loginUser" class="input" placeholder="Username"/>
       <input id="loginPass" class="input" type="password" placeholder="Password"/>
       <button class="btn" onclick="doLogin()">Sign In</button>
@@ -134,7 +105,7 @@ body{display:flex;justify-content:center;padding:20px;}
   </div>
 </div>
 
-<!-- DASHBOARD SCREEN -->
+<!-- DASHBOARD -->
 <div id="screen-dashboard" class="screen">
   <div class="content">
     <main class="main">
@@ -175,37 +146,6 @@ body{display:flex;justify-content:center;padding:20px;}
   </div>
 </div>
 
-<!-- Placeholder for Transfer / Withdraw / TopUp / Confirmation pages -->
-<div id="screen-transfer" class="screen">
-  <div class="page-title">Send Money</div>
-  <input id="transferRecipient" class="input" placeholder="Recipient Name"/>
-  <input id="transferAmount" class="input" type="number" placeholder="Amount"/>
-  <button class="btn" onclick="processTransfer()">Send</button>
-  <div id="transferLoader" class="loader" style="display:none"></div>
-  <div id="transferConfirm" class="confirm-card" style="display:none"></div>
-</div>
-
-<div id="screen-withdraw" class="screen">
-  <div class="page-title">Withdraw</div>
-  <input id="withdrawAmount" class="input" type="number" placeholder="Amount"/>
-  <button class="btn" onclick="processWithdraw()">Withdraw</button>
-  <div id="withdrawLoader" class="loader" style="display:none"></div>
-  <div id="withdrawConfirm" class="confirm-card" style="display:none"></div>
-</div>
-
-<div id="screen-topup" class="screen">
-  <div class="page-title">Top Up</div>
-  <input id="topupAmount" class="input" type="number" placeholder="Amount"/>
-  <select id="topupCard" class="input">
-    <option value="">Select Card</option>
-    <option value="Visa **** 1234">Visa **** 1234</option>
-    <option value="Mastercard **** 5678">Mastercard **** 5678</option>
-  </select>
-  <button class="btn" onclick="processTopup()">Top Up</button>
-  <div id="topupLoader" class="loader" style="display:none"></div>
-  <div id="topupConfirm" class="confirm-card" style="display:none"></div>
-</div>
-
 <!-- Bottom navigation -->
 <div id="bottomNav" class="bottom-nav" style="display:none">
   <div class="bottom-bar">
@@ -220,23 +160,23 @@ body{display:flex;justify-content:center;padding:20px;}
 </div>
 
 <script>
-/* ---------- Hamburger Menu ---------- */
+// Hamburger
 const sideMenu = document.getElementById('sideMenu');
 const hambBtn = document.getElementById('hambBtn');
 hambBtn.addEventListener('click', e=>{e.stopPropagation(); sideMenu.classList.toggle('open'); sideMenu.setAttribute('aria-hidden',!sideMenu.classList.contains('open'))})
 document.addEventListener('click', e=>{if(!sideMenu.contains(e.target)&&!hambBtn.contains(e.target)) sideMenu.classList.remove('open');});
 
-/* ---------- State ---------- */
-let balance = localStorage.getItem('balance') ? Number(localStorage.getItem('balance')) : 1000;
-let transactions = localStorage.getItem('transactions') ? JSON.parse(localStorage.getItem('transactions')) : [];
+// State
+let balance = Number(localStorage.getItem('bank_balance')||1000);
+let transactions = JSON.parse(localStorage.getItem('bank_tx')||'[]');
 
-/* ---------- Time & Greeting ---------- */
+// Live time & greeting
 function updateTime(){
   const now = new Date();
-  const hours = now.getHours();
+  const h = now.getHours();
   let greet = 'Hello';
-  if(hours<12) greet='Good morning';
-  else if(hours<18) greet='Good afternoon';
+  if(h<12) greet='Good morning';
+  else if(h<18) greet='Good afternoon';
   else greet='Good evening';
   document.getElementById('greeting').innerText = greet+',';
   document.getElementById('userName').innerText='David';
@@ -244,110 +184,44 @@ function updateTime(){
 }
 setInterval(updateTime,1000);
 
-/* ---------- Navigation ---------- */
+// Navigation
 function hideAll(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'))}
 function nav(page){
   hideAll();
-  document.getElementById('screen-'+page)?.classList.add('active');
+  const map = {dashboard:'screen-dashboard',login:'screen-login',transfer:'screen-dashboard',withdraw:'screen-dashboard',topup:'screen-dashboard',profile:'screen-dashboard'}
+  const target = document.getElementById(map[page]||'screen-dashboard');
+  target.classList.add('active');
   document.getElementById('hdrBal').innerText = balance;
   document.getElementById('balance').innerText = balance;
   updateTxPreview();
   showHeader(page!=='login');
 }
-function showHeader(show){
-  document.getElementById('topHeader').style.display = show?'flex':'none';
-  document.getElementById('bottomNav').style.display = show?'flex':'none';
-}
 
-/* ---------- Login ---------- */
+// Header
+function showHeader(show){document.getElementById('topHeader').style.display=show?'flex':'none';document.getElementById('bottomNav').style.display=show?'flex':'none';}
+
+// Login
 function doLogin(){
-  localStorage.setItem('demo_b2_logged','1');
-  localStorage.setItem('balance', balance);
-  localStorage.setItem('transactions', JSON.stringify(transactions));
+  localStorage.setItem('bank_logged','1');
   showHeader(true);
   nav('dashboard');
 }
 
-/* ---------- Transactions ---------- */
+// Transactions
 function updateTxPreview(){
-  const c=document.getElementById('txPreview'); c.innerHTML='';
+  const c = document.getElementById('txPreview'); c.innerHTML='';
   transactions.slice(-5).reverse().forEach(t=>{
-    const d=document.createElement('div'); d.className='tx'; d.innerText=t.summary; 
-    d.onclick=()=>alert(`Amount: ${t.amount}\nRecipient: ${t.recipient||'-'}\nDate: ${t.date}\nStatus: ${t.status}`);
+    const d = document.createElement('div'); d.className='tx'; d.innerText=t.details; d.addEventListener('click',()=>{alert(`Transaction:\n${t.details}\nAmount: $${t.amount}\nStatus: ${t.status}\nDate: ${t.date}`)})
     c.appendChild(d);
   });
 }
 
-/* ---------- Logout ---------- */
-function doLogout(){
-  localStorage.removeItem('demo_b2_logged');
-  showHeader(false);
-  nav('login');
-}
+// Logout
+function doLogout(){localStorage.removeItem('bank_logged');nav('login');showHeader(false)}
 
-/* ---------- Process Actions ---------- */
-function processTransfer(){
-  const r = document.getElementById('transferRecipient').value.trim();
-  const a = Number(document.getElementById('transferAmount').value);
-  if(!r||!a||a>balance){alert('Invalid input or insufficient balance'); return;}
-  document.getElementById('transferLoader').style.display='block';
-  setTimeout(()=>{
-    document.getElementById('transferLoader').style.display='none';
-    balance -= a;
-    const t = {summary:`Sent $${a} to ${r}`, amount:a, recipient:r, date:new Date().toLocaleString(), status:'Completed'};
-    transactions.push(t);
-    localStorage.setItem('balance', balance);
-    localStorage.setItem('transactions', JSON.stringify(transactions));
-    document.getElementById('transferConfirm').innerHTML=`✔ Sent $${a} to ${r}<br>${t.date}<br>Status: ${t.status}`;
-    document.getElementById('transferConfirm').style.display='block';
-    updateTxPreview();
-    document.getElementById('balance').innerText=balance;
-    document.getElementById('hdrBal').innerText=balance;
-  },1200);
-}
-
-function processWithdraw(){
-  const a = Number(document.getElementById('withdrawAmount').value);
-  if(!a||a>balance){alert('Invalid input or insufficient balance'); return;}
-  document.getElementById('withdrawLoader').style.display='block';
-  setTimeout(()=>{
-    document.getElementById('withdrawLoader').style.display='none';
-    balance -= a;
-    const t = {summary:`Withdrew $${a}`, amount:a, recipient:'-', date:new Date().toLocaleString(), status:'Completed'};
-    transactions.push(t);
-    localStorage.setItem('balance', balance);
-    localStorage.setItem('transactions', JSON.stringify(transactions));
-    document.getElementById('withdrawConfirm').innerHTML=`✔ Withdrew $${a}<br>${t.date}<br>Status: ${t.status}`;
-    document.getElementById('withdrawConfirm').style.display='block';
-    updateTxPreview();
-    document.getElementById('balance').innerText=balance;
-    document.getElementById('hdrBal').innerText=balance;
-  },1200);
-}
-
-function processTopup(){
-  const a = Number(document.getElementById('topupAmount').value);
-  const c = document.getElementById('topupCard').value;
-  if(!a||!c){alert('Enter amount and select a card'); return;}
-  document.getElementById('topupLoader').style.display='block';
-  setTimeout(()=>{
-    document.getElementById('topupLoader').style.display='none';
-    balance += a;
-    const t = {summary:`Topped up $${a} via ${c}`, amount:a, recipient:'-', date:new Date().toLocaleString(), status:'Completed'};
-    transactions.push(t);
-    localStorage.setItem('balance', balance);
-    localStorage.setItem('transactions', JSON.stringify(transactions));
-    document.getElementById('topupConfirm').innerHTML=`✔ Top Up $${a} via ${c}<br>${t.date}<br>Status: ${t.status}`;
-    document.getElementById('topupConfirm').style.display='block';
-    updateTxPreview();
-    document.getElementById('balance').innerText=balance;
-    document.getElementById('hdrBal').innerText=balance;
-  },1200);
-}
-
-/* ---------- Init ---------- */
-window.onload=()=>{
-  const logged = localStorage.getItem('demo_b2_logged')==='1';
+// Init
+window.onload = ()=>{
+  const logged = localStorage.getItem('bank_logged')==='1';
   showHeader(logged);
   nav(logged?'dashboard':'login');
   updateTime();
