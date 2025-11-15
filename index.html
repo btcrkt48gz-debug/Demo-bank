@@ -2,207 +2,150 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Premium Bank — Full Demo</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Premium Bank Demo</title>
 <style>
-/* ---------- Reset ---------- */
-* { box-sizing: border-box; margin:0; padding:0; }
-html, body { height: 100%; font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial; background: linear-gradient(180deg,#eef6ff,#fbfcff); color: #07203a; }
-body { display:flex; justify-content:center; padding:20px; }
-
-/* ---------- App wrapper ---------- */
-.app { width:100%; max-width: 920px; background:#fff; border-radius:14px; box-shadow:0 20px 50px rgba(8,23,48,0.08); overflow:hidden; display:flex; flex-direction:column; min-height:100vh; position:relative; }
-
-/* ---------- Header ---------- */
-.header { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; background: linear-gradient(90deg,#0b63d8,#1a8cff); color:#fff; }
-.h-left { display:flex; align-items:center; gap:12px; }
-.h-left img { width:36px; height:36px; object-fit:contain; border-radius:6px; }
-.hamburger { width:44px; height:44px; border-radius:10px; background:rgba(255,255,255,0.12); display:flex; align-items:center; justify-content:center; cursor:pointer; }
-.brand { font-weight:700; font-size:18px; }
-.h-right { display:flex; gap:10px; align-items:center; }
-.icon-btn { width:40px; height:40px; border-radius:10px; background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; cursor:pointer; }
-
-/* ---------- Side Menu ---------- */
-.menu { position:fixed; top:0; left:0; height:100%; width:260px; background:#fff; box-shadow:10px 0 30px rgba(8,23,48,0.06); transform:translateX(-340px); transition: transform .26s cubic-bezier(.2,.9,.2,1); z-index:120; padding:20px; overflow-y:auto; }
-.menu.open { transform: translateX(0); }
-.menu h3 { font-size:16px; margin-bottom:12px; color:#07203a; }
-.menu .m-item { padding:12px 8px; border-radius:10px; cursor:pointer; font-weight:700; color:#07203a; margin-bottom:8px; }
-.menu .m-item:hover { background:#f2f7ff; }
-
-/* ---------- Screens ---------- */
-.screen { display:none; padding:20px; overflow-y:auto; flex:1; }
-.screen.active { display:block; }
-
-/* ---------- Login ---------- */
-.login-wrap { max-width:480px; margin:40px auto; }
-.login-card { background: linear-gradient(180deg,#fff,#fbfdff); border-radius:12px; padding:28px; box-shadow:0 12px 30px rgba(10,20,60,0.06); }
-.login-title { font-size:22px; font-weight:800; text-align:center; color:#07203a; margin-bottom:6px; }
-.login-sub { text-align:center; color:#6b7280; margin-bottom:14px; }
-.input { width:100%; padding:12px 14px; margin:8px 0; border-radius:10px; border:1px solid #e6eefc; font-size:15px; }
-.btn { width:100%; padding:12px 14px; border-radius:10px; border:none; background:#0b63d8; color:#fff; font-weight:800; cursor:pointer; font-size:15px; }
-.btn.secondary { background:#fff; color:#07203a; border:1px solid #e6eefc; }
-.btn.gold { background:#ffc107; color:#07203a; border:none; font-weight:800; cursor:pointer; }
-
-/* ---------- Dashboard ---------- */
-.content { display:flex; gap:18px; flex-wrap:wrap; padding-bottom:100px; }
-.main { flex:1 1 520px; min-width:260px; }
-.side { width:300px; min-width:220px; }
-
-/* ---------- Balance Card ---------- */
-.balance-card { background: linear-gradient(90deg,#0077ff,#0b63d8); color:white; padding:22px; border-radius:14px; margin-bottom:14px; box-shadow:0 10px 30px rgba(10,50,150,0.12); }
-.balance-card .greet { font-size:14px; opacity:.95; }
-.balance-card .bal { font-size:28px; font-weight:800; margin-top:8px; }
-.account-row { margin-top:14px; background:rgba(255,255,255,0.09); padding:12px; border-radius:10px; display:flex; justify-content:space-between; align-items:center; gap:10px; }
-
-/* ---------- Tiles ---------- */
-.tiles { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
-.tile { background:#fff; border-radius:12px; padding:14px; box-shadow:0 10px 30px rgba(10,20,60,0.04); min-width:140px; flex:1 1 140px; text-align:center; cursor:pointer; font-weight:700; }
-.tile img { width:40px; height:40px; margin-bottom:6px; }
-
-/* ---------- Box ---------- */
-.box { background:#fff; border-radius:12px; padding:14px; box-shadow:0 10px 30px rgba(10,20,60,0.04); margin-bottom:14px; }
-
-/* ---------- Transactions ---------- */
-.tx-list { display:flex; flex-direction:column; gap:8px; margin-top:10px; }
-.tx { background:linear-gradient(180deg,#fbfeff,#f5f9ff); padding:12px; border-radius:10px; border-left:6px solid #1a73e8; display:flex; justify-content:space-between; align-items:center; font-weight:700; cursor:pointer; }
-.tx-detail { display:flex; flex-direction:column; gap:6px; font-size:14px; padding:12px; border-radius:10px; background:#f7faff; }
-
-/* ---------- Pages: confirm / loading ---------- */
-.page-title { font-size:18px; font-weight:800; margin-bottom:10px; }
-.confirm-card { background:#fff; padding:18px; border-radius:12px; box-shadow:0 10px 30px rgba(10,20,60,0.04); text-align:center; }
-.loader { width:64px; height:64px; border-radius:50%; margin:30px auto; position:relative; }
-.loader:before, .loader:after { content:""; position:absolute; inset:0; border-radius:50%; }
-.loader:before { border:6px solid rgba(11,99,216,0.08); }
-.loader:after { border-top-color:#0b63d8; transform:rotate(120deg); animation:spin 1s linear infinite; border-right-color:transparent; border-bottom-color:transparent; border-left-color:transparent; }
-@keyframes spin{ to{ transform:rotate(360deg) } }
-
-/* ---------- Bottom nav ---------- */
-.bottom-nav { position:fixed; left:0; right:0; bottom:0; display:flex; gap:6px; justify-content:center; padding:10px 12px; }
-.bottom-bar { max-width:920px; width:100%; display:flex; justify-content:space-between; background:#fff; padding:10px 14px; border-radius:14px; box-shadow:0 8px 30px rgba(8,23,48,0.08); margin:0 12px; }
-.nav-item { flex:1 1 0; text-align:center; padding:6px 8px; cursor:pointer; color:#6b7280; font-weight:700; }
-.nav-item.active { color:#0b63d8; }
-.center-fab { width:56px; height:56px; border-radius:50%; background:#0b63d8; color:#fff; display:flex; align-items:center; justify-content:center; margin-top:-24px; box-shadow:0 8px 26px rgba(11,99,216,0.2); cursor:pointer; font-weight:800; }
-
-/* ---------- Responsive ---------- */
-@media(max-width:720px){ .side{width:100%} .content{padding-bottom:120px} .balance-card .bal{font-size:24px} .menu{width:86%; max-width:320px} }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#e0eafc,#cfdef3);color:#07203a;}
+body{display:flex;justify-content:center;padding:20px;}
+.app{width:100%;max-width:900px;background:#fff;border-radius:16px;box-shadow:0 15px 40px rgba(0,0,0,0.1);overflow:hidden;display:flex;flex-direction:column;}
+.header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(90deg,#1a73e8,#4285f4);color:#fff;position:sticky;top:0;z-index:10;}
+.h-left{display:flex;align-items:center;gap:10px;}
+.h-left img{width:36px;height:36px;border-radius:8px;}
+.hamburger{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.brand{font-weight:700;font-size:18px;}
+.h-right{display:flex;gap:10px;align-items:center;}
+.icon-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;}
+.menu{position:fixed;top:0;left:0;height:100%;width:260px;background:#fff;box-shadow:5px 0 20px rgba(0,0,0,0.1);transform:translateX(-300px);transition:transform 0.3s ease;z-index:20;padding:20px;}
+.menu.open{transform:translateX(0);}
+.menu h3{font-size:18px;margin-bottom:16px;color:#07203a;}
+.menu .m-item{padding:12px 8px;border-radius:10px;cursor:pointer;font-weight:700;color:#07203a;margin-bottom:10px;}
+.menu .m-item:hover{background:#f0f4ff;}
+.screen{display:none;padding:20px;overflow-y:auto;}
+.screen.active{display:block;}
+.login-card{max-width:450px;margin:40px auto;padding:30px;background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.08);text-align:center;}
+.login-card img{width:80px;margin-bottom:16px;}
+.login-card .title{font-size:22px;font-weight:700;margin-bottom:6px;}
+.login-card .subtitle{font-size:14px;color:#555;margin-bottom:20px;}
+.input{width:100%;padding:12px 14px;margin:10px 0;border-radius:10px;border:1px solid #ddd;font-size:15px;}
+.btn{width:100%;padding:12px 14px;border-radius:10px;border:none;background:#1a73e8;color:#fff;font-weight:700;cursor:pointer;font-size:15px;margin-top:10px;}
+.btn.secondary{background:#fff;color:#07203a;border:1px solid #ddd;}
+.balance-card{background:linear-gradient(135deg,#1a73e8,#4285f4);color:#fff;padding:20px;border-radius:16px;margin-bottom:16px;box-shadow:0 8px 25px rgba(0,0,0,0.08);}
+.balance-card .greet{font-size:14px;opacity:0.9;}
+.balance-card .bal{font-size:28px;font-weight:700;margin-top:6px;}
+.tiles{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;}
+.tile{background:#fff;border-radius:16px;padding:16px;box-shadow:0 5px 20px rgba(0,0,0,0.05);flex:1;min-width:120px;text-align:center;cursor:pointer;font-weight:700;transition:0.2s;}
+.tile:hover{transform:translateY(-3px);}
+.tile img{width:40px;height:40px;margin-bottom:6px;}
+.box{background:#fff;border-radius:16px;padding:16px;box-shadow:0 5px 20px rgba(0,0,0,0.05);margin-bottom:16px;}
+.tx-list{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.tx{background:#f0f4ff;padding:12px;border-radius:10px;border-left:5px solid #4285f4;display:flex;justify-content:space-between;align-items:center;font-weight:600;cursor:pointer;}
+.tx:hover{background:#e4edff;}
+.page-title{font-size:20px;font-weight:700;margin-bottom:10px;}
+.confirm-card{background:#fff;padding:20px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.08);text-align:center;}
+.loader{width:64px;height:64px;border-radius:50%;margin:20px auto;position:relative;border:6px solid rgba(0,0,0,0.1);border-top-color:#1a73e8;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;padding:12px;background:#fff;box-shadow:0 -3px 15px rgba(0,0,0,0.05);}
+.bottom-nav .nav-item{flex:1;text-align:center;font-weight:700;color:#555;cursor:pointer;}
+.bottom-nav .nav-item.active{color:#1a73e8;}
 </style>
 </head>
 <body>
 
-<!-- Side Menu -->
+<!-- Side menu -->
 <div id="sideMenu" class="menu" aria-hidden="true">
   <h3>Premium Bank</h3>
-  <div class="m-item" onclick="nav('dashboard')">Home / Dashboard</div>
+  <div class="m-item" onclick="nav('dashboard')">Dashboard</div>
   <div class="m-item" onclick="nav('transactions')">Transactions</div>
-  <div class="m-item" onclick="nav('profile')">Profile & Settings</div>
+  <div class="m-item" onclick="nav('profile')">Profile</div>
   <div class="m-item" onclick="nav('help')">Help</div>
-  <div style="height:10px"></div>
+  <div style="height:10px;"></div>
   <div class="m-item" onclick="doLogout()">Logout</div>
 </div>
 
-<div class="app" id="appRoot">
+<div class="app">
 
 <!-- Header -->
-<div id="topHeader" class="header" style="display:none">
+<div class="header" id="topHeader" style="display:none;">
   <div class="h-left">
-    <img src="https://via.placeholder.com/36x36.png?text=B" alt="Logo">
+    <img src="https://via.placeholder.com/36" alt="Logo">
     <div class="brand">Premium Bank</div>
-    <div id="hambBtn" class="hamburger" title="Menu">
-      <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="0" y="0" width="18" height="2" rx="1" fill="white"></rect>
-        <rect x="0" y="5" width="18" height="2" rx="1" fill="white"></rect>
-        <rect x="0" y="10" width="18" height="2" rx="1" fill="white"></rect>
-      </svg>
-    </div>
+    <div class="hamburger" id="hambBtn">☰</div>
   </div>
   <div class="h-right">
-    <div id="hdrBalance" style="font-weight:800">Balance: $<span id="hdrBal">1000</span></div>
-    <div class="icon-btn" title="Notifications">🔔</div>
-    <div id="profileBtn" class="icon-btn" title="Profile" onclick="nav('profile')">🙂</div>
+    <div id="hdrBalance">$<span id="hdrBal">1000</span></div>
+    <div class="icon-btn" onclick="nav('profile')">👤</div>
   </div>
 </div>
 
 <!-- Login Screen -->
 <div id="screen-login" class="screen active">
-  <div class="login-wrap">
-    <div class="login-card">
-      <div class="login-title">Welcome to Premium Bank</div>
-      <div class="login-sub">Use your credentials to login</div>
-      <input id="loginUser" class="input" placeholder="Username"/>
-      <input id="loginPass" class="input" type="password" placeholder="Password"/>
-      <div style="display:flex; gap:10px; margin-top:8px">
-        <button class="btn" onclick="doLogin()">Sign In</button>
-      </div>
-    </div>
+  <div class="login-card">
+    <img src="https://via.placeholder.com/80" alt="Logo">
+    <div class="title">Welcome to Premium Bank</div>
+    <div class="subtitle">Enter your credentials</div>
+    <input id="loginUser" class="input" placeholder="Username"/>
+    <input id="loginPass" class="input" type="password" placeholder="Password"/>
+    <button class="btn" onclick="doLogin()">Sign In</button>
   </div>
 </div>
 
-<!-- Dashboard Screen -->
+<!-- Dashboard -->
 <div id="screen-dashboard" class="screen">
-  <div class="content">
-    <main class="main">
-      <div class="balance-card">
-        <div style="display:flex; justify-content:space-between; align-items:center">
-          <div>
-            <div class="greet" id="greeting">Hello,</div>
-            <div style="font-weight:800" id="userName">David</div>
-          </div>
-          <div style="text-align:right">
-            <div class="small">Today</div>
-            <div style="font-weight:700" id="liveDateTime"></div>
-          </div>
-        </div>
-        <div class="bal">$<span id="balance">1000</span></div>
+  <div class="balance-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div class="greet" id="greeting">Hello,</div>
+        <div id="userName">David</div>
       </div>
-
-      <div class="tiles">
-        <div class="tile" onclick="nav('transfer')"><img src="https://via.placeholder.com/40.png?text=S" alt="Send"><br>Send Money</div>
-        <div class="tile" onclick="nav('withdraw')"><img src="https://via.placeholder.com/40.png?text=W" alt="Withdraw"><br>Withdraw</div>
-        <div class="tile" onclick="nav('topup')"><img src="https://via.placeholder.com/40.png?text=T" alt="TopUp"><br>Top Up</div>
+      <div style="text-align:right;">
+        <div class="small">Today</div>
+        <div id="liveDateTime"></div>
       </div>
-
-      <div class="box">
-        <div style="display:flex; justify-content:space-between; align-items:center">
-          <div style="font-weight:800">Recent Transactions</div>
-          <div class="small">Last 5</div>
-        </div>
-        <div id="txPreview" class="tx-list" style="margin-top:10px"></div>
-      </div>
-    </main>
-  </div>
-</div>
-
-<!-- Bottom Navigation -->
-<div id="bottomNav" class="bottom-nav" style="display:none">
-  <div class="bottom-bar">
-    <div class="nav-item" onclick="nav('dashboard')">Home</div>
-    <div class="nav-item" onclick="nav('transfer')">Transfer</div>
-    <div style="display:flex; align-items:center; justify-content:center; width:80px">
-      <div class="center-fab" onclick="nav('transfer')">⇄</div>
     </div>
-    <div class="nav-item" onclick="nav('withdraw')">Withdraw</div>
-    <div class="nav-item" onclick="nav('profile')">Profile</div>
+    <div class="bal">$<span id="balance">1000</span></div>
+  </div>
+
+  <div class="tiles">
+    <div class="tile" onclick="nav('transfer')"><img src="https://via.placeholder.com/40" alt="">Transfer</div>
+    <div class="tile" onclick="nav('withdraw')"><img src="https://via.placeholder.com/40" alt="">Withdraw</div>
+    <div class="tile" onclick="nav('topup')"><img src="https://via.placeholder.com/40" alt="">Top Up</div>
+  </div>
+
+  <div class="box">
+    <div style="display:flex;justify-content:space-between;">
+      <div>Recent Transactions</div>
+      <div class="small">Last 5</div>
+    </div>
+    <div id="txPreview" class="tx-list"></div>
   </div>
 </div>
 
-<!-- Scripts -->
+<!-- Bottom navigation -->
+<div class="bottom-nav" id="bottomNav" style="display:none;">
+  <div class="nav-item" onclick="nav('dashboard')">Home</div>
+  <div class="nav-item" onclick="nav('transfer')">Transfer</div>
+  <div class="nav-item" onclick="nav('withdraw')">Withdraw</div>
+  <div class="nav-item" onclick="nav('profile')">Profile</div>
+</div>
+
 <script>
-// Hamburger Menu
+// Hamburger toggle
 const sideMenu = document.getElementById('sideMenu');
 const hambBtn = document.getElementById('hambBtn');
-hambBtn.addEventListener('click', e => { e.stopPropagation(); sideMenu.classList.toggle('open'); sideMenu.setAttribute('aria-hidden',!sideMenu.classList.contains('open')) })
-document.addEventListener('click', e => { if(!sideMenu.contains(e.target) && !hambBtn.contains(e.target)) sideMenu.classList.remove('open'); });
+hambBtn.addEventListener('click', e=>{e.stopPropagation(); sideMenu.classList.toggle('open');});
+document.addEventListener('click', e=>{if(!sideMenu.contains(e.target)&&!hambBtn.contains(e.target)) sideMenu.classList.remove('open');});
 
 // State
-let balance = localStorage.getItem('balance') ? parseFloat(localStorage.getItem('balance')) : 1000;
+let balance = localStorage.getItem('balance') ? Number(localStorage.getItem('balance')) : 1000;
 let transactions = localStorage.getItem('transactions') ? JSON.parse(localStorage.getItem('transactions')) : [];
 
-// Live Date & Greeting
-function updateTime() {
+// Live greeting & time
+function updateTime(){
   const now = new Date();
   const hours = now.getHours();
   let greet = 'Hello';
-  if(hours < 12) greet='Good morning';
+  if(hours<12) greet='Good morning';
   else if(hours<18) greet='Good afternoon';
   else greet='Good evening';
   document.getElementById('greeting').innerText = greet+',';
@@ -212,53 +155,52 @@ function updateTime() {
 setInterval(updateTime,1000);
 
 // Navigation
-function hideAll() { document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')) }
+function hideAll(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'))}
 function nav(page){
   hideAll();
-  if(page==='dashboard') document.getElementById('screen-dashboard').classList.add('active');
-  else document.getElementById('screen-dashboard').classList.add('active'); // default
+  document.getElementById('screen-'+page).classList.add('active');
   document.getElementById('hdrBal').innerText=balance;
   document.getElementById('balance').innerText=balance;
   updateTxPreview();
   showHeader(page!=='login');
 }
 
-// Show Header
-function showHeader(show){ document.getElementById('topHeader').style.display=show?'flex':'none'; document.getElementById('bottomNav').style.display=show?'flex':'none'; }
+// Show header & bottom nav
+function showHeader(show){
+  document.getElementById('topHeader').style.display=show?'flex':'none';
+  document.getElementById('bottomNav').style.display=show?'flex':'none';
+}
 
 // Login
 function doLogin(){
   const user = document.getElementById('loginUser').value.trim();
   const pass = document.getElementById('loginPass').value.trim();
-  if(!user||!pass) return alert('Enter username and password');
+  if(!user||!pass){alert('Enter credentials');return;}
   localStorage.setItem('logged','1');
+  localStorage.setItem('balance',balance);
+  localStorage.setItem('transactions',JSON.stringify(transactions));
   showHeader(true);
   nav('dashboard');
 }
 
-// Transactions Preview
+// Update transactions preview
 function updateTxPreview(){
-  const c = document.getElementById('txPreview');
-  c.innerHTML='';
-  transactions.slice(-5).reverse().forEach((t,i)=>{
-    const d=document.createElement('div');
-    d.className='tx';
-    d.innerHTML = `${t.amount} to ${t.to} (${t.status})`;
-    c.appendChild(d);
+  const c=document.getElementById('txPreview'); c.innerHTML='';
+  transactions.slice(-5).reverse().forEach(t=>{
+    const d=document.createElement('div'); d.className='tx'; d.innerText=t; c.appendChild(d);
   });
 }
 
 // Logout
-function doLogout(){ localStorage.removeItem('logged'); nav('login'); showHeader(false); }
+function doLogout(){localStorage.removeItem('logged');nav('login');showHeader(false);}
 
 // Init
-window.onload = ()=>{
+window.onload=()=>{
   const logged = localStorage.getItem('logged')==='1';
   showHeader(logged);
   nav(logged?'dashboard':'login');
   updateTime();
 }
 </script>
-
 </body>
 </html>
