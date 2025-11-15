@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Premium Bank Demo</title>
 <style>
-/* Reset */
+/* Reset and general */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:linear-gradient(180deg,#eef6ff,#dbe9ff); color:#07203a;}
 body{display:flex;justify-content:center;padding:12px 8px;}
@@ -65,7 +65,7 @@ body{display:flex;justify-content:center;padding:12px 8px;}
 .tx{background:linear-gradient(180deg,#fbfeff,#f5f9ff);padding:12px;border-radius:10px;border-left:6px solid #1a73e8;display:flex;justify-content:space-between;align-items:center;font-weight:700;cursor:pointer}
 .tx small{opacity:.7;}
 
-/* Pages */
+/* Transaction & confirmation pages */
 .page-title{font-size:18px;font-weight:800;margin-bottom:10px}
 .confirm-card{background:#fff;padding:18px;border-radius:12px;box-shadow:0 10px 30px rgba(10,20,60,0.04);text-align:center}
 .loader{width:64px;height:64px;border-radius:50%;margin:18px auto;position:relative}
@@ -115,7 +115,7 @@ body{display:flex;justify-content:center;padding:12px 8px;}
 </div>
 </div>
 
-<!-- Login Screen -->
+<!-- LOGIN -->
 <div id="screen-login" class="screen active">
 <div class="login-wrap">
 <div class="login-card">
@@ -130,7 +130,7 @@ body{display:flex;justify-content:center;padding:12px 8px;}
 </div>
 </div>
 
-<!-- Dashboard -->
+<!-- DASHBOARD -->
 <div id="screen-dashboard" class="screen">
 <div class="content">
 <main class="main">
@@ -235,10 +235,11 @@ showHeader(true);nav('dashboard');}
 function updateTxPreview(){
 const c=document.getElementById('txPreview');
 c.innerHTML='';
-transactions.slice(-5).reverse().forEach(t=>{
+transactions.slice(-5).reverse().forEach((t,i)=>{
 const d=document.createElement('div');
 d.className='tx';
-d.innerHTML=t;
+d.innerHTML=`${t.desc} <small>${t.date}</small>`;
+d.onclick=()=>alert(`Transaction Details:\nAmount: ${t.amount}\nTo/From: ${t.desc}\nDate: ${t.date}\nStatus: ${t.status}`);
 c.appendChild(d);
 });
 }
