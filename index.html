@@ -1,472 +1,264 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Premium Bank Full Demo</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; background: #eef6ff; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; }
-    body { display: flex; justify-content: center; padding: 20px 0; }
-    .app { width: 100%; max-width: 920px; background: #fff; border-radius: 14px; box-shadow: 0 20px 50px rgba(8,23,48,0.08); overflow: hidden; display: flex; flex-direction: column; min-height: 100vh; position: relative; }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Premium Bank — Full Demo</title>
+<style>
+/* ---------- Reset ---------- */
+* { box-sizing: border-box; margin:0; padding:0; }
+html, body { height: 100%; font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial; background: linear-gradient(180deg,#eef6ff,#fbfcff); color: #07203a; }
+body { display:flex; justify-content:center; padding:20px; }
 
-    /* Header */
-    .header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: linear-gradient(90deg, #0b63d8, #1a8cff); color: #fff; position: sticky; top: 0; z-index: 10; }
-    .h-left { display: flex; align-items: center; gap: 12px; }
-    .h-left img { width: 36px; height: 36px; border-radius: 6px; object-fit: cover; }
-    .hamburger { width: 44px; height: 44px; border-radius: 10px; background: rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; cursor: pointer; }
-    .brand { font-weight: 700; font-size: 18px; }
-    .h-right { display: flex; align-items: center; gap: 10px; }
-    .icon-btn { width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+/* ---------- App wrapper ---------- */
+.app { width:100%; max-width: 920px; background:#fff; border-radius:14px; box-shadow:0 20px 50px rgba(8,23,48,0.08); overflow:hidden; display:flex; flex-direction:column; min-height:100vh; position:relative; }
 
-    /* Side menu */
-    .menu { position: fixed; top:0; left:0; height: 100%; width:260px; background:#fff; box-shadow:10px 0 30px rgba(8,23,48,0.06); transform: translateX(-300px); transition: transform .26s cubic-bezier(.2,.9,.2,1); z-index:100; padding:20px; }
-    .menu.open { transform: translateX(0); }
-    .menu h3 { font-size: 16px; margin-bottom: 12px; color: #07203a; }
-    .menu .m-item { padding:12px 8px; cursor: pointer; font-weight: 700; color: #07203a; margin-bottom: 8px; border-radius: 8px; }
-    .menu .m-item:hover { background: #f2f7ff; }
+/* ---------- Header ---------- */
+.header { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; background: linear-gradient(90deg,#0b63d8,#1a8cff); color:#fff; }
+.h-left { display:flex; align-items:center; gap:12px; }
+.h-left img { width:36px; height:36px; object-fit:contain; border-radius:6px; }
+.hamburger { width:44px; height:44px; border-radius:10px; background:rgba(255,255,255,0.12); display:flex; align-items:center; justify-content:center; cursor:pointer; }
+.brand { font-weight:700; font-size:18px; }
+.h-right { display:flex; gap:10px; align-items:center; }
+.icon-btn { width:40px; height:40px; border-radius:10px; background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; cursor:pointer; }
 
-    /* Screens */
-    .screen { display: none; padding: 18px 20px; overflow-y: auto; flex: 1; }
-    .screen.active { display: block; }
+/* ---------- Side Menu ---------- */
+.menu { position:fixed; top:0; left:0; height:100%; width:260px; background:#fff; box-shadow:10px 0 30px rgba(8,23,48,0.06); transform:translateX(-340px); transition: transform .26s cubic-bezier(.2,.9,.2,1); z-index:120; padding:20px; overflow-y:auto; }
+.menu.open { transform: translateX(0); }
+.menu h3 { font-size:16px; margin-bottom:12px; color:#07203a; }
+.menu .m-item { padding:12px 8px; border-radius:10px; cursor:pointer; font-weight:700; color:#07203a; margin-bottom:8px; }
+.menu .m-item:hover { background:#f2f7ff; }
 
-    /* Login */
-    .login-wrap { max-width: 520px; margin: 36px auto; }
-    .login-card { background: linear-gradient(180deg, #fff, #fbfdff); border-radius: 12px; padding: 22px; box-shadow: 0 12px 30px rgba(10,20,60,0.06); }
-    .login-title { font-size: 22px; font-weight: 800; text-align: center; color: #07203a; margin-bottom: 6px; }
-    .login-sub { text-align: center; color: #6b7280; margin-bottom: 14px; }
-    .input { width: 100%; padding: 12px 14px; margin: 8px 0; border-radius: 10px; border: 1px solid #e6eefc; font-size: 15px; }
-    .btn { width: 100%; padding: 12px 14px; border-radius: 10px; border: none; background: #0b63d8; color: #fff; font-weight: 800; cursor: pointer; font-size: 15px; margin-top: 8px; }
-    .btn.secondary { background: #fff; color: #07203a; border: 1px solid #e6eefc; }
+/* ---------- Screens ---------- */
+.screen { display:none; padding:20px; overflow-y:auto; flex:1; }
+.screen.active { display:block; }
 
-    /* Dashboard balance card */
-    .balance-card { background: linear-gradient(90deg, #0077ff, #0b63d8); color: white; padding: 22px; border-radius: 14px; margin-bottom: 14px; box-shadow: 0 10px 30px rgba(10,50,150,0.12); }
-    .balance-card .greet { font-size: 14px; opacity: .95; }
-    .balance-card .bal { font-size: 28px; font-weight: 800; margin-top: 8px; }
-    .account-row { margin-top:14px; background: rgba(255,255,255,0.1); padding:12px; border-radius:10px; display:flex; justify-content:space-between; align-items:center; }
-    .account-id { color: rgba(255,255,255,0.95); font-weight:700; }
+/* ---------- Login ---------- */
+.login-wrap { max-width:480px; margin:40px auto; }
+.login-card { background: linear-gradient(180deg,#fff,#fbfdff); border-radius:12px; padding:28px; box-shadow:0 12px 30px rgba(10,20,60,0.06); }
+.login-title { font-size:22px; font-weight:800; text-align:center; color:#07203a; margin-bottom:6px; }
+.login-sub { text-align:center; color:#6b7280; margin-bottom:14px; }
+.input { width:100%; padding:12px 14px; margin:8px 0; border-radius:10px; border:1px solid #e6eefc; font-size:15px; }
+.btn { width:100%; padding:12px 14px; border-radius:10px; border:none; background:#0b63d8; color:#fff; font-weight:800; cursor:pointer; font-size:15px; }
+.btn.secondary { background:#fff; color:#07203a; border:1px solid #e6eefc; }
+.btn.gold { background:#ffc107; color:#07203a; border:none; font-weight:800; cursor:pointer; }
 
-    /* Tiles */
-    ./* Tiles wrapper */
-.tiles {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 14px;
-  margin-bottom: 14px;
-}
+/* ---------- Dashboard ---------- */
+.content { display:flex; gap:18px; flex-wrap:wrap; padding-bottom:100px; }
+.main { flex:1 1 520px; min-width:260px; }
+.side { width:300px; min-width:220px; }
 
-/* Upper row tiles (Transfer, Withdraw) */
-.tile.big {
-  flex: 0 0 calc(50% - 12px); /* Always two per row on all phones */
-  max-width: calc(50% - 12px);
-  min-width: 120px;
-  background: #fff;
-  border-radius: 14px;
-  padding: 18px 10px;
-  text-align: center;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(10,20,60,0.06);
-  transition: transform .2s;
-}
+/* ---------- Balance Card ---------- */
+.balance-card { background: linear-gradient(90deg,#0077ff,#0b63d8); color:white; padding:22px; border-radius:14px; margin-bottom:14px; box-shadow:0 10px 30px rgba(10,50,150,0.12); }
+.balance-card .greet { font-size:14px; opacity:.95; }
+.balance-card .bal { font-size:28px; font-weight:800; margin-top:8px; }
+.account-row { margin-top:14px; background:rgba(255,255,255,0.09); padding:12px; border-radius:10px; display:flex; justify-content:space-between; align-items:center; gap:10px; }
 
-/* One centered tile (Top Up) */
-.tile.full {
-  flex: 0 0 70%;
-  max-width: 70%;
-  min-width: 140px;
-  margin-top: 8px;
-  background: #fff;
-  border-radius: 14px;
-  padding: 18px 10px;
-  text-align: center;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(10,20,60,0.06);
-  transition: transform .2s;
-}
+/* ---------- Tiles ---------- */
+.tiles { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
+.tile { background:#fff; border-radius:12px; padding:14px; box-shadow:0 10px 30px rgba(10,20,60,0.04); min-width:140px; flex:1 1 140px; text-align:center; cursor:pointer; font-weight:700; }
+.tile img { width:40px; height:40px; margin-bottom:6px; }
 
-/* Hover animation */
-.tile:hover {
-  transform: translateY(-3px);
-}
+/* ---------- Box ---------- */
+.box { background:#fff; border-radius:12px; padding:14px; box-shadow:0 10px 30px rgba(10,20,60,0.04); margin-bottom:14px; }
 
-/* Icons inside tiles */
-.tile-icon {
-  font-size: 38px;
-  display: block;
-  margin-bottom: 6px;
-}
+/* ---------- Transactions ---------- */
+.tx-list { display:flex; flex-direction:column; gap:8px; margin-top:10px; }
+.tx { background:linear-gradient(180deg,#fbfeff,#f5f9ff); padding:12px; border-radius:10px; border-left:6px solid #1a73e8; display:flex; justify-content:space-between; align-items:center; font-weight:700; cursor:pointer; }
+.tx-detail { display:flex; flex-direction:column; gap:6px; font-size:14px; padding:12px; border-radius:10px; background:#f7faff; }
 
-/* FORCE layout even on very small screens */
-@media (max-width: 380px) {
-  .tile.big {
-    flex: 0 0 calc(50% - 8px);
-    max-width: calc(50% - 8px);
-  }
+/* ---------- Pages: confirm / loading ---------- */
+.page-title { font-size:18px; font-weight:800; margin-bottom:10px; }
+.confirm-card { background:#fff; padding:18px; border-radius:12px; box-shadow:0 10px 30px rgba(10,20,60,0.04); text-align:center; }
+.loader { width:64px; height:64px; border-radius:50%; margin:30px auto; position:relative; }
+.loader:before, .loader:after { content:""; position:absolute; inset:0; border-radius:50%; }
+.loader:before { border:6px solid rgba(11,99,216,0.08); }
+.loader:after { border-top-color:#0b63d8; transform:rotate(120deg); animation:spin 1s linear infinite; border-right-color:transparent; border-bottom-color:transparent; border-left-color:transparent; }
+@keyframes spin{ to{ transform:rotate(360deg) } }
 
-  .tile.full {
-    flex: 0 0 80%;
-    max-width: 80%;
-  }
-}
-}
+/* ---------- Bottom nav ---------- */
+.bottom-nav { position:fixed; left:0; right:0; bottom:0; display:flex; gap:6px; justify-content:center; padding:10px 12px; }
+.bottom-bar { max-width:920px; width:100%; display:flex; justify-content:space-between; background:#fff; padding:10px 14px; border-radius:14px; box-shadow:0 8px 30px rgba(8,23,48,0.08); margin:0 12px; }
+.nav-item { flex:1 1 0; text-align:center; padding:6px 8px; cursor:pointer; color:#6b7280; font-weight:700; }
+.nav-item.active { color:#0b63d8; }
+.center-fab { width:56px; height:56px; border-radius:50%; background:#0b63d8; color:#fff; display:flex; align-items:center; justify-content:center; margin-top:-24px; box-shadow:0 8px 26px rgba(11,99,216,0.2); cursor:pointer; font-weight:800; }
 
-    /* Box */
-    .box { background: #fff; border-radius:12px; padding:14px; box-shadow:0 10px 30px rgba(10,20,60,0.04); margin-bottom:14px; }
-
-    /* Transactions */
-    .tx-list { display:flex; flex-direction:column; gap:8px; margin-top:10px; }
-    .tx { background: linear-gradient(180deg, #fbfeff, #f5f9ff); padding:12px; border-radius:10px; border-left:6px solid #1a73e8; display:flex; justify-content:space-between; align-items:center; font-weight:700; cursor: pointer; }
-
-    /* Pages for Transfer / Withdraw / Top-up / Loading / Confirm */
-    .page-card { background: linear-gradient(180deg, #fff, #f5f9ff); padding:22px; border-radius:12px; box-shadow:0 10px 30px rgba(10,20,60,0.06); margin-bottom:20px; }
-    .page-title { font-size:18px; font-weight:800; margin-bottom:12px; }
-    .loader { width:64px; height:64px; border-radius:50%; margin: 30px auto; position:relative; }
-    .loader:before, .loader:after { content:""; position:absolute; inset:0; border-radius:50%; }
-    .loader:before { border:6px solid rgba(11,99,216,0.08); }
-    .loader:after { border-top-color: #0b63d8; transform: rotate(120deg); animation: spin 1s linear infinite; border-right-color: transparent; border-bottom-color: transparent; border-left-color: transparent; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* Confirm screen */
-    .confirm-card { background:#fff; padding:18px; border-radius:12px; box-shadow:0 10px 30px rgba(10,20,60,0.04); text-align:center; }
-
-    /* Bottom nav */
-    .bottom-nav { position: fixed; left: 0; right: 0; bottom: 0; display: flex; justify-content: center; padding: 10px 12px; background: #fff; box-shadow: 0 -4px 20px rgba(0,0,0,0.08); }
-    .bottom-bar { max-width:920px; width:100%; display:flex; justify-content:space-between; align-items:center; padding: 10px 14px; border-radius:14px; }
-    .nav-item { flex:1 1 0; text-align:center; cursor:pointer; color: #6b7280; font-weight:700; font-size:12px; }
-    .nav-item.active { color: #0b63d8; }
-    .center-fab { width:56px; height:56px; border-radius:50%; background:#0b63d8; color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 26px rgba(11,99,216,0.2); cursor:pointer; font-weight:800; font-size:24px; margin-top: -24px; }
-
-    /* Profile pic */
-    .profile-pic { width:80px; height:80px; border-radius:50%; object-fit:cover; border:2px solid #0b63d8; margin-bottom:12px; }
-
-    @media(max-width:720px) {
-      .tiles { flex-direction: column; }
-      .balance-card .bal { font-size:24px; }
-    }
-  </style>
+/* ---------- Responsive ---------- */
+@media(max-width:720px){ .side{width:100%} .content{padding-bottom:120px} .balance-card .bal{font-size:24px} .menu{width:86%; max-width:320px} }
+</style>
 </head>
 <body>
-  <div id="sideMenu" class="menu" aria-hidden="true">
-    <h3>Premium Bank</h3>
-    <div class="m-item" onclick="nav('dashboard')">Dashboard</div>
-    <div class="m-item" onclick="nav('transactions')">Transactions</div>
-    <div class="m-item" onclick="nav('profile')">Profile</div>
-    <div class="m-item" onclick="doLogout()">Logout</div>
+
+<!-- Side Menu -->
+<div id="sideMenu" class="menu" aria-hidden="true">
+  <h3>Premium Bank</h3>
+  <div class="m-item" onclick="nav('dashboard')">Home / Dashboard</div>
+  <div class="m-item" onclick="nav('transactions')">Transactions</div>
+  <div class="m-item" onclick="nav('profile')">Profile & Settings</div>
+  <div class="m-item" onclick="nav('help')">Help</div>
+  <div style="height:10px"></div>
+  <div class="m-item" onclick="doLogout()">Logout</div>
+</div>
+
+<div class="app" id="appRoot">
+
+<!-- Header -->
+<div id="topHeader" class="header" style="display:none">
+  <div class="h-left">
+    <img src="https://via.placeholder.com/36x36.png?text=B" alt="Logo">
+    <div class="brand">Premium Bank</div>
+    <div id="hambBtn" class="hamburger" title="Menu">
+      <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="18" height="2" rx="1" fill="white"></rect>
+        <rect x="0" y="5" width="18" height="2" rx="1" fill="white"></rect>
+        <rect x="0" y="10" width="18" height="2" rx="1" fill="white"></rect>
+      </svg>
+    </div>
   </div>
+  <div class="h-right">
+    <div id="hdrBalance" style="font-weight:800">Balance: $<span id="hdrBal">1000</span></div>
+    <div class="icon-btn" title="Notifications">🔔</div>
+    <div id="profileBtn" class="icon-btn" title="Profile" onclick="nav('profile')">🙂</div>
+  </div>
+</div>
 
-  <div class="app">
-    <!-- Header -->
-    <div id="topHeader" class="header" style="display:none">
-      <div class="h-left">
-        <div id="hambBtn" class="hamburger">☰</div>
-        <img src="https://via.placeholder.com/36x36.png?text=B" alt="Logo">
-        <div class="brand">Premium Bank</div>
-      </div>
-      <div class="h-right">
-        <div id="hdrBalance">Balance: $<span id="hdrBal">0</span></div>
-        <div class="icon-btn" onclick="nav('profile')">👤</div>
-      </div>
-    </div>
-
-    <!-- LOGIN SCREEN -->
-    <div id="screen-login" class="screen active">
-      <div class="login-wrap">
-        <div class="login-card">
-          <div class="login-title">Welcome to Chase Bank</div>
-          <div class="login-sub">Please sign in</div>
-          <input id="loginUser" class="input" placeholder="Username">
-          <input id="loginPass" class="input" type="password" placeholder="Password">
-          <button class="btn" onclick="doLogin()">Sign In</button>
-        </div>
+<!-- Login Screen -->
+<div id="screen-login" class="screen active">
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-title">Welcome to Premium Bank</div>
+      <div class="login-sub">Use your credentials to login</div>
+      <input id="loginUser" class="input" placeholder="Username"/>
+      <input id="loginPass" class="input" type="password" placeholder="Password"/>
+      <div style="display:flex; gap:10px; margin-top:8px">
+        <button class="btn" onclick="doLogin()">Sign In</button>
       </div>
     </div>
+  </div>
+</div>
 
-    <!-- DASHBOARD SCREEN -->
-    <div id="screen-dashboard" class="screen">
+<!-- Dashboard Screen -->
+<div id="screen-dashboard" class="screen">
+  <div class="content">
+    <main class="main">
       <div class="balance-card">
-        <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex; justify-content:space-between; align-items:center">
           <div>
             <div class="greet" id="greeting">Hello,</div>
-            <div style="font-weight:800" id="userName">User</div>
+            <div style="font-weight:800" id="userName">David</div>
           </div>
           <div style="text-align:right">
             <div class="small">Today</div>
             <div style="font-weight:700" id="liveDateTime"></div>
           </div>
         </div>
-        <div class="bal">$<span id="balance">0</span></div>
+        <div class="bal">$<span id="balance">1000</span></div>
       </div>
 
-    <div class="tiles">
-
-  <div class="tile big" onclick="nav('transfer')">
-    <div class="tile-icon">🪁</div>
-    <div>Send Money</div>
-  </div>
-
-  <div class="tile big" onclick="nav('withdraw')">
-    <div class="tile-icon">🏧</div>
-    <div>Withdraw</div>
-  </div>
-
-  <div class="tile full" onclick="nav('topup')">
-    <div class="tile-icon">➕</div>
-    <div>Top Up</div>
-  </div>
-
-</div>
+      <div class="tiles">
+        <div class="tile" onclick="nav('transfer')"><img src="https://via.placeholder.com/40.png?text=S" alt="Send"><br>Send Money</div>
+        <div class="tile" onclick="nav('withdraw')"><img src="https://via.placeholder.com/40.png?text=W" alt="Withdraw"><br>Withdraw</div>
+        <div class="tile" onclick="nav('topup')"><img src="https://via.placeholder.com/40.png?text=T" alt="TopUp"><br>Top Up</div>
+      </div>
 
       <div class="box">
-        <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex; justify-content:space-between; align-items:center">
           <div style="font-weight:800">Recent Transactions</div>
           <div class="small">Last 5</div>
         </div>
-        <div id="txPreview" class="tx-list"></div>
+        <div id="txPreview" class="tx-list" style="margin-top:10px"></div>
       </div>
-    </div>
-
-    <!-- TRANSFER SCREEN -->
-    <div id="screen-transfer" class="screen">
-      <div class="page-card">
-        <div class="page-title">Send Money</div>
-        <input id="transferTo" class="input" placeholder="Recipient">
-        <input id="transferAmt" class="input" type="number" placeholder="Amount">
-        <button class="btn" onclick="startTransfer()">Continue</button>
-      </div>
-    </div>
-
-    <!-- WITHDRAW SCREEN -->
-    <div id="screen-withdraw" class="screen">
-      <div class="page-card">
-        <div class="page-title">Withdraw</div>
-        <input id="withdrawAmt" class="input" type="number" placeholder="Amount">
-        <button class="btn" onclick="startWithdraw()">Continue</button>
-      </div>
-    </div>
-
-    <!-- TOPUP SCREEN -->
-    <div id="screen-topup" class="screen">
-      <div class="page-card">
-        <div class="page-title">Top Up</div>
-        <input id="topupAmt" class="input" type="number" placeholder="Amount">
-        <button class="btn" onclick="startTopup()">Continue</button>
-      </div>
-    </div>
-
-    <!-- LOADING SCREEN -->
-    <div id="screen-loading" class="screen" style="text-align:center">
-      <div class="loader"></div>
-      <div style="margin-top:12px;">Processing…</div>
-    </div>
-
-    <!-- CONFIRMATION SCREEN -->
-    <div id="screen-confirm" class="screen">
-      <div class="confirm-card">
-        <div style="font-size:32px;color:green;">✔</div>
-        <div id="confirmMsg" style="margin-top:12px;font-weight:700"></div>
-        <div id="confirmDate" style="margin-top:6px;color:#6b7280"></div>
-        <button class="btn" onclick="nav('dashboard')">Back to Dashboard</button>
-      </div>
-    </div>
-
-    <!-- TRANSACTIONS SCREEN -->
-    <div id="screen-transactions" class="screen">
-      <div class="page-title">All Transactions</div>
-      <div class="tx-list" id="txList"></div>
-    </div>
-
-    <!-- PROFILE SCREEN -->
-    <div id="screen-profile" class="screen">
-      <div class="page-card" style="text-align:center">
-        <img id="profilePic" class="profile-pic" src="" alt="Profile Picture">
-        <div><input type="file" id="profilePicIn" accept="image/*"></div>
-        <div style="margin-top:12px;text-align:left">
-          <div>Name</div>
-          <input class="input" id="profileName">
-          <div>Email</div>
-          <input class="input" id="profileEmail">
-          <div>Phone</div>
-          <input class="input" id="profilePhone">
-        </div>
-        <button class="btn" onclick="saveProfile()">Save Profile</button>
-      </div>
-    </div>
-
-    <!-- Bottom Navigation -->
-    <div id="bottomNav" class="bottom-nav" style="display:none">
-      <div class="bottom-bar">
-        <div class="nav-item" id="navHome" onclick="nav('dashboard')">🏠<br>Home</div>
-        <div class="nav-item" onclick="nav('transfer')">💸<br>Send</div>
-        <div class="center-fab" onclick="nav('topup')">➕</div>
-        <div class="nav-item" onclick="nav('withdraw')">🏧<br>Withdraw</div>
-        <div class="nav-item" onclick="nav('profile')">👤<br>Profile</div>
-      </div>
-    </div>
+    </main>
   </div>
 </div>
 
+<!-- Bottom Navigation -->
+<div id="bottomNav" class="bottom-nav" style="display:none">
+  <div class="bottom-bar">
+    <div class="nav-item" onclick="nav('dashboard')">Home</div>
+    <div class="nav-item" onclick="nav('transfer')">Transfer</div>
+    <div style="display:flex; align-items:center; justify-content:center; width:80px">
+      <div class="center-fab" onclick="nav('transfer')">⇄</div>
+    </div>
+    <div class="nav-item" onclick="nav('withdraw')">Withdraw</div>
+    <div class="nav-item" onclick="nav('profile')">Profile</div>
+  </div>
+</div>
+
+<!-- Scripts -->
 <script>
-// --- Hamburger toggle ---
+// Hamburger Menu
 const sideMenu = document.getElementById('sideMenu');
-const hamb = document.getElementById('hambBtn');
-hamb.addEventListener('click', e => { e.stopPropagation(); sideMenu.classList.toggle('open'); });
-document.addEventListener('click', e => { if (!sideMenu.contains(e.target) && !hamb.contains(e.target)) sideMenu.classList.remove('open'); });
+const hambBtn = document.getElementById('hambBtn');
+hambBtn.addEventListener('click', e => { e.stopPropagation(); sideMenu.classList.toggle('open'); sideMenu.setAttribute('aria-hidden',!sideMenu.classList.contains('open')) })
+document.addEventListener('click', e => { if(!sideMenu.contains(e.target) && !hambBtn.contains(e.target)) sideMenu.classList.remove('open'); });
 
-// --- State ---
-let balance = Number(localStorage.getItem('pbank_balance') || 1000);
-let transactions = JSON.parse(localStorage.getItem('pbank_tx') || '[]');
-let profile = JSON.parse(localStorage.getItem('pbank_profile') || '{"name":"David","email":"","phone":"","pic":""}');
+// State
+let balance = localStorage.getItem('balance') ? parseFloat(localStorage.getItem('balance')) : 1000;
+let transactions = localStorage.getItem('transactions') ? JSON.parse(localStorage.getItem('transactions')) : [];
 
-// --- Time & Greeting ---
-function updateTime(){
+// Live Date & Greeting
+function updateTime() {
   const now = new Date();
-  const h = now.getHours();
+  const hours = now.getHours();
   let greet = 'Hello';
-  if(h < 12) greet = 'Good morning';
-  else if(h < 18) greet = 'Good afternoon';
-  else greet = 'Good evening';
-  document.getElementById('greeting').innerText = greet + ',';
-  document.getElementById('userName').innerText = profile.name;
+  if(hours < 12) greet='Good morning';
+  else if(hours<18) greet='Good afternoon';
+  else greet='Good evening';
+  document.getElementById('greeting').innerText = greet+',';
+  document.getElementById('userName').innerText='David';
   document.getElementById('liveDateTime').innerText = now.toLocaleString();
 }
-setInterval(updateTime, 1000);
+setInterval(updateTime,1000);
 
-// --- Navigation ---
-function hideAll(){
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-}
+// Navigation
+function hideAll() { document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')) }
 function nav(page){
   hideAll();
-  document.getElementById('screen-' + page)?.classList.add('active');
-  if (page === 'transactions') loadAllTransactions();
-  showHeader(page !== 'login');
-  updateDashboard();
-}
-function showHeader(show){
-  document.getElementById('topHeader').style.display = show ? 'flex' : 'none';
-  document.getElementById('bottomNav').style.display = show ? 'flex' : 'none';
+  if(page==='dashboard') document.getElementById('screen-dashboard').classList.add('active');
+  else document.getElementById('screen-dashboard').classList.add('active'); // default
+  document.getElementById('hdrBal').innerText=balance;
+  document.getElementById('balance').innerText=balance;
+  updateTxPreview();
+  showHeader(page!=='login');
 }
 
-// --- Login ---
+// Show Header
+function showHeader(show){ document.getElementById('topHeader').style.display=show?'flex':'none'; document.getElementById('bottomNav').style.display=show?'flex':'none'; }
+
+// Login
 function doLogin(){
-  const u = document.getElementById('loginUser').value.trim();
-  const p = document.getElementById('loginPass').value.trim();
-  if (!u || !p) { alert('Enter username & password'); return; }
-  localStorage.setItem('pbank_logged', '1');
+  const user = document.getElementById('loginUser').value.trim();
+  const pass = document.getElementById('loginPass').value.trim();
+  if(!user||!pass) return alert('Enter username and password');
+  localStorage.setItem('logged','1');
+  showHeader(true);
   nav('dashboard');
 }
-if (localStorage.getItem('pbank_logged') === '1') {
-  nav('dashboard'); showHeader(true);
-}
 
-// --- Dashboard update ---
-function updateDashboard(){
-  document.getElementById('balance').innerText = balance.toFixed(2);
-  document.getElementById('hdrBal').innerText = balance.toFixed(2);
-  const preview = document.getElementById('txPreview');
-  preview.innerHTML = '';
-  transactions.slice(-5).reverse().forEach((t,i) => {
-    const d = document.createElement('div');
-    d.className = 'tx';
-    d.innerText = `${t.type} $${t.amount} → ${t.to || '-'} (${t.status})`;
-    d.onclick = () => showTransactionDetail(t);
-    preview.appendChild(d);
+// Transactions Preview
+function updateTxPreview(){
+  const c = document.getElementById('txPreview');
+  c.innerHTML='';
+  transactions.slice(-5).reverse().forEach((t,i)=>{
+    const d=document.createElement('div');
+    d.className='tx';
+    d.innerHTML = `${t.amount} to ${t.to} (${t.status})`;
+    c.appendChild(d);
   });
 }
 
-// --- Transactions page ---
-function loadAllTransactions(){
-  const list = document.getElementById('txList');
-  list.innerHTML = '';
-  transactions.slice().reverse().forEach(t => {
-    const d = document.createElement('div');
-    d.className = 'tx';
-    d.innerText = `${t.type} $${t.amount} → ${t.to || '-'} (${t.status})`;
-    d.onclick = () => showTransactionDetail(t);
-    list.appendChild(d);
-  });
-}
+// Logout
+function doLogout(){ localStorage.removeItem('logged'); nav('login'); showHeader(false); }
 
-// --- Transaction detail ---
-function showTransactionDetail(tx){
-  alert(
-    `Type: ${tx.type}\nAmount: $${tx.amount}\nTo: ${tx.to || '-'}\nDate: ${tx.date}\nStatus: ${tx.status}`
-  );
-}
-
-// --- Action flows ---
-function startTransfer(){
-  const to = document.getElementById('transferTo').value.trim();
-  const amt = Number(document.getElementById('transferAmt').value);
-  if (!to || !amt || amt <= 0 || amt > balance) { alert('Invalid transfer'); return; }
-  goLoading(() => completeTransaction('Transfer', to, amt));
-}
-function startWithdraw(){
-  const amt = Number(document.getElementById('withdrawAmt').value);
-  if (!amt || amt <= 0 || amt > balance) { alert('Invalid withdraw'); return; }
-  goLoading(() => completeTransaction('Withdraw', null, amt));
-}
-function startTopup(){
-  const amt = Number(document.getElementById('topupAmt').value);
-  if (!amt || amt <= 0) { alert('Invalid top up'); return; }
-  goLoading(() => completeTransaction('Top Up', null, amt, true));
-}
-function goLoading(cb){
-  nav('loading');
-  setTimeout(cb, 1200);
-}
-function completeTransaction(type, to, amount, isTopup = false){
-  const now = new Date();
-  const date = now.toLocaleString();
-  const tx = { type, to, amount: amount.toFixed(2), date, status: 'Completed' };
-  if (isTopup) balance += amount;
-  else balance -= amount;
-  transactions.push(tx);
-  localStorage.setItem('pbank_balance', balance);
-  localStorage.setItem('pbank_tx', JSON.stringify(transactions));
-  document.getElementById('confirmMsg').innerText = `${type} of $${amount.toFixed(2)} ${isTopup ? 'completed' : 'sent'}${to ? ' to ' + to : ''}`;
-  document.getElementById('confirmDate').innerText = date;
-  nav('confirm');
-}
-
-// --- Profile ---
-document.getElementById('profilePicIn').addEventListener('change', e => {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = () => {
-    profile.pic = reader.result;
-    document.getElementById('profilePic').src = profile.pic;
-    saveProfileToStorage();
-  };
-  reader.readAsDataURL(file);
-});
-function saveProfile(){
-  profile.name = document.getElementById('profileName').value;
-  profile.email = document.getElementById('profileEmail').value;
-  profile.phone = document.getElementById('profilePhone').value;
-  saveProfileToStorage();
-  alert('Profile saved');
-}
-function saveProfileToStorage(){
-  localStorage.setItem('pbank_profile', JSON.stringify(profile));
-}
-function loadProfile(){
-  document.getElementById('profileName').value = profile.name;
-  document.getElementById('profileEmail').value = profile.email;
-  document.getElementById('profilePhone').value = profile.phone;
-  if (profile.pic) document.getElementById('profilePic').src = profile.pic;
-}
-
-// --- Init ---
-window.onload = () => {
-  loadProfile();
-  updateDashboard();
+// Init
+window.onload = ()=>{
+  const logged = localStorage.getItem('logged')==='1';
+  showHeader(logged);
+  nav(logged?'dashboard':'login');
   updateTime();
-};
+}
 </script>
+
 </body>
 </html>
