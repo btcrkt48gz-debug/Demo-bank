@@ -41,6 +41,7 @@ body{display:flex;justify-content:center;padding:20px;}
 .input{width:100%;padding:12px 14px;margin:10px 0;border-radius:10px;border:1px solid #e6eefc;font-size:15px;}
 .btn{width:100%;padding:14px 0;border-radius:12px;border:none;background:#0b63d8;color:#fff;font-weight:800;cursor:pointer;font-size:16px;margin-top:10px;}
 .btn.secondary{background:#fff;color:#07203a;border:1px solid #e6eefc;}
+.btn.gold{background:#ffc107;color:#07203a;border:none;font-weight:800;cursor:pointer;}
 
 /* ---------- Dashboard ---------- */
 .content{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;padding-bottom:100px;}
@@ -62,6 +63,9 @@ body{display:flex;justify-content:center;padding:20px;}
 .tx-list{display:flex;flex-direction:column;gap:10px;margin-top:10px;}
 .tx{background:linear-gradient(180deg,#f9faff,#f0f6ff);padding:14px;border-radius:12px;border-left:6px solid #1a73e8;display:flex;justify-content:space-between;align-items:center;font-weight:700;cursor:pointer;transition:all 0.2s;}
 .tx:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.05);}
+
+/* ---------- Transaction Detail ---------- */
+.tx-detail{background:#fff;border-radius:16px;padding:20px;box-shadow:0 10px 30px rgba(10,20,60,0.04);margin-top:20px;}
 
 /* ---------- Pages: Transfer / Withdraw / Topup ---------- */
 .page-title{font-size:20px;font-weight:800;margin-bottom:12px;text-align:center;}
@@ -171,6 +175,37 @@ body{display:flex;justify-content:center;padding:20px;}
   </div>
 </div>
 
+<!-- Placeholder for Transfer / Withdraw / TopUp / Confirmation pages -->
+<div id="screen-transfer" class="screen">
+  <div class="page-title">Send Money</div>
+  <input id="transferRecipient" class="input" placeholder="Recipient Name"/>
+  <input id="transferAmount" class="input" type="number" placeholder="Amount"/>
+  <button class="btn" onclick="processTransfer()">Send</button>
+  <div id="transferLoader" class="loader" style="display:none"></div>
+  <div id="transferConfirm" class="confirm-card" style="display:none"></div>
+</div>
+
+<div id="screen-withdraw" class="screen">
+  <div class="page-title">Withdraw</div>
+  <input id="withdrawAmount" class="input" type="number" placeholder="Amount"/>
+  <button class="btn" onclick="processWithdraw()">Withdraw</button>
+  <div id="withdrawLoader" class="loader" style="display:none"></div>
+  <div id="withdrawConfirm" class="confirm-card" style="display:none"></div>
+</div>
+
+<div id="screen-topup" class="screen">
+  <div class="page-title">Top Up</div>
+  <input id="topupAmount" class="input" type="number" placeholder="Amount"/>
+  <select id="topupCard" class="input">
+    <option value="">Select Card</option>
+    <option value="Visa **** 1234">Visa **** 1234</option>
+    <option value="Mastercard **** 5678">Mastercard **** 5678</option>
+  </select>
+  <button class="btn" onclick="processTopup()">Top Up</button>
+  <div id="topupLoader" class="loader" style="display:none"></div>
+  <div id="topupConfirm" class="confirm-card" style="display:none"></div>
+</div>
+
 <!-- Bottom navigation -->
 <div id="bottomNav" class="bottom-nav" style="display:none">
   <div class="bottom-bar">
@@ -213,17 +248,7 @@ setInterval(updateTime,1000);
 function hideAll(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'))}
 function nav(page){
   hideAll();
-  const map = {
-    dashboard:'screen-dashboard',
-    login:'screen-login',
-    transfer:'screen-dashboard', // add proper pages later
-    withdraw:'screen-dashboard',
-    topup:'screen-dashboard',
-    profile:'screen-dashboard',
-    transactions:'screen-dashboard'
-  };
-  const id = map[page] || 'screen-dashboard';
-  document.getElementById(id).classList.add('active');
+  document.getElementById('screen-'+page)?.classList.add('active');
   document.getElementById('hdrBal').innerText = balance;
   document.getElementById('balance').innerText = balance;
   updateTxPreview();
@@ -247,7 +272,9 @@ function doLogin(){
 function updateTxPreview(){
   const c=document.getElementById('txPreview'); c.innerHTML='';
   transactions.slice(-5).reverse().forEach(t=>{
-    const d=document.createElement('div'); d.className='tx'; d.innerText=t; c.appendChild(d);
+    const d=document.createElement('div'); d.className='tx'; d.innerText=t.summary; 
+    d.onclick=()=>alert(`Amount: ${t.amount}\nRecipient: ${t.recipient||'-'}\nDate: ${t.date}\nStatus: ${t.status}`);
+    c.appendChild(d);
   });
 }
 
@@ -256,6 +283,66 @@ function doLogout(){
   localStorage.removeItem('demo_b2_logged');
   showHeader(false);
   nav('login');
+}
+
+/* ---------- Process Actions ---------- */
+function processTransfer(){
+  const r = document.getElementById('transferRecipient').value.trim();
+  const a = Number(document.getElementById('transferAmount').value);
+  if(!r||!a||a>balance){alert('Invalid input or insufficient balance'); return;}
+  document.getElementById('transferLoader').style.display='block';
+  setTimeout(()=>{
+    document.getElementById('transferLoader').style.display='none';
+    balance -= a;
+    const t = {summary:`Sent $${a} to ${r}`, amount:a, recipient:r, date:new Date().toLocaleString(), status:'Completed'};
+    transactions.push(t);
+    localStorage.setItem('balance', balance);
+    localStorage.setItem('transactions', JSON.stringify(transactions));
+    document.getElementById('transferConfirm').innerHTML=`✔ Sent $${a} to ${r}<br>${t.date}<br>Status: ${t.status}`;
+    document.getElementById('transferConfirm').style.display='block';
+    updateTxPreview();
+    document.getElementById('balance').innerText=balance;
+    document.getElementById('hdrBal').innerText=balance;
+  },1200);
+}
+
+function processWithdraw(){
+  const a = Number(document.getElementById('withdrawAmount').value);
+  if(!a||a>balance){alert('Invalid input or insufficient balance'); return;}
+  document.getElementById('withdrawLoader').style.display='block';
+  setTimeout(()=>{
+    document.getElementById('withdrawLoader').style.display='none';
+    balance -= a;
+    const t = {summary:`Withdrew $${a}`, amount:a, recipient:'-', date:new Date().toLocaleString(), status:'Completed'};
+    transactions.push(t);
+    localStorage.setItem('balance', balance);
+    localStorage.setItem('transactions', JSON.stringify(transactions));
+    document.getElementById('withdrawConfirm').innerHTML=`✔ Withdrew $${a}<br>${t.date}<br>Status: ${t.status}`;
+    document.getElementById('withdrawConfirm').style.display='block';
+    updateTxPreview();
+    document.getElementById('balance').innerText=balance;
+    document.getElementById('hdrBal').innerText=balance;
+  },1200);
+}
+
+function processTopup(){
+  const a = Number(document.getElementById('topupAmount').value);
+  const c = document.getElementById('topupCard').value;
+  if(!a||!c){alert('Enter amount and select a card'); return;}
+  document.getElementById('topupLoader').style.display='block';
+  setTimeout(()=>{
+    document.getElementById('topupLoader').style.display='none';
+    balance += a;
+    const t = {summary:`Topped up $${a} via ${c}`, amount:a, recipient:'-', date:new Date().toLocaleString(), status:'Completed'};
+    transactions.push(t);
+    localStorage.setItem('balance', balance);
+    localStorage.setItem('transactions', JSON.stringify(transactions));
+    document.getElementById('topupConfirm').innerHTML=`✔ Top Up $${a} via ${c}<br>${t.date}<br>Status: ${t.status}`;
+    document.getElementById('topupConfirm').style.display='block';
+    updateTxPreview();
+    document.getElementById('balance').innerText=balance;
+    document.getElementById('hdrBal').innerText=balance;
+  },1200);
 }
 
 /* ---------- Init ---------- */
