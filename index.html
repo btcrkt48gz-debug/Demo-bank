@@ -1,156 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Premium Bank Demo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Premium Bank</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;}
-html,body{height:100%;background:linear-gradient(180deg,#e0eafc,#cfdef3);color:#07203a;overflow-x:hidden;}
-body{display:flex;justify-content:center;padding:20px;}
-.app{width:100%;max-width:900px;background:#fff;border-radius:16px;box-shadow:0 15px 40px rgba(0,0,0,0.1);overflow:hidden;display:flex;flex-direction:column;}
-.header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(90deg,#1a73e8,#4285f4);color:#fff;position:sticky;top:0;z-index:10;}
-.h-left{display:flex;align-items:center;gap:10px;}
-.h-left img{width:36px;height:36px;border-radius:8px;}
-.hamburger{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;}
-.brand{font-weight:700;font-size:18px;}
-.h-right{display:flex;gap:10px;align-items:center;}
-.icon-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;}
-.menu{position:fixed;top:0;left:0;height:100%;width:260px;background:#fff;box-shadow:5px 0 20px rgba(0,0,0,0.1);transform:translateX(-300px);transition:transform 0.3s ease;z-index:20;padding:20px;overflow-y:auto;}
-.menu.open{transform:translateX(0);}
-.menu h3{font-size:18px;margin-bottom:16px;color:#07203a;}
-.menu .m-item{padding:12px 8px;border-radius:10px;cursor:pointer;font-weight:700;color:#07203a;margin-bottom:10px;}
-.menu .m-item:hover{background:#f0f4ff;}
-.screen{display:none;padding:20px;overflow-y:auto;max-height:80vh;}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;}
+body{background:linear-gradient(180deg,#eef6ff,#fbfcff);color:#07203a;}
+.app{max-width:920px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 20px 50px rgba(8,23,48,0.08);}
+.header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:linear-gradient(90deg,#0b63d8,#1a8cff);color:#fff;}
+.header .brand{font-weight:700;font-size:20px;}
+.header img{width:40px;height:40px;border-radius:6px;}
+.hamburger{width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.screen{display:none;padding:20px;}
 .screen.active{display:block;}
-/* Login Card */
-.login-card{max-width:450px;margin:60px auto;padding:30px;background:linear-gradient(135deg,#1a73e8,#4285f4);border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.1);text-align:center;color:#fff;}
-.login-card img{width:80px;margin-bottom:16px;border-radius:16px;}
-.login-card .title{font-size:24px;font-weight:700;margin-bottom:6px;}
-.login-card .subtitle{font-size:14px;margin-bottom:20px;opacity:0.85;}
-.input{width:100%;padding:12px 14px;margin:10px 0;border-radius:10px;border:none;font-size:15px;}
-.input:focus{outline:none;box-shadow:0 0 0 2px rgba(255,255,255,0.3);}
-.btn{width:100%;padding:12px 14px;border-radius:10px;border:none;background:#fff;color:#1a73e8;font-weight:700;cursor:pointer;font-size:15px;margin-top:10px;transition:0.2s;}
-.btn:hover{opacity:0.9;}
-.btn.primary{background:#fff;color:#1a73e8;}
-.btn.secondary{background:rgba(255,255,255,0.2);color:#fff;}
-.balance-card{background:linear-gradient(135deg,#1a73e8,#4285f4);color:#fff;padding:20px;border-radius:16px;margin-bottom:16px;box-shadow:0 8px 25px rgba(0,0,0,0.08);}
-.balance-card .greet{font-size:14px;opacity:0.9;}
-.balance-card .bal{font-size:28px;font-weight:700;margin-top:6px;}
-.tiles{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;}
-.tile{background:#fff;border-radius:16px;padding:16px;box-shadow:0 5px 20px rgba(0,0,0,0.05);flex:1;min-width:120px;text-align:center;cursor:pointer;font-weight:700;transition:0.2s;}
-.tile:hover{transform:translateY(-3px);}
-.tile img{width:40px;height:40px;margin-bottom:6px;}
-.box{background:#fff;border-radius:16px;padding:16px;box-shadow:0 5px 20px rgba(0,0,0,0.05);margin-bottom:16px;}
-.tx-list{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
-.tx{background:#f0f4ff;padding:12px;border-radius:10px;border-left:5px solid #4285f4;display:flex;justify-content:space-between;align-items:center;font-weight:600;cursor:pointer;}
-.tx:hover{background:#e4edff;}
-.page-title{font-size:20px;font-weight:700;margin-bottom:10px;}
-.confirm-card{background:#fff;padding:20px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.08);text-align:center;}
-.loader{width:64px;height:64px;border-radius:50%;margin:20px auto;position:relative;border:6px solid rgba(0,0,0,0.1);border-top-color:#1a73e8;animation:spin 1s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg)}}
-/* Profile */
-.profile-card{max-width:500px;margin:20px auto;padding:20px;background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.08);}
-.profile-avatar{width:100px;height:100px;border-radius:50%;object-fit:cover;margin-bottom:12px;}
-.profile-input{width:100%;padding:10px;margin:8px 0;border-radius:10px;border:1px solid #ddd;}
-.profile-btn{padding:12px;background:#1a73e8;color:#fff;font-weight:700;border:none;border-radius:10px;cursor:pointer;width:100%;margin-top:10px;}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;padding:12px;background:#fff;box-shadow:0 -3px 15px rgba(0,0,0,0.05);}
-.bottom-nav .nav-item{flex:1;text-align:center;font-weight:700;color:#555;cursor:pointer;}
-.bottom-nav .nav-item.active{color:#1a73e8;}
+.login-card, .profile-card, .balance-card, .confirm-card{background:#fff;border-radius:14px;padding:20px;box-shadow:0 12px 30px rgba(10,20,60,0.06);margin:20px 0;}
+.login-title{font-size:22px;font-weight:800;margin-bottom:10px;text-align:center;}
+.login-sub{margin-bottom:14px;text-align:center;color:#6b7280;}
+.input, .profile-input{width:100%;padding:12px;border-radius:10px;border:1px solid #e6eefc;margin:8px 0;font-size:15px;}
+.btn, .profile-btn{width:100%;padding:12px;border:none;border-radius:10px;font-weight:800;color:#fff;background:#0b63d8;cursor:pointer;font-size:15px;margin-top:10px;}
+.profile-btn{background:linear-gradient(90deg,#0b63d8,#1a8cff);}
+.tx-list{margin-top:10px;display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto;}
+.tx{background:linear-gradient(180deg,#fbfeff,#f5f9ff);padding:12px;border-left:6px solid #1a73e8;border-radius:10px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:700;}
+.page-title{font-size:18px;font-weight:800;margin-bottom:10px;text-align:center;}
+.loader{width:64px;height:64px;border-radius:50%;margin:50px auto;position:relative;}
+.loader:before,.loader:after{content:"";position:absolute;inset:0;border-radius:50%;}
+.loader:before{border:6px solid rgba(11,99,216,0.08);}
+.loader:after{border-top-color:#0b63d8;transform:rotate(120deg);animation:spin 1s linear infinite;border-right-color:transparent;border-bottom-color:transparent;border-left-color:transparent;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.balance-card{background:linear-gradient(90deg,#0077ff,#0b63d8);color:white;padding:20px;margin-bottom:14px;border-radius:14px;box-shadow:0 10px 30px rgba(10,50,150,0.12);}
+.balance-card .bal{font-size:28px;font-weight:800;margin-top:8px;}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;padding:10px 0;background:#fff;box-shadow:0 -5px 20px rgba(0,0,0,0.05);}
+.nav-item{flex:1;text-align:center;font-weight:700;color:#6b7280;cursor:pointer;padding:10px;}
+.nav-item.active{color:#0b63d8;}
+.profile-pic{width:60px;height:60px;border-radius:50%;object-fit:cover;margin:10px auto;display:block;}
 </style>
 </head>
 <body>
-
-<!-- Side menu -->
-<div id="sideMenu" class="menu" aria-hidden="true">
-  <h3>Premium Bank</h3>
-  <div class="m-item" onclick="nav('dashboard')">Dashboard</div>
-  <div class="m-item" onclick="nav('transactions')">Transactions</div>
-  <div class="m-item" onclick="nav('profile')">Profile</div>
-  <div class="m-item" onclick="nav('help')">Help</div>
-  <div style="height:10px;"></div>
-  <div class="m-item" onclick="doLogout()">Logout</div>
-</div>
-
 <div class="app">
-
-<!-- Header -->
-<div class="header" id="topHeader" style="display:none;">
-  <div class="h-left">
-    <img src="https://via.placeholder.com/36" alt="Logo">
-    <div class="brand">Premium Bank</div>
-    <div class="hamburger" id="hambBtn">☰</div>
+  <!-- Header -->
+  <div class="header" id="topHeader" style="display:none">
+    <div style="display:flex;align-items:center;gap:10px">
+      <img src="https://i.ibb.co/XJ3zG2h/bank-logo.png" alt="Logo">
+      <div class="brand">Premium Bank</div>
+    </div>
+    <div id="hdrBalance">Balance: $<span id="hdrBal">0</span></div>
   </div>
-  <div class="h-right">
-    <div id="hdrBalance">$<span id="hdrBal">1000</span></div>
-    <div class="icon-btn" onclick="nav('profile')">👤</div>
+
+  <!-- Login Screen -->
+  <div id="screen-login" class="screen active">
+    <div class="login-card">
+      <div class="login-title">Welcome to Premium Bank</div>
+      <div class="login-sub">Enter your username & password</div>
+      <input id="loginUser" class="input" placeholder="Username"/>
+      <input id="loginPass" class="input" type="password" placeholder="Password"/>
+      <button class="btn" onclick="doLogin()">Sign In</button>
+    </div>
   </div>
-</div>
 
-<!-- Screens -->
-
-<!-- Login -->
-<div id="screen-login" class="screen active">
-  <div class="login-card">
-    <img src="https://via.placeholder.com/80" alt="Logo">
-    <div class="title">Welcome to Premium Bank</div>
-    <div class="subtitle">Enter your credentials</div>
-    <input id="loginUser" class="input" placeholder="Username"/>
-    <input id="loginPass" class="input" type="password" placeholder="Password"/>
-    <button class="btn primary" onclick="doLogin()">Sign In</button>
+  <!-- Dashboard Screen -->
+  <div id="screen-dashboard" class="screen">
+    <div class="balance-card">
+      <div id="greeting">Hello,</div>
+      <div id="userName">User</div>
+      <div class="bal">$<span id="balance">0</span></div>
+    </div>
+    <div class="tiles">
+      <button class="profile-btn" onclick="nav('transfer')">Send Money</button>
+      <button class="profile-btn" onclick="nav('withdraw')">Withdraw</button>
+      <button class="profile-btn" onclick="nav('topup')">Top Up</button>
+      <input type="file" id="profilePicInput" accept="image/*"/>
+      <img id="profilePic" class="profile-pic" src="" alt="" style="display:none">
+    </div>
+    <div class="tx-list" id="txPreview"></div>
   </div>
-</div>
 
-<!-- Dashboard, Transactions, Transfer, Withdraw, Topup same as previous code -->
-
-<!-- Profile Page -->
-<div id="screen-profile" class="screen">
-  <div class="profile-card">
-    <img id="profilePic" class="profile-avatar" src="https://via.placeholder.com/100" alt="Avatar">
-    <input type="file" id="uploadPic" class="profile-input" accept="image/*">
-    <input id="profileName" class="profile-input" placeholder="Full Name" value="David">
-    <input id="profileEmail" class="profile-input" placeholder="Email" value="david@example.com">
-    <button class="profile-btn" onclick="saveProfile()">Save Profile</button>
+  <!-- Transfer -->
+  <div id="screen-transfer" class="screen">
+    <div class="profile-card">
+      <div class="page-title">Send Money</div>
+      <input id="transferTo" class="profile-input" placeholder="Recipient Name">
+      <input id="transferAmount" class="profile-input" type="number" placeholder="Amount">
+      <button class="profile-btn" onclick="startTransfer()">Continue</button>
+    </div>
   </div>
-</div>
 
-<!-- Bottom nav -->
-<div class="bottom-nav" id="bottomNav" style="display:none;">
-  <div class="nav-item" onclick="nav('dashboard')">Home</div>
-  <div class="nav-item" onclick="nav('transfer')">Transfer</div>
-  <div class="nav-item" onclick="nav('withdraw')">Withdraw</div>
-  <div class="nav-item" onclick="nav('profile')">Profile</div>
+  <!-- Withdraw -->
+  <div id="screen-withdraw" class="screen">
+    <div class="profile-card">
+      <div class="page-title">Withdraw</div>
+      <input id="withdrawAmount" class="profile-input" type="number" placeholder="Amount">
+      <button class="profile-btn" onclick="startWithdraw()">Continue</button>
+    </div>
+  </div>
+
+  <!-- Top Up -->
+  <div id="screen-topup" class="screen">
+    <div class="profile-card">
+      <div class="page-title">Top Up</div>
+      <input id="topupCard" class="profile-input" placeholder="Card Number">
+      <input id="topupAmount" class="profile-input" type="number" placeholder="Amount">
+      <button class="profile-btn" onclick="startTopup()">Continue</button>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div id="screen-loading" class="screen">
+    <div class="loader"></div>
+    <div style="text-align:center;margin-top:12px;font-weight:600;">Processing...</div>
+  </div>
+
+  <!-- Confirmation -->
+  <div id="screen-confirm" class="screen">
+    <div class="confirm-card">
+      <div class="page-title">Success ✅</div>
+      <div id="confirmMessage" style="margin:12px 0;font-size:16px;"></div>
+      <div id="confirmDate" style="opacity:0.7;font-size:14px;"></div>
+      <button class="profile-btn" onclick="nav('dashboard')">Back to Dashboard</button>
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav" id="bottomNav" style="display:none">
+    <div class="nav-item" onclick="nav('dashboard')">Home</div>
+    <div class="nav-item" onclick="nav('transfer')">Send</div>
+    <div class="nav-item" onclick="nav('withdraw')">Withdraw</div>
+    <div class="nav-item" onclick="nav('topup')">Top Up</div>
+  </div>
 </div>
 
 <script>
-// Hamburger toggle
-const sideMenu = document.getElementById('sideMenu');
-const hambBtn = document.getElementById('hambBtn');
-hambBtn.addEventListener('click', e=>{e.stopPropagation(); sideMenu.classList.toggle('open');});
-document.addEventListener('click', e=>{if(!sideMenu.contains(e.target)&&!hambBtn.contains(e.target)) sideMenu.classList.remove('open');});
-
 // State
-let balance = localStorage.getItem('balance') ? Number(localStorage.getItem('balance')) : 1000;
-let transactions = localStorage.getItem('transactions') ? JSON.parse(localStorage.getItem('transactions')) : [];
+let balance = Number(localStorage.getItem('balance') || 1000);
+let transactions = JSON.parse(localStorage.getItem('transactions')||'[]');
 
-// Live greeting & time
-function updateTime(){
-  const now = new Date();
-  const hours = now.getHours();
-  let greet = 'Hello';
-  if(hours<12) greet='Good morning';
-  else if(hours<18) greet='Good afternoon';
-  else greet='Good evening';
-  document.getElementById('greeting').innerText = greet+',';
-  document.getElementById('userName').innerText='David';
-  document.getElementById('liveDateTime').innerText = now.toLocaleString();
+// Login
+function doLogin(){
+  const user = document.getElementById('loginUser').value || 'David';
+  localStorage.setItem('userName',user);
+  document.getElementById('userName').innerText=user;
+  nav('dashboard');
+  showHeader(true);
 }
-setInterval(updateTime,1000);
 
-// Navigation
+// Nav
 function hideAll(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'))}
 function nav(page){
   hideAll();
+  const validScreens=['dashboard','login','transfer','withdraw','topup','loading','confirm'];
+  if(!validScreens.includes(page)) page='dashboard';
   document.getElementById('screen-'+page).classList.add('active');
   document.getElementById('hdrBal').innerText=balance;
   document.getElementById('balance').innerText=balance;
@@ -158,49 +156,94 @@ function nav(page){
   showHeader(page!=='login');
 }
 
-// Show header & bottom nav
+// Show Header
 function showHeader(show){
   document.getElementById('topHeader').style.display=show?'flex':'none';
   document.getElementById('bottomNav').style.display=show?'flex':'none';
 }
 
-// Login
-function doLogin(){
-  const user = document.getElementById('loginUser').value.trim();
-  const pass = document.getElementById('loginPass').value.trim();
-  if(!user||!pass){alert('Enter credentials');return;}
-  localStorage.setItem('logged','1');
-  localStorage.setItem('balance',balance);
+// Transaction Functions
+function addTransaction(type,name,amount,status='Completed'){
+  const now=new Date();
+  const tx={type,name,amount,date:now.toLocaleString(),status};
+  transactions.push(tx);
   localStorage.setItem('transactions',JSON.stringify(transactions));
-  showHeader(true);
-  nav('dashboard');
+  balance = type==='Top Up'? balance+amount : balance-amount;
+  localStorage.setItem('balance',balance);
+  updateTxPreview();
+}
+function startTransfer(){
+  const to=document.getElementById('transferTo').value;
+  const amount=Number(document.getElementById('transferAmount').value);
+  if(!to||!amount){alert('Enter valid details');return;}
+  nav('loading');
+  setTimeout(()=>{
+    addTransaction('Transfer',to,amount);
+    document.getElementById('confirmMessage').innerText=`You sent $${amount} to ${to}`;
+    document.getElementById('confirmDate').innerText=new Date().toLocaleString();
+    nav('confirm');
+  },1500);
+}
+function startWithdraw(){
+  const amount=Number(document.getElementById('withdrawAmount').value);
+  if(!amount||amount>balance){alert('Invalid amount');return;}
+  nav('loading');
+  setTimeout(()=>{
+    addTransaction('Withdraw','ATM/Bank',amount);
+    document.getElementById('confirmMessage').innerText=`You withdrew $${amount}`;
+    document.getElementById('confirmDate').innerText=new Date().toLocaleString();
+    nav('confirm');
+  },1500);
+}
+function startTopup(){
+  const card=document.getElementById('topupCard').value;
+  const amount=Number(document.getElementById('topupAmount').value);
+  if(!card||!amount){alert('Enter valid details');return;}
+  nav('loading');
+  setTimeout(()=>{
+    addTransaction('Top Up',card,amount);
+    document.getElementById('confirmMessage').innerText=`You topped up $${amount} using ${card}`;
+    document.getElementById('confirmDate').innerText=new Date().toLocaleString();
+    nav('confirm');
+  },1500);
 }
 
-// Profile picture upload
-const uploadPic = document.getElementById('uploadPic');
-uploadPic.addEventListener('change',function(){
-  const file = this.files[0];
+// Transaction Preview
+function updateTxPreview(){
+  const c=document.getElementById('txPreview');
+  if(!c) return;
+  c.innerHTML='';
+  transactions.slice(-5).reverse().forEach((t,i)=>{
+    const d=document.createElement('div');
+    d.className='tx';
+    d.innerHTML=`${t.type} - $${t.amount} <span style="font-weight:400;font-size:12px;">(${t.status})</span>`;
+    d.onclick=()=>alert(`${t.type} Details:\nName: ${t.name}\nAmount: $${t.amount}\nDate: ${t.date}\nStatus: ${t.status}`);
+    c.appendChild(d);
+  });
+}
+
+// Profile picture
+document.getElementById('profilePicInput').addEventListener('change', function(e){
+  const file=e.target.files[0];
   if(file){
-    const reader = new FileReader();
-    reader.onload = function(e){
-      document.getElementById('profilePic').src = e.target.result;
-      localStorage.setItem('profilePic', e.target.result);
-    }
+    const reader=new FileReader();
+    reader.onload=function(){ 
+      document.getElementById('profilePic').src=reader.result;
+      document.getElementById('profilePic').style.display='block';
+      localStorage.setItem('profilePic',reader.result);
+    };
     reader.readAsDataURL(file);
   }
 });
-window.onload=()=>{
-  const logged = localStorage.getItem('logged')==='1';
-  showHeader(logged);
-  nav(logged?'dashboard':'login');
-  updateTime();
-  if(localStorage.getItem('profilePic')){
-    document.getElementById('profilePic').src = localStorage.getItem('profilePic');
+window.onload=function(){
+  const pic=localStorage.getItem('profilePic');
+  if(pic){
+    document.getElementById('profilePic').src=pic;
+    document.getElementById('profilePic').style.display='block';
   }
-}
-// Save profile
-function saveProfile(){
-  alert('Profile saved!');
+  const user=localStorage.getItem('userName')||'David';
+  document.getElementById('userName').innerText=user;
+  nav('login');
 }
 </script>
 </body>
