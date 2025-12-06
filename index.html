@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>USA Bank - Personal Banking</title>
+  <meta name="description" content="Manage your accounts, transfer money, and track your finances with USA Bank's secure online banking." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --background: #f7f7f8;
+      --foreground: #1f2023;
+      --card: #f2f2f4;
+      --card-border: #e8e8eb;
+      --muted: #e5e5e8;
+      --muted-foreground: #5c5c66;
+      --border: #dfdfe3;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+      --blue-800: #1e40af;
+      --blue-100: #dbeafe;
+      --purple-600: #9333ea;
+      --green-600: #16a34a;
+      --orange-500: #f97316;
+      --red-600: #dc2626;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background);
+      color: var(--foreground);
+      min-height: 100vh;
+      padding-bottom: 100px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, var(--blue-600), var(--blue-700), var(--blue-800));
+      color: white;
+      padding: 24px 16px 48px;
+      border-radius: 0 0 24px 24px;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-box {
+      background: var(--red-600);
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .logo-text {
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .header-icons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      background: transparent;
+      border: none;
+      color: white;
+      padding: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .greeting {
+      font-size: 24px;
+      font-weight: 300;
+      margin-bottom: 8px;
+    }
+
+    .greeting span {
+      font-weight: 600;
+    }
+
+    .date-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--blue-100);
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .time-info {
+      color: var(--blue-100);
+      font-size: 14px;
+    }
+
+    /* Quick Actions Card */
+    .quick-actions-card {
+      background: white;
+      border-radius: 12px;
+      margin: -24px 16px 0;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      position: relative;
+      z-index: 10;
+    }
+
+    .total-balance {
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .total-balance-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted-foreground);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .total-balance-amount {
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--blue-600);
+    }
+
+    .section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted-foreground);
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 8px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    .action-btn:hover {
+      background: var(--muted);
+    }
+
+    .action-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .action-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--foreground);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .action-sublabel {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--purple-600);
+    }
+
+    .extra-actions {
+      display: none;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .extra-actions.open {
+      display: grid;
+    }
+
+    .expand-btn {
+      display: flex;
+      justify-content: center;
+      margin-top: 8px;
+    }
+
+    .expand-btn button {
+      background: transparent;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      color: var(--muted-foreground);
+      border-radius: 8px;
+    }
+
+    .expand-btn button:hover {
+      background: var(--muted);
+    }
+
+    .expand-btn svg {
+      transition: transform 0.2s;
+    }
+
+    .expand-btn.open svg {
+      transform: rotate(180deg);
+    }
+
+    /* Deposits Section */
+    .deposits-section {
+      padding: 16px;
+    }
+
+    .deposits-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: none;
+      padding: 0;
+      margin-bottom: 16px;
+      cursor: pointer;
+    }
+
+    .deposits-toggle svg {
+      color: var(--blue-600);
+      transition: transform 0.2s;
+    }
+
+    .deposits-toggle.collapsed svg {
+      transform: rotate(-90deg);
+    }
+
+    .deposits-toggle span {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--blue-600);
+    }
+
+    .accounts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .accounts-list.hidden {
+      display: none;
+    }
+
+    /* Account Card */
+    .account-card {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .account-card-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .account-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .account-name {
+      font-weight: 600;
+      color: var(--foreground);
+      margin-bottom: 8px;
+    }
+
+    .account-bar {
+      width: 32px;
+      height: 4px;
+      background: var(--blue-600);
+      border-radius: 2px;
+      margin-bottom: 12px;
+    }
+
+    .account-number {
+      font-size: 14px;
+      color: var(--muted-foreground);
+      font-family: 'Roboto Mono', monospace;
+    }
+
+    .account-balance-section {
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+    }
+
+    .balance-info {
+      text-align: right;
+    }
+
+    .balance-label {
+      font-size: 12px;
+      color: var(--muted-foreground);
+      margin-bottom: 4px;
+    }
+
+    .balance-amount {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--blue-600);
+    }
+
+    .more-btn {
+      background: transparent;
+      border: none;
+      padding: 4px;
+      cursor: pointer;
+      color: var(--muted-foreground);
+      border-radius: 4px;
+      margin-right: -8px;
+    }
+
+    .more-btn:hover {
+      background: var(--muted);
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid var(--border);
+      padding: 8px 8px;
+      z-index: 50;
+    }
+
+    .nav-items {
+      display: flex;
+      justify-content: space-around;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 12px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+      min-width: 70px;
+      color: var(--muted-foreground);
+    }
+
+    .nav-item:hover {
+      background: var(--muted);
+    }
+
+    .nav-item.active {
+      color: var(--blue-600);
+    }
+
+    .nav-item span {
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      bottom: 100px;
+      right: 16px;
+      z-index: 100;
+    }
+
+    .toast {
+      background: var(--foreground);
+      color: white;
+      padding: 12px 16px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      margin-top: 8px;
+      animation: slideIn 0.3s ease;
+      max-width: 300px;
+    }
+
+    .toast-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .toast-desc {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* SVG Icons inline */
+    .icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .icon-lg {
+      width: 24px;
+      height: 24px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="header-top">
+      <div class="logo">
+        <div class="logo-box">USA</div>
+        <span class="logo-text">Bank</span>
+      </div>
+      <div class="header-icons">
+        <button class="icon-btn" onclick="showToast('Messages', 'No new messages')">
+          <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </button>
+        <button class="icon-btn" onclick="showToast('Notifications', 'No new notifications')">
+          <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <h1 class="greeting" id="greeting">Good afternoon, <span>Michigan</span></h1>
+    <div class="date-info">
+      <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+        <line x1="16" y1="2" x2="16" y2="6"/>
+        <line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      <span id="currentDate">Today is Friday, December 6, 2024.</span>
+    </div>
+    <div class="time-info" id="currentTime">3:30:45 PM</div>
+  </div>
+
+  <!-- Quick Actions Card -->
+  <div class="quick-actions-card">
+    <div class="total-balance">
+      <div class="total-balance-label">Overall Balance</div>
+      <div class="total-balance-amount">$14,839.28</div>
+    </div>
+    
+    <div class="section-title">Quick Actions</div>
+    <div class="actions-grid">
+      <button class="action-btn" onclick="showToast('CreditView', 'Checking your credit score...')">
+        <div class="action-icon">
+          <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="#2563eb" stroke-width="2">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+            <polyline points="17 6 23 6 23 12"/>
+          </svg>
+        </div>
+        <span class="action-label">USA Bank</span>
+      </button>
+      <button class="action-btn" onclick="showToast('Send Money', 'Opening Zelle transfer...')">
+        <div class="action-icon">
+          <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="#9333ea" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </div>
+        <span class="action-label">Send money with</span>
+        <span class="action-sublabel">Zelle</span>
+      </button>
+      <button class="action-btn" onclick="showToast('Logging out', 'You have been securely logged out.')">
+        <div class="action-icon">
+          <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="#2563eb" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+        </div>
+        <span class="action-label">Logout</span>
+      </button>
+    </div>
+
+    <div class="extra-actions" id="extraActions">
+      <button class="action-btn" onclick="showToast('Pay Bills', 'Schedule and pay your bills online.')">
+        <div class="action-icon">
+          <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="#16a34a" stroke-width="2">
+            <rect x="2" y="6" width="20" height="12" rx="2"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+          </svg>
+        </div>
+        <span class="action-label">Pay Bills</span>
+      </button>
+      <button class="action-btn" onclick="showToast('Wire Transfer', 'Send domestic or international wire transfers.')">
+        <div class="action-icon">
+          <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="#f97316" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+        </div>
+        <span class="action-label">Wire Transfer</span>
+      </button>
+      <button class="action-btn" onclick="showToast('Manage Cards', 'View and manage your debit and credit cards.')">
+        <div class="action-icon">
+          <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="#2563eb" stroke-width="2">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+            <line x1="1" y1="10" x2="23" y2="10"/>
+          </svg>
+        </div>
+        <span class="action-label">Manage Cards</span>
+      </button>
+      <button class="action-btn" onclick="showToast('Statements', 'View your account statements and documents.')">
+        <div class="action-icon">
+          <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="#2563eb" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+        </div>
+        <span class="action-label">Statements</span>
+      </button>
+      <button class="action-btn" onclick="showToast('Settings', 'Manage your account preferences.')">
+        <div class="action-icon">
+          <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="#2563eb" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </div>
+        <span class="action-label">Settings</span>
+      </button>
+      <button class="action-btn" onclick="showToast('Help & Support', 'Get help with your banking needs.')">
+        <div class="action-icon">
+          <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="#2563eb" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <span class="action-label">Help & Support</span>
+      </button>
+      <button class="action-btn" onclick="showToast('Alerts', 'Manage your notification preferences.')">
+        <div class="action-icon">
+          <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="#2563eb" stroke-width="2">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+        </div>
+        <span class="action-label">Alerts</span>
+      </button>
+      <button class="action-btn" onclick="showToast('Security', 'Review your security settings.')">
+        <div class="action-icon">
+          <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="#2563eb" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <span class="action-label">Security</span>
+      </button>
+    </div>
+
+    <div class="expand-btn" id="expandBtn">
+      <button onclick="toggleExtraActions()">
+        <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Deposits Section -->
+  <div class="deposits-section">
+    <button class="deposits-toggle" id="depositsToggle" onclick="toggleDeposits()">
+      <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+      <span>Deposits</span>
+    </button>
+
+    <div class="accounts-list" id="accountsList">
+      <div class="account-card">
+        <div class="account-card-content">
+          <div class="account-info">
+            <div class="account-name">Everyday Checking</div>
+            <div class="account-bar"></div>
+            <div class="account-number">Checking *6016</div>
+          </div>
+          <div class="account-balance-section">
+            <div class="balance-info">
+              <div class="balance-label">Available balance</div>
+              <div class="balance-amount">$7,473.22</div>
+            </div>
+            <button class="more-btn" onclick="showToast('Everyday Checking', 'View account details, statements, and more.')">
+              <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="account-card">
+        <div class="account-card-content">
+          <div class="account-info">
+            <div class="account-name">Portfolio Checking</div>
+            <div class="account-bar"></div>
+            <div class="account-number">Checking *9460</div>
+          </div>
+          <div class="account-balance-section">
+            <div class="balance-info">
+              <div class="balance-label">Available balance</div>
+              <div class="balance-amount">$2,344.49</div>
+            </div>
+            <button class="more-btn" onclick="showToast('Portfolio Checking', 'View account details, statements, and more.')">
+              <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="account-card">
+        <div class="account-card-content">
+          <div class="account-info">
+            <div class="account-name">Smart Money</div>
+            <div class="account-bar"></div>
+            <div class="account-number">Checking *2310</div>
+          </div>
+          <div class="account-balance-section">
+            <div class="balance-info">
+              <div class="balance-label">Available balance</div>
+              <div class="balance-amount">$5,021.57</div>
+            </div>
+            <button class="more-btn" onclick="showToast('Smart Money', 'View account details, statements, and more.')">
+              <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="nav-items">
+      <button class="nav-item active" id="nav-home" onclick="setActiveNav('home')">
+        <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        <span>Home</span>
+      </button>
+      <button class="nav-item" id="nav-transfer" onclick="setActiveNav('transfer')">
+        <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="1" x2="12" y2="23"/>
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+        </svg>
+        <span>Pay & transfer</span>
+      </button>
+      <button class="nav-item" id="nav-deposit" onclick="setActiveNav('deposit')">
+        <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+        <span>Deposit a check</span>
+      </button>
+      <button class="nav-item" id="nav-more" onclick="setActiveNav('more')">
+        <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        <span>More</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    // Update time every second
+    function updateDateTime() {
+      const now = new Date();
+      
+      // Update greeting based on time
+      const hour = now.getHours();
+      let greeting = 'Good morning';
+      if (hour >= 12 && hour < 17) greeting = 'Good afternoon';
+      if (hour >= 17) greeting = 'Good evening';
+      document.getElementById('greeting').innerHTML = `${greeting}, <span>Michigan</span>`;
+      
+      // Update date
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const dateStr = now.toLocaleDateString('en-US', options);
+      document.getElementById('currentDate').textContent = `Today is ${dateStr}.`;
+      
+      // Update time
+      const timeStr = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true });
+      document.getElementById('currentTime').textContent = timeStr;
+    }
+
+    // Run immediately and then every second
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+
+    // Toggle extra actions
+    function toggleExtraActions() {
+      const extraActions = document.getElementById('extraActions');
+      const expandBtn = document.getElementById('expandBtn');
+      extraActions.classList.toggle('open');
+      expandBtn.classList.toggle('open');
+    }
+
+    // Toggle deposits
+    function toggleDeposits() {
+      const accountsList = document.getElementById('accountsList');
+      const depositsToggle = document.getElementById('depositsToggle');
+      accountsList.classList.toggle('hidden');
+      depositsToggle.classList.toggle('collapsed');
+    }
+
+    // Set active nav
+    function setActiveNav(item) {
+      const navItems = ['home', 'transfer', 'deposit', 'more'];
+      navItems.forEach(nav => {
+        document.getElementById(`nav-${nav}`).classList.remove('active');
+      });
+      document.getElementById(`nav-${item}`).classList.add('active');
+      
+      if (item !== 'home') {
+        const titles = {
+          transfer: 'Pay & Transfer',
+          deposit: 'Deposit a Check',
+          more: 'More Options'
+        };
+        showToast(titles[item], 'This feature is coming soon.');
+      }
+    }
+
+    // Show toast notification
+    function showToast(title, description) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `
+        <div class="toast-title">${title}</div>
+        <div class="toast-desc">${description}</div>
+      `;
+      container.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
