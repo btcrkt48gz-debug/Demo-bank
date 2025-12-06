@@ -461,6 +461,519 @@
       width: 24px;
       height: 24px;
     }
+
+    /* Pay & Transfer Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      border-radius: 24px 24px 0 0;
+      overflow-y: auto;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(100%);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    .modal-accounts {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-account-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    .modal-account-row:hover {
+      background: var(--muted);
+    }
+
+    .modal-account-row:last-child {
+      border-bottom: none;
+    }
+
+    .modal-account-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .modal-account-name {
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--foreground);
+    }
+
+    .modal-account-number {
+      font-size: 14px;
+      color: var(--muted-foreground);
+    }
+
+    .modal-account-balance {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-account-amount {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--foreground);
+    }
+
+    .modal-account-arrow {
+      color: var(--blue-600);
+    }
+
+    .modal-link {
+      display: block;
+      padding: 16px 20px;
+      color: var(--blue-600);
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .modal-link:hover {
+      background: var(--muted);
+    }
+
+    .modal-section-header {
+      background: var(--muted);
+      padding: 12px 20px;
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--foreground);
+    }
+
+    .modal-action-list {
+      padding: 8px 0;
+    }
+
+    .modal-action-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+    }
+
+    .modal-action-item:hover {
+      background: var(--muted);
+    }
+
+    .modal-action-icon {
+      width: 24px;
+      height: 24px;
+      color: var(--blue-600);
+    }
+
+    .modal-action-label {
+      font-size: 16px;
+      color: var(--foreground);
+    }
+
+    .modal-cancel {
+      display: block;
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+      background: transparent;
+      border: none;
+      border-top: 1px solid var(--border);
+      font-size: 16px;
+      color: var(--muted-foreground);
+      cursor: pointer;
+    }
+
+    .modal-cancel:hover {
+      background: var(--muted);
+    }
+
+    /* Account Transfer Page */
+    .transfer-page {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--background);
+      z-index: 300;
+      overflow-y: auto;
+    }
+
+    .transfer-page.open {
+      display: block;
+    }
+
+    .transfer-header {
+      background: var(--blue-600);
+      height: 8px;
+    }
+
+    .transfer-title {
+      padding: 20px;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--foreground);
+    }
+
+    .transfer-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+    }
+
+    .transfer-tab {
+      padding: 12px 0;
+      margin-right: 24px;
+      background: transparent;
+      border: none;
+      font-size: 14px;
+      color: var(--muted-foreground);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+
+    .transfer-tab.active {
+      color: var(--foreground);
+      font-weight: 500;
+      border-bottom: 2px solid var(--foreground);
+    }
+
+    .transfer-form {
+      padding: 20px;
+    }
+
+    .transfer-form-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .transfer-form-subtitle {
+      font-size: 14px;
+      color: var(--muted-foreground);
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--foreground);
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 16px;
+      background: white;
+      color: var(--foreground);
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 20px;
+    }
+
+    .form-select:focus {
+      outline: none;
+      border-color: var(--blue-600);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 16px;
+      background: white;
+      color: var(--foreground);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--blue-600);
+    }
+
+    .form-hint {
+      font-size: 12px;
+      color: var(--muted-foreground);
+      margin-top: 4px;
+    }
+
+    .transfer-type-label {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      color: var(--foreground);
+    }
+
+    .transfer-type-buttons {
+      display: flex;
+      gap: 0;
+      margin-bottom: 8px;
+    }
+
+    .transfer-type-btn {
+      flex: 1;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--foreground);
+      cursor: pointer;
+    }
+
+    .transfer-type-btn:first-child {
+      border-radius: 8px 0 0 8px;
+    }
+
+    .transfer-type-btn:last-child {
+      border-radius: 0 8px 8px 0;
+    }
+
+    .transfer-type-btn.active {
+      background: var(--blue-800);
+      color: white;
+      border-color: var(--blue-800);
+    }
+
+    .transfer-type-desc {
+      font-size: 14px;
+      color: var(--muted-foreground);
+      margin-bottom: 20px;
+    }
+
+    .transfer-bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid var(--border);
+      padding: 8px 8px;
+      z-index: 350;
+    }
+
+    .transfer-nav-items {
+      display: flex;
+      justify-content: space-around;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .transfer-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 12px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+      min-width: 70px;
+      color: var(--muted-foreground);
+    }
+
+    .transfer-nav-item:hover {
+      background: var(--muted);
+    }
+
+    .transfer-nav-item.active {
+      color: var(--blue-600);
+    }
+
+    .transfer-nav-item span {
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      color: var(--muted-foreground);
+      border-radius: 8px;
+    }
+
+    .back-btn:hover {
+      background: var(--muted);
+    }
+
+    .continue-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--blue-600);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
+      margin-bottom: 100px;
+    }
+
+    .continue-btn:hover {
+      background: var(--blue-700);
+    }
+
+    /* Confirmation Page */
+    .confirmation-page {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--background);
+      z-index: 400;
+      overflow-y: auto;
+    }
+
+    .confirmation-page.open {
+      display: block;
+    }
+
+    .confirmation-content {
+      padding: 20px;
+      padding-bottom: 120px;
+    }
+
+    .confirmation-title {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .confirmation-subtitle {
+      font-size: 14px;
+      color: var(--muted-foreground);
+      margin-bottom: 24px;
+    }
+
+    .confirmation-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .confirmation-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .confirmation-row:last-child {
+      border-bottom: none;
+    }
+
+    .confirmation-label {
+      font-size: 14px;
+      color: var(--muted-foreground);
+    }
+
+    .confirmation-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--foreground);
+    }
+
+    .confirmation-amount {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--blue-600);
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .send-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--green-600);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .send-btn:hover {
+      background: #15803d;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 16px;
+      color: var(--blue-600);
+      font-size: 14px;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      width: 100%;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -698,6 +1211,182 @@
     </div>
   </div>
 
+  <!-- Pay & Transfer Modal -->
+  <div class="modal-overlay" id="payTransferModal">
+    <div class="modal-content">
+      <div class="modal-action-list">
+        <button class="modal-action-item" onclick="openTransferPage()">
+          <svg class="modal-action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M23 4v6h-6"/>
+            <path d="M1 20v-6h6"/>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+          </svg>
+          <span class="modal-action-label">Account transfer</span>
+        </button>
+        <button class="modal-action-item" onclick="showToast('Bill Payment', 'Opening bill payment...')">
+          <svg class="modal-action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+          <span class="modal-action-label">Bill payment</span>
+        </button>
+        <button class="modal-action-item" onclick="showToast('Interac e-Transfer', 'Opening Interac e-Transfer...')">
+          <svg class="modal-action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+          <span class="modal-action-label">Interac e-Transfer</span>
+        </button>
+        <button class="modal-action-item" onclick="showToast('Global Money Transfer', 'Opening Global Money Transfer...')">
+          <svg class="modal-action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          <span class="modal-action-label">Global Money Transfer</span>
+        </button>
+        <button class="modal-action-item" onclick="showToast('Deposit a cheque', 'Opening cheque deposit...')">
+          <svg class="modal-action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+          <span class="modal-action-label">Deposit a cheque</span>
+        </button>
+      </div>
+
+      <button class="modal-cancel" onclick="closePayTransferModal()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Account Transfer Page -->
+  <div class="transfer-page" id="transferPage">
+    <div class="transfer-header"></div>
+    <div style="position: relative;">
+      <div class="transfer-title">Account transfers</div>
+      <button class="back-btn" onclick="closeTransferPage()">
+        <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="transfer-tabs">
+      <button class="transfer-tab active" onclick="setTransferTab('make')">Make a transfer</button>
+      <button class="transfer-tab" onclick="setTransferTab('activity')">Transfer activity</button>
+    </div>
+    <div class="transfer-form">
+      <div class="transfer-form-title">Your transfer details</div>
+      <div class="transfer-form-subtitle">All fields are required unless we've marked them (optional)</div>
+      
+      <div class="form-group">
+        <label class="form-label">From</label>
+        <select class="form-select" id="fromAccount">
+          <option value="everyday">Everyday Checking *6016    $7,473.22</option>
+          <option value="portfolio">Portfolio Checking *9460    $2,344.49</option>
+          <option value="smart">Smart Money *2310    $5,021.57</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">To</label>
+        <select class="form-select" id="toAccount">
+          <option value="portfolio">Portfolio Checking *9460    $2,344.49</option>
+          <option value="everyday">Everyday Checking *6016    $7,473.22</option>
+          <option value="smart">Smart Money *2310    $5,021.57</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Amount</label>
+        <input type="text" class="form-input" id="transferAmount" placeholder="">
+        <div class="form-hint">Format: 0.00</div>
+      </div>
+
+      <button class="continue-btn" onclick="openConfirmationPage()">Continue</button>
+    </div>
+
+    <nav class="transfer-bottom-nav">
+      <div class="transfer-nav-items">
+        <button class="transfer-nav-item" onclick="closeTransferPage()">
+          <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <line x1="2" y1="10" x2="22" y2="10"/>
+          </svg>
+          <span>Accounts</span>
+        </button>
+        <button class="transfer-nav-item active">
+          <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="16"/>
+            <line x1="8" y1="12" x2="16" y2="12"/>
+          </svg>
+          <span>Pay & Transfer</span>
+        </button>
+        <button class="transfer-nav-item" onclick="showToast('Bank Services', 'Opening bank services...')">
+          <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M3 21h18"/>
+            <path d="M3 10h18"/>
+            <path d="M5 6l7-3 7 3"/>
+            <path d="M4 10v11"/>
+            <path d="M20 10v11"/>
+            <path d="M8 14v3"/>
+            <path d="M12 14v3"/>
+            <path d="M16 14v3"/>
+          </svg>
+          <span>Bank services</span>
+        </button>
+        <button class="transfer-nav-item" onclick="showToast('Offers', 'Opening offers...')">
+          <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          <span>Offers</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Confirmation Page -->
+  <div class="confirmation-page" id="confirmationPage">
+    <div class="transfer-header"></div>
+    <div style="position: relative;">
+      <div class="transfer-title">Confirm transfer</div>
+      <button class="back-btn" onclick="closeConfirmationPage()">
+        <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="confirmation-content">
+      <div class="confirmation-title">Review your transfer</div>
+      <div class="confirmation-subtitle">Please verify the details below before sending</div>
+      
+      <div class="confirmation-card">
+        <div class="confirmation-amount" id="confirmAmount">$0.00</div>
+      </div>
+      
+      <div class="confirmation-card">
+        <div class="confirmation-row">
+          <span class="confirmation-label">From</span>
+          <span class="confirmation-value" id="confirmFrom">Everyday Checking *6016</span>
+        </div>
+        <div class="confirmation-row">
+          <span class="confirmation-label">To</span>
+          <span class="confirmation-value" id="confirmTo">Portfolio Checking *9460</span>
+        </div>
+        <div class="confirmation-row">
+          <span class="confirmation-label">Date</span>
+          <span class="confirmation-value" id="confirmDate">Today</span>
+        </div>
+      </div>
+      
+      <button class="send-btn" onclick="sendTransfer()">Send Transfer</button>
+      <button class="back-link" onclick="closeConfirmationPage()">Go back to edit</button>
+    </div>
+  </div>
+
   <!-- Bottom Navigation -->
   <nav class="bottom-nav">
     <div class="nav-items">
@@ -708,7 +1397,7 @@
         </svg>
         <span>Home</span>
       </button>
-      <button class="nav-item" id="nav-transfer" onclick="setActiveNav('transfer')">
+      <button class="nav-item" id="nav-transfer" onclick="openPayTransferModal()">
         <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <line x1="12" y1="1" x2="12" y2="23"/>
           <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
@@ -724,9 +1413,9 @@
       </button>
       <button class="nav-item" id="nav-more" onclick="setActiveNav('more')">
         <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <line x1="3" y1="12" x2="21" y2="12"/>
-          <line x1="3" y1="6" x2="21" y2="6"/>
-          <line x1="3" y1="18" x2="21" y2="18"/>
+          <circle cx="12" cy="12" r="1"/>
+          <circle cx="19" cy="12" r="1"/>
+          <circle cx="5" cy="12" r="1"/>
         </svg>
         <span>More</span>
       </button>
@@ -737,28 +1426,25 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <script>
-    // Update time every second
+    // Update date and time
     function updateDateTime() {
       const now = new Date();
-      
-      // Update greeting based on time
-      const hour = now.getHours();
-      let greeting = 'Good morning';
-      if (hour >= 12 && hour < 17) greeting = 'Good afternoon';
-      if (hour >= 17) greeting = 'Good evening';
-      document.getElementById('greeting').innerHTML = `${greeting}, <span>Michigan</span>`;
-      
-      // Update date
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       const dateStr = now.toLocaleDateString('en-US', options);
       document.getElementById('currentDate').textContent = `Today is ${dateStr}.`;
       
-      // Update time
-      const timeStr = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true });
+      const timeStr = now.toLocaleTimeString('en-US');
       document.getElementById('currentTime').textContent = timeStr;
+
+      // Update greeting based on time
+      const hour = now.getHours();
+      let greeting = 'Good evening';
+      if (hour < 12) greeting = 'Good morning';
+      else if (hour < 17) greeting = 'Good afternoon';
+      
+      document.getElementById('greeting').innerHTML = `${greeting}, <span>Michigan</span>`;
     }
 
-    // Run immediately and then every second
     updateDateTime();
     setInterval(updateDateTime, 1000);
 
@@ -770,7 +1456,7 @@
       expandBtn.classList.toggle('open');
     }
 
-    // Toggle deposits
+    // Toggle deposits section
     function toggleDeposits() {
       const accountsList = document.getElementById('accountsList');
       const depositsToggle = document.getElementById('depositsToggle');
@@ -778,22 +1464,96 @@
       depositsToggle.classList.toggle('collapsed');
     }
 
-    // Set active nav
-    function setActiveNav(item) {
-      const navItems = ['home', 'transfer', 'deposit', 'more'];
-      navItems.forEach(nav => {
-        document.getElementById(`nav-${nav}`).classList.remove('active');
+    // Set active nav item
+    function setActiveNav(navId) {
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
       });
-      document.getElementById(`nav-${item}`).classList.add('active');
-      
-      if (item !== 'home') {
-        const titles = {
-          transfer: 'Pay & Transfer',
-          deposit: 'Deposit a Check',
-          more: 'More Options'
-        };
-        showToast(titles[item], 'This feature is coming soon.');
+      document.getElementById(`nav-${navId}`).classList.add('active');
+      showToast('Navigation', `Navigating to ${navId.charAt(0).toUpperCase() + navId.slice(1)}...`);
+    }
+
+    // Open Pay & Transfer Modal
+    function openPayTransferModal() {
+      document.getElementById('payTransferModal').classList.add('open');
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      document.getElementById('nav-transfer').classList.add('active');
+    }
+
+    // Close Pay & Transfer Modal
+    function closePayTransferModal() {
+      document.getElementById('payTransferModal').classList.remove('open');
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      document.getElementById('nav-home').classList.add('active');
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('payTransferModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closePayTransferModal();
       }
+    });
+
+    // Open Transfer Page
+    function openTransferPage() {
+      closePayTransferModal();
+      document.getElementById('transferPage').classList.add('open');
+    }
+
+    // Close Transfer Page
+    function closeTransferPage() {
+      document.getElementById('transferPage').classList.remove('open');
+    }
+
+    // Set Transfer Tab
+    function setTransferTab(tab) {
+      document.querySelectorAll('.transfer-tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+      if (tab === 'activity') {
+        showToast('Transfer Activity', 'Viewing your transfer history...');
+      }
+    }
+
+    // Open Confirmation Page
+    function openConfirmationPage() {
+      const amount = document.getElementById('transferAmount').value;
+      const fromSelect = document.getElementById('fromAccount');
+      const toSelect = document.getElementById('toAccount');
+      
+      if (!amount || amount.trim() === '') {
+        showToast('Error', 'Please enter an amount');
+        return;
+      }
+      
+      const formattedAmount = parseFloat(amount).toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD'
+      });
+      
+      document.getElementById('confirmAmount').textContent = formattedAmount;
+      document.getElementById('confirmFrom').textContent = fromSelect.options[fromSelect.selectedIndex].text.split('$')[0].trim();
+      document.getElementById('confirmTo').textContent = toSelect.options[toSelect.selectedIndex].text.split('$')[0].trim();
+      document.getElementById('confirmDate').textContent = 'Today';
+      
+      document.getElementById('confirmationPage').classList.add('open');
+    }
+
+    // Close Confirmation Page
+    function closeConfirmationPage() {
+      document.getElementById('confirmationPage').classList.remove('open');
+    }
+
+    // Send Transfer
+    function sendTransfer() {
+      const amount = document.getElementById('confirmAmount').textContent;
+      closeConfirmationPage();
+      closeTransferPage();
+      showToast('Transfer Successful', `Your transfer of ${amount} has been sent successfully.`);
+      document.getElementById('transferAmount').value = '';
     }
 
     // Show toast notification
@@ -806,11 +1566,9 @@
         <div class="toast-desc">${description}</div>
       `;
       container.appendChild(toast);
-      
+
       setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateX(100%)';
-        toast.style.transition = 'all 0.3s ease';
+        toast.style.animation = 'slideIn 0.3s ease reverse';
         setTimeout(() => toast.remove(), 300);
       }, 3000);
     }
