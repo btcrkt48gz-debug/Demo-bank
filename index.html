@@ -462,6 +462,392 @@
       height: 24px;
     }
 
+    /* USA Bank Transfer Page */
+    .usa-bank-transfer-page {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--background);
+      z-index: 500;
+      overflow-y: auto;
+    }
+
+    .usa-bank-transfer-page.open {
+      display: block;
+    }
+
+    .usa-bank-header {
+      background: linear-gradient(135deg, var(--blue-600), var(--blue-700), var(--blue-800));
+      color: white;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .usa-bank-back-btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      padding: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .usa-bank-back-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    .usa-bank-header-title {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .glow-balance-card {
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6, #1e40af);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 20px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.5),
+                  0 0 40px rgba(59, 130, 246, 0.3),
+                  0 0 60px rgba(59, 130, 246, 0.2);
+      animation: glowPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.5),
+                    0 0 40px rgba(59, 130, 246, 0.3),
+                    0 0 60px rgba(59, 130, 246, 0.2);
+      }
+      50% {
+        box-shadow: 0 0 30px rgba(59, 130, 246, 0.7),
+                    0 0 60px rgba(59, 130, 246, 0.5),
+                    0 0 90px rgba(59, 130, 246, 0.3);
+      }
+    }
+
+    .glow-balance-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+      }
+      100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+      }
+    }
+
+    .glow-card-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.9;
+      margin-bottom: 4px;
+    }
+
+    .glow-card-account {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 16px;
+    }
+
+    .glow-card-balance {
+      font-size: 36px;
+      font-weight: 700;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .usa-bank-transfer-form {
+      padding: 0 20px 120px;
+    }
+
+    .usa-bank-form-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--foreground);
+    }
+
+    .usa-bank-form-group {
+      margin-bottom: 16px;
+    }
+
+    .usa-bank-form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--foreground);
+    }
+
+    .usa-bank-form-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 16px;
+      background: white;
+      color: var(--foreground);
+    }
+
+    .usa-bank-form-input:focus {
+      outline: none;
+      border-color: var(--blue-600);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .usa-bank-transfer-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 24px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .usa-bank-transfer-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .usa-bank-transfer-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Statement Pages */
+    .statement-page {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--background);
+      z-index: 500;
+      overflow-y: auto;
+    }
+
+    .statement-page.open {
+      display: block;
+    }
+
+    .statement-header {
+      background: linear-gradient(135deg, var(--blue-600), var(--blue-700), var(--blue-800));
+      color: white;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .statement-back-btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      padding: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .statement-back-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    .statement-header-title {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .statement-content {
+      padding: 20px;
+    }
+
+    .statement-title {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--foreground);
+    }
+
+    .statement-subtitle {
+      font-size: 14px;
+      color: var(--muted-foreground);
+      margin-bottom: 24px;
+    }
+
+    .account-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      cursor: pointer;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border: 2px solid transparent;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .account-option:hover {
+      border-color: var(--blue-600);
+      transform: translateY(-2px);
+    }
+
+    .account-option-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .account-option-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .account-option-details h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--foreground);
+      margin-bottom: 4px;
+    }
+
+    .account-option-details p {
+      font-size: 14px;
+      color: var(--muted-foreground);
+    }
+
+    .account-option-arrow {
+      color: var(--blue-600);
+    }
+
+    .date-range-form {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .date-range-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--foreground);
+    }
+
+    .date-input-group {
+      margin-bottom: 20px;
+    }
+
+    .date-input-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--foreground);
+    }
+
+    .date-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 16px;
+      background: white;
+      color: var(--foreground);
+    }
+
+    .date-input:focus {
+      outline: none;
+      border-color: var(--blue-600);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .selected-account-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--blue-100);
+      color: var(--blue-700);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    .download-statement-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--green-600);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .download-statement-btn:hover {
+      background: #15803d;
+      transform: translateY(-2px);
+    }
+
+    .back-to-accounts-btn {
+      width: 100%;
+      padding: 14px;
+      background: transparent;
+      color: var(--blue-600);
+      border: 1px solid var(--blue-600);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    .back-to-accounts-btn:hover {
+      background: var(--blue-100);
+    }
+
     /* Pay & Transfer Modal */
     .modal-overlay {
       display: none;
@@ -3115,7 +3501,7 @@
 
     <div class="section-title">Quick Actions</div>
     <div class="actions-grid">
-      <button class="action-btn" onclick="showToast('CreditView', 'Checking your credit score...')">
+      <button class="action-btn" onclick="openUSABankTransferPage()">
         <div class="action-icon">
           <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="#2563eb" stroke-width="2">
             <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
@@ -3165,7 +3551,7 @@
         </div>
         <span class="action-label">Pay Bills</span>
       </button>
-      <button class="action-btn" onclick="showToast('Statements', 'View your account statements and documents.')">
+      <button class="action-btn" onclick="openStatementsPage()">
         <div class="action-icon">
           <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="#2563eb" stroke-width="2">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -3270,6 +3656,155 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Statement Account Selection Page -->
+  <div class="statement-page" id="statementAccountPage">
+    <div class="statement-header">
+      <button class="statement-back-btn" onclick="closeStatementPages()">
+        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <span class="statement-header-title">Account Statements</span>
+    </div>
+
+    <div class="statement-content">
+      <h2 class="statement-title">Select an Account</h2>
+      <p class="statement-subtitle">Choose which account statement you'd like to download</p>
+
+      <div class="account-option" onclick="selectStatementAccount('checking')">
+        <div class="account-option-info">
+          <div class="account-option-icon">
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="6" width="20" height="12" rx="2"/>
+              <path d="M2 10h20"/>
+            </svg>
+          </div>
+          <div class="account-option-details">
+            <h3>Everyday Checking</h3>
+            <p>****4892 - Balance: $7,473.22</p>
+          </div>
+        </div>
+        <div class="account-option-arrow">
+          <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="account-option" onclick="selectStatementAccount('savings')">
+        <div class="account-option-info">
+          <div class="account-option-icon">
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M19 21V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5m-4 0h4"/>
+            </svg>
+          </div>
+          <div class="account-option-details">
+            <h3>Premium Savings</h3>
+            <p>****6016 - Balance: $7,366.06</p>
+          </div>
+        </div>
+        <div class="account-option-arrow">
+          <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Statement Date Range Page -->
+  <div class="statement-page" id="statementDatePage">
+    <div class="statement-header">
+      <button class="statement-back-btn" onclick="backToAccountSelection()">
+        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <span class="statement-header-title">Download Statement</span>
+    </div>
+
+    <div class="statement-content">
+      <h2 class="statement-title">Select Date Range</h2>
+      <p class="statement-subtitle">Choose the period for your account statement</p>
+
+      <div class="selected-account-badge" id="selectedAccountBadge">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="6" width="20" height="12" rx="2"/>
+        </svg>
+        <span id="selectedAccountName">Everyday Checking</span>
+      </div>
+
+      <div class="date-range-form">
+        <div class="date-range-title">Statement Period</div>
+        
+        <div class="date-input-group">
+          <label class="date-input-label">Start Date</label>
+          <input type="date" class="date-input" id="statementStartDate">
+        </div>
+
+        <div class="date-input-group">
+          <label class="date-input-label">End Date</label>
+          <input type="date" class="date-input" id="statementEndDate">
+        </div>
+
+        <button class="download-statement-btn" onclick="downloadStatement()">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+          </svg>
+          Download Statement
+        </button>
+
+        <button class="back-to-accounts-btn" onclick="backToAccountSelection()">
+          Choose Different Account
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- USA Bank Transfer Page -->
+  <div class="usa-bank-transfer-page" id="usaBankTransferPage">
+    <div class="usa-bank-header">
+      <button class="usa-bank-back-btn" onclick="closeUSABankTransferPage()">
+        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <span class="usa-bank-header-title">USA Bank Transfer</span>
+    </div>
+
+    <div class="glow-balance-card">
+      <div class="glow-card-label">Available Balance</div>
+      <div class="glow-card-account">Everyday Checking ****4892</div>
+      <div class="glow-card-balance">$7,473.22</div>
+    </div>
+
+    <div class="usa-bank-transfer-form">
+      <div class="usa-bank-form-title">Send Money to USA Bank User</div>
+      
+      <div class="usa-bank-form-group">
+        <label class="usa-bank-form-label">Recipient Name</label>
+        <input type="text" class="usa-bank-form-input" id="usaBankRecipientName" placeholder="Enter recipient's full name">
+      </div>
+
+      <div class="usa-bank-form-group">
+        <label class="usa-bank-form-label">Account Number</label>
+        <input type="text" class="usa-bank-form-input" id="usaBankAccountNumber" placeholder="Enter recipient's account number">
+      </div>
+
+      <div class="usa-bank-form-group">
+        <label class="usa-bank-form-label">Amount</label>
+        <input type="text" class="usa-bank-form-input" id="usaBankAmount" placeholder="$0.00">
+      </div>
+
+      <div class="usa-bank-form-group">
+        <label class="usa-bank-form-label">Memo (Optional)</label>
+        <input type="text" class="usa-bank-form-input" id="usaBankMemo" placeholder="What's this for?">
+      </div>
+
+      <button class="usa-bank-transfer-btn" onclick="submitUSABankTransfer()">Send Money</button>
     </div>
   </div>
 
@@ -5419,6 +5954,190 @@
         showToast(isFrozen ? 'Card Frozen' : 'Card Unfrozen', 
                   isFrozen ? 'Your card has been temporarily frozen' : 'Your card is now active');
       }
+    }
+
+    let selectedStatementAccount = null;
+
+    function openStatementsPage() {
+      document.getElementById('statementAccountPage').classList.add('open');
+    }
+
+    function closeStatementPages() {
+      document.getElementById('statementAccountPage').classList.remove('open');
+      document.getElementById('statementDatePage').classList.remove('open');
+      selectedStatementAccount = null;
+      document.getElementById('statementStartDate').value = '';
+      document.getElementById('statementEndDate').value = '';
+    }
+
+    function selectStatementAccount(accountType) {
+      selectedStatementAccount = accountType;
+      document.getElementById('statementAccountPage').classList.remove('open');
+      document.getElementById('statementDatePage').classList.add('open');
+      
+      if (accountType === 'checking') {
+        document.getElementById('selectedAccountName').textContent = 'Everyday Checking ****4892';
+      } else {
+        document.getElementById('selectedAccountName').textContent = 'Premium Savings ****6016';
+      }
+      
+      const today = new Date();
+      const thirtyDaysAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
+      document.getElementById('statementEndDate').value = today.toISOString().split('T')[0];
+      document.getElementById('statementStartDate').value = thirtyDaysAgo.toISOString().split('T')[0];
+    }
+
+    function backToAccountSelection() {
+      document.getElementById('statementDatePage').classList.remove('open');
+      document.getElementById('statementAccountPage').classList.add('open');
+    }
+
+    function downloadStatement() {
+      const startDate = document.getElementById('statementStartDate').value;
+      const endDate = document.getElementById('statementEndDate').value;
+      
+      if (!startDate || !endDate) {
+        showToast('Missing Dates', 'Please select both start and end dates');
+        return;
+      }
+      
+      if (new Date(startDate) > new Date(endDate)) {
+        showToast('Invalid Date Range', 'Start date must be before end date');
+        return;
+      }
+      
+      const accountName = selectedStatementAccount === 'checking' ? 'Everyday Checking' : 'Premium Savings';
+      const accountNumber = selectedStatementAccount === 'checking' ? '****4892' : '****6016';
+      const balance = selectedStatementAccount === 'checking' ? '$7,473.22' : '$7,366.06';
+      
+      const transactions = generateSampleTransactions(startDate, endDate, selectedStatementAccount);
+      
+      let statementContent = `
+╔════════════════════════════════════════════════════════════════╗
+║                         USA BANK                                ║
+║                    ACCOUNT STATEMENT                            ║
+╚════════════════════════════════════════════════════════════════╝
+
+Account: ${accountName}
+Account Number: ${accountNumber}
+Statement Period: ${formatDate(startDate)} - ${formatDate(endDate)}
+Current Balance: ${balance}
+
+────────────────────────────────────────────────────────────────
+
+TRANSACTION HISTORY
+
+Date            Description                          Amount
+────────────────────────────────────────────────────────────────
+`;
+      
+      transactions.forEach(t => {
+        const dateStr = t.date.padEnd(16);
+        const descStr = t.description.padEnd(36);
+        const amtStr = t.amount;
+        statementContent += `${dateStr}${descStr}${amtStr}\n`;
+      });
+      
+      statementContent += `
+────────────────────────────────────────────────────────────────
+
+Thank you for banking with USA Bank.
+For questions, call 1-800-USA-BANK or visit usabank.com
+
+This statement was generated on ${formatDate(new Date().toISOString().split('T')[0])}
+`;
+      
+      const blob = new Blob([statementContent], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `USA_Bank_${accountName.replace(' ', '_')}_Statement_${startDate}_to_${endDate}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      showToast('Statement Downloaded', 'Your account statement has been downloaded');
+      closeStatementPages();
+    }
+
+    function generateSampleTransactions(startDate, endDate, accountType) {
+      const transactions = [];
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      
+      const checkingDescs = [
+        { desc: 'Direct Deposit - Payroll', amount: '+$2,450.00' },
+        { desc: 'Walmart Purchase', amount: '-$87.34' },
+        { desc: 'Amazon.com', amount: '-$156.99' },
+        { desc: 'Gas Station - Shell', amount: '-$45.22' },
+        { desc: 'Restaurant - Olive Garden', amount: '-$62.50' },
+        { desc: 'Netflix Subscription', amount: '-$15.99' },
+        { desc: 'Electric Bill Payment', amount: '-$128.45' },
+        { desc: 'ATM Withdrawal', amount: '-$200.00' },
+        { desc: 'Grocery - Kroger', amount: '-$134.78' },
+        { desc: 'Mobile Transfer Received', amount: '+$500.00' }
+      ];
+      
+      const savingsDescs = [
+        { desc: 'Interest Payment', amount: '+$12.45' },
+        { desc: 'Transfer from Checking', amount: '+$500.00' },
+        { desc: 'Transfer to Checking', amount: '-$200.00' },
+        { desc: 'Direct Deposit - Bonus', amount: '+$1,000.00' },
+        { desc: 'Interest Payment', amount: '+$8.92' }
+      ];
+      
+      const descs = accountType === 'checking' ? checkingDescs : savingsDescs;
+      
+      let currentDate = new Date(start);
+      let index = 0;
+      
+      while (currentDate <= end && transactions.length < 15) {
+        if (Math.random() > 0.3) {
+          const item = descs[index % descs.length];
+          transactions.push({
+            date: formatDate(currentDate.toISOString().split('T')[0]),
+            description: item.desc,
+            amount: item.amount
+          });
+          index++;
+        }
+        currentDate.setDate(currentDate.getDate() + Math.floor(Math.random() * 3) + 1);
+      }
+      
+      return transactions;
+    }
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+    }
+
+    function openUSABankTransferPage() {
+      document.getElementById('usaBankTransferPage').classList.add('open');
+    }
+
+    function closeUSABankTransferPage() {
+      document.getElementById('usaBankTransferPage').classList.remove('open');
+      document.getElementById('usaBankRecipientName').value = '';
+      document.getElementById('usaBankAccountNumber').value = '';
+      document.getElementById('usaBankAmount').value = '';
+      document.getElementById('usaBankMemo').value = '';
+    }
+
+    function submitUSABankTransfer() {
+      const recipientName = document.getElementById('usaBankRecipientName').value;
+      const accountNumber = document.getElementById('usaBankAccountNumber').value;
+      const amount = document.getElementById('usaBankAmount').value;
+      
+      if (!recipientName || !accountNumber || !amount) {
+        showToast('Missing Information', 'Please fill in all required fields');
+        return;
+      }
+      
+      showToast('Transfer Initiated', 'Sending ' + amount + ' to ' + recipientName);
+      closeUSABankTransferPage();
     }
 
     function deleteSelectedCard() {
