@@ -974,6 +974,706 @@
     .back-link:hover {
       text-decoration: underline;
     }
+
+    /* Global Money Transfer Page */
+    .global-transfer-page {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--background);
+      z-index: 300;
+      overflow-y: auto;
+    }
+
+    .global-transfer-page.open {
+      display: block;
+    }
+
+    .global-transfer-header {
+      background: var(--blue-600);
+      height: 8px;
+    }
+
+    .global-transfer-title {
+      padding: 20px;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--foreground);
+    }
+
+    .global-transfer-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      overflow-x: auto;
+    }
+
+    .global-transfer-tab {
+      padding: 12px 0;
+      margin-right: 24px;
+      background: transparent;
+      border: none;
+      font-size: 14px;
+      color: var(--muted-foreground);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+    }
+
+    .global-transfer-tab.active {
+      color: var(--foreground);
+      font-weight: 500;
+      border-bottom: 2px solid var(--foreground);
+    }
+
+    .global-transfer-tab-arrow {
+      padding: 12px 8px;
+      background: transparent;
+      border: none;
+      color: var(--blue-600);
+      cursor: pointer;
+    }
+
+    .global-transfer-content {
+      padding: 20px;
+      padding-bottom: 120px;
+    }
+
+    .currency-watchlist {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .currency-watchlist-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .currency-watchlist-subtitle {
+      font-size: 14px;
+      color: var(--muted-foreground);
+      margin-bottom: 16px;
+    }
+
+    .currency-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .currency-row:last-of-type {
+      border-bottom: none;
+    }
+
+    .currency-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .currency-flag {
+      width: 32px;
+      height: 24px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .currency-name {
+      font-size: 16px;
+      color: var(--foreground);
+    }
+
+    .currency-code {
+      font-size: 14px;
+      color: var(--muted-foreground);
+      margin-left: 8px;
+    }
+
+    .currency-rate-label {
+      font-size: 12px;
+      color: var(--muted-foreground);
+      text-align: right;
+    }
+
+    .currency-rate {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--foreground);
+      text-align: right;
+    }
+
+    .edit-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--blue-600);
+      font-size: 14px;
+      font-weight: 600;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 12px 0;
+    }
+
+    .edit-link:hover {
+      text-decoration: underline;
+    }
+
+    .no-contacts-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      text-align: center;
+    }
+
+    .no-contacts-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .no-contacts-subtitle {
+      font-size: 14px;
+      color: var(--muted-foreground);
+      margin-bottom: 20px;
+    }
+
+    .add-contact-btn {
+      display: inline-block;
+      padding: 14px 48px;
+      background: var(--blue-600);
+      color: white;
+      border: none;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+    }
+
+    .add-contact-btn:hover {
+      background: var(--blue-700);
+    }
+
+    .history-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      text-align: center;
+    }
+
+    .history-card-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .history-card-subtitle {
+      font-size: 14px;
+      color: var(--muted-foreground);
+    }
+
+    /* Add Contact Page */
+    .add-contact-page {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--background);
+      z-index: 400;
+      overflow-y: auto;
+    }
+
+    .add-contact-page.open {
+      display: block;
+    }
+
+    .add-contact-header {
+      background: var(--blue-600);
+      height: 8px;
+    }
+
+    .add-contact-title {
+      padding: 20px;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--foreground);
+    }
+
+    .add-contact-content {
+      padding: 0 20px 120px;
+    }
+
+    .contact-form-group {
+      margin-bottom: 20px;
+    }
+
+    .contact-form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+      margin-bottom: 8px;
+      color: var(--foreground);
+    }
+
+    .contact-form-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 16px;
+      background: white;
+      color: var(--foreground);
+    }
+
+    .contact-form-input:focus {
+      outline: none;
+      border-color: var(--blue-600);
+    }
+
+    .contact-form-select {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 16px;
+      background: white;
+      color: var(--foreground);
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 20px;
+    }
+
+    .contact-form-select:focus {
+      outline: none;
+      border-color: var(--blue-600);
+    }
+
+    .contact-section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--blue-600);
+      margin-bottom: 16px;
+      margin-top: 8px;
+    }
+
+    .contact-info-box {
+      background: #e3f2fd;
+      border-left: 4px solid var(--blue-600);
+      padding: 16px;
+      margin-bottom: 20px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .contact-info-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--blue-600);
+      margin-bottom: 4px;
+    }
+
+    .contact-info-text {
+      font-size: 14px;
+      color: var(--blue-600);
+    }
+
+    .form-hint-text {
+      font-size: 12px;
+      color: var(--muted-foreground);
+      margin-top: 4px;
+    }
+
+    .heads-up-box {
+      border-left: 4px solid var(--foreground);
+      padding: 16px;
+      margin: 20px 0;
+    }
+
+    .heads-up-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .heads-up-text {
+      font-size: 14px;
+      color: var(--muted-foreground);
+    }
+
+    .contact-form-buttons {
+      margin-top: 24px;
+      padding-bottom: 40px;
+    }
+
+    .back-text-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 16px;
+      background: transparent;
+      border: none;
+      color: var(--blue-600);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 16px;
+    }
+
+    .back-text-btn:hover {
+      text-decoration: underline;
+    }
+
+    .continue-contact-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--blue-600);
+      color: white;
+      border: none;
+      border-radius: 24px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 16px;
+    }
+
+    .continue-contact-btn:hover {
+      background: var(--blue-700);
+    }
+
+    .cancel-text-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 16px;
+      background: transparent;
+      border: none;
+      color: var(--blue-600);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .cancel-text-btn:hover {
+      text-decoration: underline;
+    }
+
+    /* Saved Contacts List */
+    .contacts-list {
+      background: white;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      overflow: hidden;
+    }
+
+    .contacts-list-title {
+      padding: 16px 20px;
+      font-size: 18px;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      width: 100%;
+      text-align: left;
+    }
+
+    .contact-item:hover {
+      background: var(--muted);
+    }
+
+    .contact-item:last-child {
+      border-bottom: none;
+    }
+
+    .contact-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--blue-600);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 18px;
+      margin-right: 16px;
+    }
+
+    .contact-details {
+      flex: 1;
+    }
+
+    .contact-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--foreground);
+      margin-bottom: 4px;
+    }
+
+    .contact-bank {
+      font-size: 14px;
+      color: var(--muted-foreground);
+    }
+
+    .contact-arrow {
+      color: var(--blue-600);
+    }
+
+    /* Amount Input Page */
+    .amount-page {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--background);
+      z-index: 500;
+      overflow-y: auto;
+    }
+
+    .amount-page.open {
+      display: block;
+    }
+
+    .amount-header {
+      background: var(--blue-600);
+      height: 8px;
+    }
+
+    .amount-content {
+      padding: 20px;
+      padding-bottom: 120px;
+    }
+
+    .amount-title {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .amount-subtitle {
+      font-size: 14px;
+      color: var(--muted-foreground);
+      margin-bottom: 24px;
+    }
+
+    .recipient-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .recipient-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .recipient-name {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .amount-input-group {
+      margin-bottom: 20px;
+    }
+
+    .amount-input-label {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--foreground);
+    }
+
+    .amount-input-wrapper {
+      display: flex;
+      align-items: center;
+      border: 2px solid var(--blue-600);
+      border-radius: 8px;
+      padding: 16px;
+      background: white;
+    }
+
+    .amount-currency {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--blue-600);
+      margin-right: 8px;
+    }
+
+    .amount-input {
+      flex: 1;
+      border: none;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--foreground);
+      outline: none;
+    }
+
+    .amount-input::placeholder {
+      color: var(--muted-foreground);
+    }
+
+    .conversion-info {
+      background: #e8f4fd;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
+
+    .conversion-text {
+      font-size: 14px;
+      color: var(--blue-600);
+    }
+
+    /* Global Transfer Receipt Page */
+    .transfer-receipt-page {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--background);
+      z-index: 600;
+      overflow-y: auto;
+    }
+
+    .transfer-receipt-page.open {
+      display: block;
+    }
+
+    .receipt-header {
+      background: var(--blue-600);
+      height: 8px;
+    }
+
+    .receipt-content {
+      padding: 20px;
+      padding-bottom: 120px;
+    }
+
+    .receipt-title {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .receipt-subtitle {
+      font-size: 14px;
+      color: var(--muted-foreground);
+      margin-bottom: 24px;
+    }
+
+    .receipt-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .receipt-amount {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--blue-600);
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .receipt-row:last-child {
+      border-bottom: none;
+    }
+
+    .receipt-label {
+      font-size: 14px;
+      color: var(--muted-foreground);
+    }
+
+    .receipt-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--foreground);
+      text-align: right;
+      max-width: 60%;
+    }
+
+    .send-global-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--green-600);
+      color: white;
+      border: none;
+      border-radius: 24px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .send-global-btn:hover {
+      background: #15803d;
+    }
+
+    .edit-transfer-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 16px;
+      background: transparent;
+      border: none;
+      color: var(--blue-600);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 16px;
+    }
+
+    .edit-transfer-btn:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -1239,7 +1939,7 @@
           </svg>
           <span class="modal-action-label">Interac e-Transfer</span>
         </button>
-        <button class="modal-action-item" onclick="showToast('Global Money Transfer', 'Opening Global Money Transfer...')">
+        <button class="modal-action-item" onclick="openGlobalTransferPage()">
           <svg class="modal-action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="10"/>
             <line x1="2" y1="12" x2="22" y2="12"/>
@@ -1384,6 +2084,350 @@
       
       <button class="send-btn" onclick="sendTransfer()">Send Transfer</button>
       <button class="back-link" onclick="closeConfirmationPage()">Go back to edit</button>
+    </div>
+  </div>
+
+  <!-- Global Money Transfer Page -->
+  <div class="global-transfer-page" id="globalTransferPage">
+    <div class="global-transfer-header"></div>
+    <div style="position: relative;">
+      <div class="global-transfer-title">Global money transfer</div>
+      <button class="back-btn" onclick="closeGlobalTransferPage()">
+        <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="global-transfer-tabs">
+      <button class="global-transfer-tab active" onclick="setGlobalTransferTab('overview')">Overview</button>
+      <button class="global-transfer-tab" onclick="setGlobalTransferTab('history')">Global transfer history</button>
+      <button class="global-transfer-tab" onclick="setGlobalTransferTab('manage')">Manage</button>
+      <button class="global-transfer-tab-arrow">
+        <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+    </div>
+    <div class="global-transfer-content">
+      <div class="currency-watchlist">
+        <div class="currency-watchlist-title">Your currency watchlist</div>
+        <div class="currency-watchlist-subtitle">Actual transfer rates may vary slightly</div>
+        <div class="currency-row">
+          <div class="currency-info">
+            <div class="currency-flag">🇪🇺</div>
+            <span class="currency-name">Euro</span>
+            <span class="currency-code">EUR</span>
+          </div>
+          <div>
+            <div class="currency-rate-label">1 USD =</div>
+            <div class="currency-rate">0.92 EUR</div>
+          </div>
+        </div>
+        <div class="currency-row">
+          <div class="currency-info">
+            <div class="currency-flag">🇬🇧</div>
+            <span class="currency-name">British pound</span>
+            <span class="currency-code">GBP</span>
+          </div>
+          <div>
+            <div class="currency-rate-label">1 USD =</div>
+            <div class="currency-rate">0.79 GBP</div>
+          </div>
+        </div>
+        <div class="currency-row">
+          <div class="currency-info">
+            <div class="currency-flag">🇯🇵</div>
+            <span class="currency-name">Japanese yen</span>
+            <span class="currency-code">JPY</span>
+          </div>
+          <div>
+            <div class="currency-rate-label">1 USD =</div>
+            <div class="currency-rate">149.50 JPY</div>
+          </div>
+        </div>
+        <button class="edit-link" onclick="showToast('Edit Watchlist', 'Opening currency watchlist editor...')">
+          <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+          EDIT
+        </button>
+      </div>
+
+      <div class="no-contacts-card" id="noContactsCard">
+        <div class="no-contacts-title">You haven't added any contacts yet.</div>
+        <div class="no-contacts-subtitle">Let's change that.</div>
+        <button class="add-contact-btn" onclick="openAddContactPage()">ADD A CONTACT</button>
+      </div>
+
+      <div class="contacts-list" id="contactsList" style="display: none;">
+        <div class="contacts-list-title">Your contacts</div>
+        <div id="contactsContainer"></div>
+        <button class="add-contact-btn" onclick="openAddContactPage()" style="margin: 16px;">ADD A CONTACT</button>
+      </div>
+
+      <div class="history-card">
+        <div class="history-card-title">Go on, make history.</div>
+        <div class="history-card-subtitle">Once you start sending global money transfers, they'll show up here.</div>
+      </div>
+    </div>
+
+    <nav class="transfer-bottom-nav">
+      <div class="transfer-nav-items">
+        <button class="transfer-nav-item" onclick="closeGlobalTransferPage()">
+          <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <line x1="2" y1="10" x2="22" y2="10"/>
+          </svg>
+          <span>Accounts</span>
+        </button>
+        <button class="transfer-nav-item active">
+          <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="16"/>
+            <line x1="8" y1="12" x2="16" y2="12"/>
+          </svg>
+          <span>Pay & Transfer</span>
+        </button>
+        <button class="transfer-nav-item" onclick="showToast('Bank Services', 'Opening bank services...')">
+          <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M3 21h18"/>
+            <path d="M3 10h18"/>
+            <path d="M5 6l7-3 7 3"/>
+            <path d="M4 10v11"/>
+            <path d="M20 10v11"/>
+            <path d="M8 14v3"/>
+            <path d="M12 14v3"/>
+            <path d="M16 14v3"/>
+          </svg>
+          <span>Bank services</span>
+        </button>
+        <button class="transfer-nav-item" onclick="showToast('Offers', 'Opening offers...')">
+          <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          <span>Offers</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Add Contact Page -->
+  <div class="add-contact-page" id="addContactPage">
+    <div class="add-contact-header"></div>
+    <div style="position: relative;">
+      <div class="add-contact-title">Contact information</div>
+      <button class="back-btn" onclick="closeAddContactPage()">
+        <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="add-contact-content">
+      <div class="contact-form-group">
+        <label class="contact-form-label">First name</label>
+        <input type="text" class="contact-form-input" id="contactFirstName" placeholder="">
+      </div>
+
+      <div class="contact-form-group">
+        <label class="contact-form-label">Middle name</label>
+        <input type="text" class="contact-form-input" id="contactMiddleName" placeholder="">
+      </div>
+
+      <div class="contact-form-group">
+        <label class="contact-form-label">Last name</label>
+        <input type="text" class="contact-form-input" id="contactLastName" placeholder="">
+      </div>
+
+      <div class="contact-section-title">Contact address</div>
+
+
+      <div class="contact-form-group">
+        <label class="contact-form-label">Country</label>
+        <select class="contact-form-select" id="contactCountry">
+          <option value="US">United States</option>
+          <option value="CA">Canada</option>
+          <option value="MX">Mexico</option>
+          <option value="GB">United Kingdom</option>
+          <option value="DE">Germany</option>
+          <option value="FR">France</option>
+          <option value="ES">Spain</option>
+          <option value="IT">Italy</option>
+          <option value="AU">Australia</option>
+          <option value="JP">Japan</option>
+          <option value="CN">China</option>
+          <option value="IN">India</option>
+          <option value="BR">Brazil</option>
+          <option value="NG">Nigeria</option>
+          <option value="GH">Ghana</option>
+          <option value="KE">Kenya</option>
+          <option value="ZA">South Africa</option>
+          <option value="PH">Philippines</option>
+          <option value="VN">Vietnam</option>
+          <option value="KR">South Korea</option>
+        </select>
+      </div>
+
+      <div class="contact-form-group">
+        <label class="contact-form-label">Address line 1</label>
+        <input type="text" class="contact-form-input" id="contactAddress1" placeholder="">
+      </div>
+
+      <div class="contact-form-group">
+        <label class="contact-form-label">City</label>
+        <input type="text" class="contact-form-input" id="contactCity" placeholder="">
+      </div>
+
+      <div class="contact-form-group">
+        <label class="contact-form-label">State/Province</label>
+        <input type="text" class="contact-form-input" id="contactState" placeholder="">
+        <div class="form-hint-text">e.g. NY or CA</div>
+      </div>
+
+      <div class="contact-form-group">
+        <label class="contact-form-label">Postal/Zip code</label>
+        <input type="text" class="contact-form-input" id="contactZip" placeholder="">
+      </div>
+
+      <div class="contact-section-title">Bank details</div>
+
+      <div class="contact-form-group">
+        <label class="contact-form-label">Bank name</label>
+        <input type="text" class="contact-form-input" id="contactBankName" placeholder="">
+      </div>
+
+      <div class="contact-form-group">
+        <label class="contact-form-label">Bank address</label>
+        <input type="text" class="contact-form-input" id="contactBankAddress" placeholder="">
+      </div>
+
+      <div class="contact-form-group">
+        <label class="contact-form-label">Account number</label>
+        <input type="text" class="contact-form-input" id="contactAccountNumber" placeholder="">
+      </div>
+
+      <div class="contact-form-group">
+        <label class="contact-form-label">Routing number or SWIFT code</label>
+        <input type="text" class="contact-form-input" id="contactRoutingSwift" placeholder="">
+        <div class="form-hint-text">For US banks use routing number; for international use SWIFT/BIC code</div>
+      </div>
+
+      <div class="heads-up-box">
+        <div class="heads-up-title">Heads-up:</div>
+        <div class="heads-up-text">Please double-check your contact's info is correct before continuing.</div>
+      </div>
+
+      <div class="contact-form-buttons">
+        <button class="back-text-btn" onclick="closeAddContactPage()">BACK</button>
+        <button class="continue-contact-btn" onclick="saveContact()">CONTINUE</button>
+        <button class="cancel-text-btn" onclick="cancelAddContact()">CANCEL</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Amount Input Page -->
+  <div class="amount-page" id="amountPage">
+    <div class="amount-header"></div>
+    <div style="position: relative;">
+      <div class="amount-content">
+        <button class="back-btn" onclick="closeAmountPage()" style="position: absolute; top: 0; right: 0;">
+          <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+        <div class="amount-title">Send money</div>
+        <div class="amount-subtitle">Enter the amount you want to send</div>
+        
+        <div class="recipient-card">
+          <div class="recipient-header">
+            <div class="contact-avatar" id="amountRecipientAvatar">JD</div>
+            <div class="recipient-name" id="amountRecipientName">John Doe</div>
+          </div>
+          <div style="font-size: 14px; color: var(--muted-foreground);">
+            <div id="amountRecipientBank">Bank of America</div>
+            <div id="amountRecipientAccount">Account: ****1234</div>
+          </div>
+        </div>
+
+        <div class="amount-input-group">
+          <div class="amount-input-label">Amount to send (USD)</div>
+          <div class="amount-input-wrapper">
+            <span class="amount-currency">$</span>
+            <input type="number" class="amount-input" id="globalTransferAmount" placeholder="0.00" step="0.01" min="0">
+          </div>
+        </div>
+
+        <div class="conversion-info">
+          <div class="conversion-text">Transfer fees and exchange rates will be calculated at the time of transfer.</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">From account</label>
+          <select class="form-select" id="globalFromAccount">
+            <option value="checking6016">Everyday Checking *6016 - $7,473.22</option>
+            <option value="checking9460">Portfolio Checking *9460 - $2,344.49</option>
+            <option value="checking2310">Smart Money *2310 - $5,021.57</option>
+          </select>
+        </div>
+
+        <button class="continue-contact-btn" onclick="openTransferReceipt()">CONTINUE</button>
+        <button class="cancel-text-btn" onclick="closeAmountPage()">CANCEL</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transfer Receipt Page -->
+  <div class="transfer-receipt-page" id="transferReceiptPage">
+    <div class="receipt-header"></div>
+    <div style="position: relative;">
+      <div class="receipt-content">
+        <button class="back-btn" onclick="closeTransferReceipt()" style="position: absolute; top: 0; right: 0;">
+          <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+        <div class="receipt-title">Review transfer</div>
+        <div class="receipt-subtitle">Please confirm the transfer details below</div>
+
+        <div class="receipt-card">
+          <div class="receipt-amount" id="receiptAmount">$0.00</div>
+          <div class="receipt-row">
+            <span class="receipt-label">Recipient</span>
+            <span class="receipt-value" id="receiptRecipient">John Doe</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-label">Bank</span>
+            <span class="receipt-value" id="receiptBank">Bank of America</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-label">Bank address</span>
+            <span class="receipt-value" id="receiptBankAddress">123 Main St</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-label">Account number</span>
+            <span class="receipt-value" id="receiptAccountNum">****1234</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-label">Routing/SWIFT</span>
+            <span class="receipt-value" id="receiptRouting">BOFAUS3N</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-label">From account</span>
+            <span class="receipt-value" id="receiptFromAccount">Everyday Checking *6016</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-label">Transfer date</span>
+            <span class="receipt-value" id="receiptDate">Today</span>
+          </div>
+        </div>
+
+        <button class="send-global-btn" onclick="sendGlobalTransfer()">SEND TRANSFER</button>
+        <button class="edit-transfer-btn" onclick="editTransfer()">Go back to edit</button>
+      </div>
     </div>
   </div>
 
@@ -1572,6 +2616,243 @@
         setTimeout(() => toast.remove(), 300);
       }, 3000);
     }
+
+    // Contact storage
+    let savedContacts = JSON.parse(localStorage.getItem('usaBankContacts') || '[]');
+    let selectedContact = null;
+
+    // Open Global Transfer Page
+    function openGlobalTransferPage() {
+      closePayTransferModal();
+      document.getElementById('globalTransferPage').classList.add('open');
+      renderContacts();
+    }
+
+    // Close Global Transfer Page
+    function closeGlobalTransferPage() {
+      document.getElementById('globalTransferPage').classList.remove('open');
+    }
+
+    // Set Global Transfer Tab
+    function setGlobalTransferTab(tab) {
+      document.querySelectorAll('.global-transfer-tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+      if (tab === 'history') {
+        showToast('Transfer History', 'Viewing your global transfer history...');
+      } else if (tab === 'manage') {
+        showToast('Manage', 'Opening transfer management...');
+      }
+    }
+
+    // Render contacts list
+    function renderContacts() {
+      const noContactsCard = document.getElementById('noContactsCard');
+      const contactsList = document.getElementById('contactsList');
+      const contactsContainer = document.getElementById('contactsContainer');
+
+      if (savedContacts.length === 0) {
+        noContactsCard.style.display = 'block';
+        contactsList.style.display = 'none';
+      } else {
+        noContactsCard.style.display = 'none';
+        contactsList.style.display = 'block';
+        
+        contactsContainer.innerHTML = '';
+        savedContacts.forEach((contact, index) => {
+          const initials = (contact.firstName.charAt(0) + contact.lastName.charAt(0)).toUpperCase();
+          const contactItem = document.createElement('button');
+          contactItem.className = 'contact-item';
+          contactItem.onclick = () => selectContact(index);
+          contactItem.innerHTML = `
+            <div class="contact-avatar">${initials}</div>
+            <div class="contact-details">
+              <div class="contact-name">${contact.firstName} ${contact.lastName}</div>
+              <div class="contact-bank">${contact.bankName} - ****${contact.accountNumber.slice(-4)}</div>
+            </div>
+            <div class="contact-arrow">
+              <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </div>
+          `;
+          contactsContainer.appendChild(contactItem);
+        });
+      }
+    }
+
+    // Select contact for transfer
+    function selectContact(index) {
+      selectedContact = savedContacts[index];
+      openAmountPage();
+    }
+
+    // Open Add Contact Page
+    function openAddContactPage() {
+      document.getElementById('addContactPage').classList.add('open');
+    }
+
+    // Close Add Contact Page
+    function closeAddContactPage() {
+      document.getElementById('addContactPage').classList.remove('open');
+    }
+
+    // Save Contact
+    function saveContact() {
+      const firstName = document.getElementById('contactFirstName').value.trim();
+      const middleName = document.getElementById('contactMiddleName').value.trim();
+      const lastName = document.getElementById('contactLastName').value.trim();
+      const country = document.getElementById('contactCountry').value;
+      const address = document.getElementById('contactAddress1').value.trim();
+      const city = document.getElementById('contactCity').value.trim();
+      const state = document.getElementById('contactState').value.trim();
+      const zip = document.getElementById('contactZip').value.trim();
+      const bankName = document.getElementById('contactBankName').value.trim();
+      const bankAddress = document.getElementById('contactBankAddress').value.trim();
+      const accountNumber = document.getElementById('contactAccountNumber').value.trim();
+      const routingSwift = document.getElementById('contactRoutingSwift').value.trim();
+
+      if (!firstName || !lastName) {
+        showToast('Error', 'Please enter first and last name');
+        return;
+      }
+
+      if (!address || !city || !state || !zip) {
+        showToast('Error', 'Please fill in all address fields');
+        return;
+      }
+
+      if (!bankName || !accountNumber || !routingSwift) {
+        showToast('Error', 'Please fill in all bank details');
+        return;
+      }
+
+      const newContact = {
+        firstName,
+        middleName,
+        lastName,
+        country,
+        address,
+        city,
+        state,
+        zip,
+        bankName,
+        bankAddress,
+        accountNumber,
+        routingSwift
+      };
+
+      savedContacts.push(newContact);
+      localStorage.setItem('usaBankContacts', JSON.stringify(savedContacts));
+
+      clearContactForm();
+      closeAddContactPage();
+      renderContacts();
+      showToast('Contact Saved', `${firstName} ${lastName} has been added to your contacts.`);
+    }
+
+    // Clear contact form
+    function clearContactForm() {
+      document.getElementById('contactFirstName').value = '';
+      document.getElementById('contactMiddleName').value = '';
+      document.getElementById('contactLastName').value = '';
+      document.getElementById('contactAddress1').value = '';
+      document.getElementById('contactCity').value = '';
+      document.getElementById('contactState').value = '';
+      document.getElementById('contactZip').value = '';
+      document.getElementById('contactCountry').value = 'US';
+      document.getElementById('contactBankName').value = '';
+      document.getElementById('contactBankAddress').value = '';
+      document.getElementById('contactAccountNumber').value = '';
+      document.getElementById('contactRoutingSwift').value = '';
+    }
+
+    // Cancel Add Contact
+    function cancelAddContact() {
+      clearContactForm();
+      closeAddContactPage();
+      closeGlobalTransferPage();
+    }
+
+    // Open Amount Page
+    function openAmountPage() {
+      if (!selectedContact) return;
+      
+      const initials = (selectedContact.firstName.charAt(0) + selectedContact.lastName.charAt(0)).toUpperCase();
+      document.getElementById('amountRecipientAvatar').textContent = initials;
+      document.getElementById('amountRecipientName').textContent = `${selectedContact.firstName} ${selectedContact.lastName}`;
+      document.getElementById('amountRecipientBank').textContent = selectedContact.bankName;
+      document.getElementById('amountRecipientAccount').textContent = `Account: ****${selectedContact.accountNumber.slice(-4)}`;
+      document.getElementById('globalTransferAmount').value = '';
+      
+      document.getElementById('amountPage').classList.add('open');
+    }
+
+    // Close Amount Page
+    function closeAmountPage() {
+      document.getElementById('amountPage').classList.remove('open');
+      document.getElementById('globalTransferAmount').value = '';
+    }
+
+    // Open Transfer Receipt
+    function openTransferReceipt() {
+      const amount = document.getElementById('globalTransferAmount').value;
+      
+      if (!amount || parseFloat(amount) <= 0) {
+        showToast('Error', 'Please enter a valid amount');
+        return;
+      }
+
+      const formattedAmount = parseFloat(amount).toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD'
+      });
+
+      const fromSelect = document.getElementById('globalFromAccount');
+      const fromAccountText = fromSelect.options[fromSelect.selectedIndex].text.split('-')[0].trim();
+
+      document.getElementById('receiptAmount').textContent = formattedAmount;
+      document.getElementById('receiptRecipient').textContent = `${selectedContact.firstName} ${selectedContact.lastName}`;
+      document.getElementById('receiptBank').textContent = selectedContact.bankName;
+      document.getElementById('receiptBankAddress').textContent = selectedContact.bankAddress || 'N/A';
+      document.getElementById('receiptAccountNum').textContent = `****${selectedContact.accountNumber.slice(-4)}`;
+      document.getElementById('receiptRouting').textContent = selectedContact.routingSwift;
+      document.getElementById('receiptFromAccount').textContent = fromAccountText;
+      document.getElementById('receiptDate').textContent = new Date().toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+
+      document.getElementById('transferReceiptPage').classList.add('open');
+    }
+
+    // Close Transfer Receipt
+    function closeTransferReceipt() {
+      document.getElementById('transferReceiptPage').classList.remove('open');
+    }
+
+    // Edit Transfer (go back to amount page)
+    function editTransfer() {
+      closeTransferReceipt();
+    }
+
+    // Send Global Transfer
+    function sendGlobalTransfer() {
+      const amount = document.getElementById('receiptAmount').textContent;
+      const recipient = document.getElementById('receiptRecipient').textContent;
+
+      closeTransferReceipt();
+      closeAmountPage();
+      closeGlobalTransferPage();
+      
+      showToast('Transfer Sent!', `Your transfer of ${amount} to ${recipient} has been submitted successfully.`);
+      
+      selectedContact = null;
+    }
+
+    // Initialize contacts on page load
+    renderContacts();
   </script>
 </body>
 </html>
