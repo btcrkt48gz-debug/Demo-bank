@@ -976,6 +976,159 @@
     }
 
     /* Global Money Transfer Page */
+    .agreement-page {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: white;
+      z-index: 400;
+      overflow-y: auto;
+      padding-bottom: 100px;
+    }
+
+    .agreement-page.open {
+      display: block;
+    }
+
+    .agreement-content {
+      padding: 24px;
+    }
+
+    .agreement-text {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--foreground);
+      margin-bottom: 24px;
+    }
+
+    .agreement-link {
+      color: var(--blue-600);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .agreement-buttons {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 16px;
+      background: white;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .agree-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--blue-600);
+      color: white;
+      border: none;
+      border-radius: 24px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .cancel-btn {
+      width: 100%;
+      padding: 16px;
+      background: transparent;
+      color: var(--blue-600);
+      border: none;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .deposit-form-page {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--background);
+      z-index: 400;
+      overflow-y: auto;
+    }
+
+    .deposit-form-page.open {
+      display: block;
+    }
+
+    .deposit-header {
+      background: var(--blue-600);
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      color: white;
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .deposit-steps {
+      padding: 16px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step-indicator {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--foreground);
+      margin-bottom: 8px;
+    }
+
+    .step-bars {
+      display: flex;
+      gap: 4px;
+    }
+
+    .step-bar {
+      height: 4px;
+      flex: 1;
+      background: var(--muted);
+      border-radius: 2px;
+    }
+
+    .step-bar.active {
+      background: var(--green-600);
+    }
+
+    .camera-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--blue-600);
+      font-weight: 600;
+      background: transparent;
+      border: none;
+      padding: 8px 0;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .camera-placeholder {
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 8px;
+      background: var(--muted);
+      display: none;
+    }
+
+    .camera-placeholder.visible {
+      display: block;
+    }
+
     .global-transfer-page {
       display: none;
       position: fixed;
@@ -1716,7 +1869,7 @@
       <div class="total-balance-label">Overall Balance</div>
       <div class="total-balance-amount">$14,839.28</div>
     </div>
-    
+
     <div class="section-title">Quick Actions</div>
     <div class="actions-grid">
       <button class="action-btn" onclick="showToast('CreditView', 'Checking your credit score...')">
@@ -1751,7 +1904,7 @@
     </div>
 
     <div class="extra-actions" id="extraActions">
-      <button class="action-btn" onclick="showToast('Pay Bills', 'Schedule and pay your bills online.')">
+      <button class="action-btn" onclick="openPayBillsPage()">
         <div class="action-icon">
           <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="#16a34a" stroke-width="2">
             <rect x="2" y="6" width="20" height="12" rx="2"/>
@@ -1923,7 +2076,7 @@
           </svg>
           <span class="modal-action-label">Account transfer</span>
         </button>
-        <button class="modal-action-item" onclick="showToast('Bill Payment', 'Opening bill payment...')">
+        <button class="modal-action-item" onclick="openPayBillsPage()">
           <svg class="modal-action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
             <polyline points="14 2 14 8 20 8"/>
@@ -1931,13 +2084,6 @@
             <line x1="16" y1="17" x2="8" y2="17"/>
           </svg>
           <span class="modal-action-label">Bill payment</span>
-        </button>
-        <button class="modal-action-item" onclick="showToast('Interac e-Transfer', 'Opening Interac e-Transfer...')">
-          <svg class="modal-action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <line x1="22" y1="2" x2="11" y2="13"/>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-          </svg>
-          <span class="modal-action-label">Interac e-Transfer</span>
         </button>
         <button class="modal-action-item" onclick="openGlobalTransferPage()">
           <svg class="modal-action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -1947,7 +2093,7 @@
           </svg>
           <span class="modal-action-label">Global Money Transfer</span>
         </button>
-        <button class="modal-action-item" onclick="showToast('Deposit a cheque', 'Opening cheque deposit...')">
+        <button class="modal-action-item" onclick="openDepositCheck()">
           <svg class="modal-action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
             <circle cx="12" cy="13" r="4"/>
@@ -1979,7 +2125,7 @@
     <div class="transfer-form">
       <div class="transfer-form-title">Your transfer details</div>
       <div class="transfer-form-subtitle">All fields are required unless we've marked them (optional)</div>
-      
+
       <div class="form-group">
         <label class="form-label">From</label>
         <select class="form-select" id="fromAccount">
@@ -2047,6 +2193,104 @@
     </nav>
   </div>
 
+  <!-- Pay Bills Page -->
+  <div class="transfer-page" id="payBillsPage">
+    <div class="transfer-header"></div>
+    <div style="position: relative;">
+      <div class="transfer-title">Pay Bills</div>
+      <button class="back-btn" onclick="closePayBillsPage()">
+        <svg class="icon-lg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="transfer-form">
+      <div id="billerSelection">
+        <div class="transfer-form-title">Select Bill Type</div>
+        <div class="transfer-form-subtitle">Choose a category to add a new biller</div>
+        
+        <div class="modal-action-list">
+            <button class="modal-action-item" onclick="selectBillerType('Utilities (electricity, water, gas)')">
+                <svg class="modal-action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                </svg>
+                <span class="modal-action-label">Utilities (electricity, water, gas)</span>
+            </button>
+            <button class="modal-action-item" onclick="selectBillerType('Phone/internet')">
+                <svg class="modal-action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                    <line x1="12" y1="18" x2="12.01" y2="18"/>
+                </svg>
+                <span class="modal-action-label">Phone/internet</span>
+            </button>
+            <button class="modal-action-item" onclick="selectBillerType('Credit card bills')">
+                <svg class="modal-action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                    <line x1="1" y1="10" x2="23" y2="10"/>
+                </svg>
+                <span class="modal-action-label">Credit card bills</span>
+            </button>
+            <button class="modal-action-item" onclick="selectBillerType('Rent')">
+                <svg class="modal-action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+                <span class="modal-action-label">Rent (some landlords accept it)</span>
+            </button>
+            <button class="modal-action-item" onclick="selectBillerType('Car loan')">
+                <svg class="modal-action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <rect x="1" y="3" width="15" height="13"/>
+                    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                    <circle cx="5.5" cy="18.5" r="2.5"/>
+                    <circle cx="18.5" cy="18.5" r="2.5"/>
+                </svg>
+                <span class="modal-action-label">Car loan</span>
+            </button>
+            <button class="modal-action-item" onclick="selectBillerType('Insurance')">
+                <svg class="modal-action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span class="modal-action-label">Insurance</span>
+            </button>
+            <button class="modal-action-item" onclick="selectBillerType('Government payments')">
+                <svg class="modal-action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <line x1="4" y1="22" x2="20" y2="22"/>
+                    <line x1="2" y1="7" x2="22" y2="7"/>
+                    <line x1="12" y1="2" x2="12" y2="7"/>
+                    <line x1="6" y1="7" x2="6" y2="22"/>
+                    <line x1="18" y1="7" x2="18" y2="22"/>
+                </svg>
+                <span class="modal-action-label">Government payments</span>
+            </button>
+        </div>
+      </div>
+
+      <div id="addBillerForm" style="display: none;">
+        <div class="transfer-form-title" id="selectedBillerTitle">Add Biller</div>
+        <div class="transfer-form-subtitle">Enter the biller details below</div>
+        <form onsubmit="handleAddBiller(event)">
+            <div class="form-group">
+                <label class="form-label">Company Name</label>
+                <input type="text" class="form-input" required placeholder="e.g. City Power Co.">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Your Account Number</label>
+                <input type="text" class="form-input" required placeholder="Account # with company">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Company Address</label>
+                <input type="text" class="form-input" required placeholder="Street address">
+                <div class="form-hint">Some banks find this automatically</div>
+            </div>
+            <button class="continue-btn">Add Biller</button>
+            <button type="button" class="modal-cancel" onclick="resetBillerSelection()" style="margin-top: 0; border-top: none;">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- Confirmation Page -->
   <div class="confirmation-page" id="confirmationPage">
     <div class="transfer-header"></div>
@@ -2062,11 +2306,11 @@
     <div class="confirmation-content">
       <div class="confirmation-title">Review your transfer</div>
       <div class="confirmation-subtitle">Please verify the details below before sending</div>
-      
+
       <div class="confirmation-card">
         <div class="confirmation-amount" id="confirmAmount">$0.00</div>
       </div>
-      
+
       <div class="confirmation-card">
         <div class="confirmation-row">
           <span class="confirmation-label">From</span>
@@ -2081,7 +2325,7 @@
           <span class="confirmation-value" id="confirmDate">Today</span>
         </div>
       </div>
-      
+
       <button class="send-btn" onclick="sendTransfer()">Send Transfer</button>
       <button class="back-link" onclick="closeConfirmationPage()">Go back to edit</button>
     </div>
@@ -2340,7 +2584,7 @@
         </button>
         <div class="amount-title">Send money</div>
         <div class="amount-subtitle">Enter the amount you want to send</div>
-        
+
         <div class="recipient-card">
           <div class="recipient-header">
             <div class="contact-avatar" id="amountRecipientAvatar">JD</div>
@@ -2431,6 +2675,109 @@
     </div>
   </div>
 
+  <!-- Agreement Page -->
+  <div class="agreement-page" id="depositAgreementPage">
+    <div style="background: var(--background); padding: 12px 16px; font-weight: 600; font-size: 14px; text-align: center;">
+      Mobile Cheque Deposit
+    </div>
+    <div class="agreement-content">
+      <div class="agreement-text">
+        <p style="margin-bottom: 16px;">
+          You agree that your use of Mobile Cheque Deposit is subject to the BMO Mobile Cheque Deposit Terms and Conditions (terms and conditions) set out in your account agreement (current version: the <span class="agreement-link">Electronic Banking Services Agreement</span> and <span class="agreement-link">Better Banking Guide for Business</span>).
+        </p>
+        <p style="font-weight: 600; margin-bottom: 16px;">
+          The following is a reminder of important information:
+        </p>
+        <p style="margin-bottom: 16px;">
+          You agree to use the service to deposit a digital representation (image) of any of the following original paper items (each an eligible item): cheques, certified cheques and travelers cheques, money orders and bank drafts issued by a Canadian financial institution or provincial or Canadian government, in Canadian dollars, and addressed to you (and/or to your joint accountholder in the case of a joint account). You must provide an image of the front and back of the original eligible item. You agree to only deposit eligible items while you are physically located in Canada through cellular or Wi-Fi networks in Canada.
+        </p>
+        <p style="margin-bottom: 16px;">
+          You will not use mobile cheque deposit to deposit any items that:
+        </p>
+        <p style="margin-bottom: 16px;">
+          Deposits received on or before 11:59 p.m. Eastern Time (ET) on a business day will have that day as a transaction date, and otherwise will have the next business day as a transaction date.
+        </p>
+        <p style="margin-bottom: 16px;">
+          Amounts you deposit through this service are subject to the limits set out in your account agreement. We may impose limits on the dollar amount of items and/or number of items which can be deposited and may reject any item. You are liable for any error and your account may be adjusted accordingly.
+        </p>
+        <p>
+          There is no charge to deposit items into a personal deposit account. Per-item deposit content fees may apply when you deposit items into a business banking account.
+        </p>
+        <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
+            The parties expressly request that these terms and conditions and any related documents be drafted in English.
+        </div>
+      </div>
+    </div>
+    <div class="agreement-buttons">
+      <button class="agree-btn" onclick="agreeToDepositTerms()">I AGREE</button>
+      <button class="cancel-btn" onclick="closeDepositPages()">CANCEL</button>
+    </div>
+  </div>
+
+  <!-- Deposit Form Page -->
+  <div class="deposit-form-page" id="depositFormPage">
+    <div class="deposit-header">
+      Deposit a cheque
+    </div>
+    <div class="deposit-steps">
+      <div class="step-indicator">Step 1 of 3 - Enter details</div>
+      <div class="step-bars">
+        <div class="step-bar active"></div>
+        <div class="step-bar"></div>
+        <div class="step-bar"></div>
+      </div>
+    </div>
+    
+    <div style="padding: 20px;">
+      <div class="form-group">
+        <label class="form-label">Amount</label>
+        <input type="number" class="form-input" id="depositAmount" placeholder="0.00" style="padding-left: 16px;">
+        <div class="form-hint">Format 0.00</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">To</label>
+        <select class="form-select" id="depositAccount">
+            <option value="">Choose an account</option>
+            <option value="checking6016">Everyday Checking *6016</option>
+            <option value="checking9460">Portfolio Checking *9460</option>
+            <option value="savings">Savings *2310</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom: 24px;">
+        <label class="form-label">Photo of front</label>
+        <button class="camera-btn" onclick="toggleCamera('front')">
+          <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+          TAKE PHOTO
+        </button>
+        <div class="camera-placeholder" id="cameraFront">
+            [Camera Interface Placeholder]
+        </div>
+      </div>
+
+      <div style="margin-bottom: 32px;">
+        <label class="form-label">Photo of back</label>
+        <button class="camera-btn" onclick="toggleCamera('back')">
+          <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+          TAKE PHOTO
+        </button>
+        <div class="camera-placeholder" id="cameraBack">
+            [Camera Interface Placeholder]
+        </div>
+      </div>
+
+      <button class="continue-btn" onclick="submitDeposit()" style="margin-bottom: 16px;">CONTINUE</button>
+      <button class="cancel-text-btn" onclick="closeDepositPages()" style="width: 100%; border: none; background: transparent; color: var(--blue-600); font-weight: 600; padding: 12px; cursor: pointer;">CANCEL</button>
+    </div>
+  </div>
+
   <!-- Bottom Navigation -->
   <nav class="bottom-nav">
     <div class="nav-items">
@@ -2448,12 +2795,12 @@
         </svg>
         <span>Pay & transfer</span>
       </button>
-      <button class="nav-item" id="nav-deposit" onclick="setActiveNav('deposit')">
+      <button class="nav-item" id="nav-deposit" onclick="openDepositCheck()">
         <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
           <circle cx="12" cy="13" r="4"/>
         </svg>
-        <span>Deposit a check</span>
+        <span>Deposit a cheque</span>
       </button>
       <button class="nav-item" id="nav-more" onclick="setActiveNav('more')">
         <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -2476,7 +2823,7 @@
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       const dateStr = now.toLocaleDateString('en-US', options);
       document.getElementById('currentDate').textContent = `Today is ${dateStr}.`;
-      
+
       const timeStr = now.toLocaleTimeString('en-US');
       document.getElementById('currentTime').textContent = timeStr;
 
@@ -2485,7 +2832,7 @@
       let greeting = 'Good evening';
       if (hour < 12) greeting = 'Good morning';
       else if (hour < 17) greeting = 'Good afternoon';
-      
+
       document.getElementById('greeting').innerHTML = `${greeting}, <span>Michigan</span>`;
     }
 
@@ -2567,22 +2914,22 @@
       const amount = document.getElementById('transferAmount').value;
       const fromSelect = document.getElementById('fromAccount');
       const toSelect = document.getElementById('toAccount');
-      
+
       if (!amount || amount.trim() === '') {
         showToast('Error', 'Please enter an amount');
         return;
       }
-      
+
       const formattedAmount = parseFloat(amount).toLocaleString('en-US', {
         style: 'currency',
         currency: 'USD'
       });
-      
+
       document.getElementById('confirmAmount').textContent = formattedAmount;
       document.getElementById('confirmFrom').textContent = fromSelect.options[fromSelect.selectedIndex].text.split('$')[0].trim();
       document.getElementById('confirmTo').textContent = toSelect.options[toSelect.selectedIndex].text.split('$')[0].trim();
       document.getElementById('confirmDate').textContent = 'Today';
-      
+
       document.getElementById('confirmationPage').classList.add('open');
     }
 
@@ -2656,7 +3003,7 @@
       } else {
         noContactsCard.style.display = 'none';
         contactsList.style.display = 'block';
-        
+
         contactsContainer.innerHTML = '';
         savedContacts.forEach((contact, index) => {
           const initials = (contact.firstName.charAt(0) + contact.lastName.charAt(0)).toUpperCase();
@@ -2776,14 +3123,14 @@
     // Open Amount Page
     function openAmountPage() {
       if (!selectedContact) return;
-      
+
       const initials = (selectedContact.firstName.charAt(0) + selectedContact.lastName.charAt(0)).toUpperCase();
       document.getElementById('amountRecipientAvatar').textContent = initials;
       document.getElementById('amountRecipientName').textContent = `${selectedContact.firstName} ${selectedContact.lastName}`;
       document.getElementById('amountRecipientBank').textContent = selectedContact.bankName;
       document.getElementById('amountRecipientAccount').textContent = `Account: ****${selectedContact.accountNumber.slice(-4)}`;
       document.getElementById('globalTransferAmount').value = '';
-      
+
       document.getElementById('amountPage').classList.add('open');
     }
 
@@ -2796,7 +3143,7 @@
     // Open Transfer Receipt
     function openTransferReceipt() {
       const amount = document.getElementById('globalTransferAmount').value;
-      
+
       if (!amount || parseFloat(amount) <= 0) {
         showToast('Error', 'Please enter a valid amount');
         return;
@@ -2845,14 +3192,100 @@
       closeTransferReceipt();
       closeAmountPage();
       closeGlobalTransferPage();
-      
+
       showToast('Transfer Sent!', `Your transfer of ${amount} to ${recipient} has been submitted successfully.`);
-      
+
       selectedContact = null;
+    }
+
+
+    // Deposit Check Logic
+    function openDepositCheck() {
+      // Close other modals/pages
+      closePayTransferModal();
+      document.getElementById('payBillsPage').classList.remove('open'); // Ensure bills page is closed
+      
+      // Open Agreement Page
+      document.getElementById('depositAgreementPage').classList.add('open');
+      
+      // Update nav
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+      document.getElementById('nav-deposit').classList.add('active');
+    }
+
+    function agreeToDepositTerms() {
+      document.getElementById('depositAgreementPage').classList.remove('open');
+      document.getElementById('depositFormPage').classList.add('open');
+    }
+
+    function closeDepositPages() {
+      document.getElementById('depositAgreementPage').classList.remove('open');
+      document.getElementById('depositFormPage').classList.remove('open');
+      document.getElementById('nav-home').classList.add('active'); // Reset to home
+      document.getElementById('nav-deposit').classList.remove('active');
+    }
+
+    function toggleCamera(side) {
+        const el = document.getElementById(side === 'front' ? 'cameraFront' : 'cameraBack');
+        el.classList.toggle('visible');
+        showToast('Camera', 'Opening camera interface...');
+    }
+
+    function submitDeposit() {
+      const amount = document.getElementById('depositAmount').value;
+      const account = document.getElementById('depositAccount').value;
+
+      if (!amount) {
+        showToast('Error', 'Please enter an amount');
+        return;
+      }
+      if (!account) {
+        showToast('Error', 'Please select an account');
+        return;
+      }
+
+      showToast('Success', 'Deposit submitted successfully!');
+      setTimeout(() => {
+        closeDepositPages();
+        document.getElementById('depositAmount').value = '';
+        document.getElementById('depositAccount').value = '';
+        document.getElementById('cameraFront').classList.remove('visible');
+        document.getElementById('cameraBack').classList.remove('visible');
+      }, 1500);
     }
 
     // Initialize contacts on page load
     renderContacts();
+
+    // Pay Bills Logic
+    function openPayBillsPage() {
+      closePayTransferModal();
+      document.getElementById('payBillsPage').classList.add('open');
+      resetBillerSelection();
+    }
+
+    function closePayBillsPage() {
+      document.getElementById('payBillsPage').classList.remove('open');
+    }
+
+    function selectBillerType(type) {
+      document.getElementById('billerSelection').style.display = 'none';
+      document.getElementById('addBillerForm').style.display = 'block';
+      document.getElementById('selectedBillerTitle').textContent = 'Add ' + type + ' Biller';
+    }
+
+    function resetBillerSelection() {
+      document.getElementById('billerSelection').style.display = 'block';
+      document.getElementById('addBillerForm').style.display = 'none';
+    }
+
+    function handleAddBiller(e) {
+      e.preventDefault();
+      showToast('Success', 'Biller added successfully!');
+      setTimeout(() => {
+          closePayBillsPage();
+      }, 1000);
+    }
   </script>
 </body>
 </html>
