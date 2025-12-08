@@ -2537,6 +2537,574 @@
       color: #6b7280;
       margin-bottom: 16px;
     }
+
+    /* ========== CARD MANAGEMENT STYLES ========== */
+    .manage-cards-header {
+      background: linear-gradient(180deg, #0d4a7c 0%, #1a6bb3 100%);
+      color: white;
+      padding: 20px;
+    }
+
+    .manage-cards-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .manage-cards-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .manage-cards-logo-icon {
+      width: 28px;
+      height: 28px;
+      background: #dc2626;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .manage-cards-logo-icon svg {
+      width: 16px;
+      height: 16px;
+      fill: white;
+    }
+
+    .manage-cards-logo-text {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .manage-cards-title {
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1.3;
+    }
+
+    .manage-cards-title strong {
+      font-weight: 700;
+    }
+
+    .manage-cards-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cards-empty-state {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 32px;
+      text-align: center;
+    }
+
+    .cards-empty-icon {
+      width: 80px;
+      height: 50px;
+      border: 3px solid #d1d5db;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .cards-empty-icon-inner {
+      width: 50px;
+      height: 8px;
+      background: #d1d5db;
+      border-radius: 2px;
+    }
+
+    .cards-empty-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 8px;
+    }
+
+    .cards-empty-text {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 32px;
+    }
+
+    .saved-cards-list {
+      padding: 16px;
+      flex: 1;
+    }
+
+    .saved-card-item {
+      background: linear-gradient(135deg, #1e3a5f 0%, #0d4a7c 50%, #1a6bb3 100%);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .saved-card-item:hover {
+      transform: scale(1.02);
+    }
+
+    .saved-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .saved-card-chip {
+      width: 35px;
+      height: 26px;
+      background: linear-gradient(135deg, #d4af37 0%, #f4d160 50%, #d4af37 100%);
+      border-radius: 4px;
+    }
+
+    .saved-card-type-badge {
+      padding: 3px 8px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .saved-card-number-display {
+      font-size: 16px;
+      letter-spacing: 2px;
+      font-family: 'Courier New', monospace;
+      margin-bottom: 16px;
+    }
+
+    .saved-card-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .saved-card-holder {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .saved-card-network-display {
+      font-size: 14px;
+      font-weight: 700;
+      font-style: italic;
+    }
+
+    .add-card-footer-btn {
+      margin: 16px;
+      padding: 16px;
+      background: #1a6bb3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .add-card-footer-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Add Card Form Page */
+    .add-card-preview-section {
+      padding: 24px 16px;
+      background: linear-gradient(180deg, #4a5568 0%, #2d3748 100%);
+    }
+
+    .add-card-live-preview {
+      width: 100%;
+      max-width: 340px;
+      height: 200px;
+      margin: 0 auto;
+      border-radius: 16px;
+      padding: 20px;
+      position: relative;
+      background: linear-gradient(135deg, #1e3a5f 0%, #0d4a7c 50%, #1a6bb3 100%);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .add-card-preview-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .add-card-preview-chip {
+      width: 40px;
+      height: 30px;
+      background: linear-gradient(135deg, #d4af37 0%, #f4d160 50%, #d4af37 100%);
+      border-radius: 6px;
+    }
+
+    .add-card-preview-type {
+      padding: 4px 10px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: white;
+      text-transform: uppercase;
+    }
+
+    .add-card-preview-number {
+      font-size: 18px;
+      font-weight: 500;
+      color: white;
+      letter-spacing: 3px;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      margin: 16px 0;
+    }
+
+    .add-card-preview-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .add-card-preview-holder-section {
+      flex: 1;
+    }
+
+    .add-card-preview-label {
+      font-size: 8px;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+
+    .add-card-preview-holder-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .add-card-preview-expiry-section {
+      text-align: right;
+    }
+
+    .add-card-preview-expiry {
+      font-size: 13px;
+      color: white;
+      font-weight: 500;
+    }
+
+    .add-card-preview-network {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      font-style: italic;
+    }
+
+    .add-card-form-section {
+      padding: 20px 16px;
+      background: white;
+      flex: 1;
+    }
+
+    .card-form-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .card-form-row .form-group {
+      flex: 1;
+    }
+
+    .card-type-toggle {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .card-type-btn {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid #e5e7eb;
+      background: white;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .card-type-btn.active {
+      border-color: #1a6bb3;
+      background: #f0f7ff;
+      color: #1a6bb3;
+    }
+
+    .card-network-toggle {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .card-network-btn {
+      flex: 1;
+      padding: 12px 8px;
+      border: 2px solid #e5e7eb;
+      background: white;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .card-network-btn.visa {
+      color: #1a1f71;
+    }
+
+    .card-network-btn.mastercard {
+      color: #eb001b;
+    }
+
+    .card-network-btn.amex {
+      color: #006fcf;
+    }
+
+    .card-network-btn.active {
+      border-color: #1a6bb3;
+      background: #f0f7ff;
+    }
+
+    .save-card-btn {
+      width: 100%;
+      padding: 16px;
+      background: #1a6bb3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .save-card-btn:hover {
+      background: #155a96;
+    }
+
+    /* Add Money Card Selection */
+    .add-money-card-select {
+      padding: 20px 16px;
+      flex: 1;
+    }
+
+    .add-money-section-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #6b7280;
+      margin-bottom: 16px;
+    }
+
+    .add-money-card-option {
+      background: white;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .add-money-card-option:hover {
+      border-color: #1a6bb3;
+      background: #f0f7ff;
+    }
+
+    .add-money-card-mini {
+      width: 50px;
+      height: 32px;
+      background: linear-gradient(135deg, #1e3a5f 0%, #1a6bb3 100%);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .add-money-card-mini-chip {
+      width: 12px;
+      height: 9px;
+      background: linear-gradient(135deg, #d4af37 0%, #f4d160 100%);
+      border-radius: 2px;
+    }
+
+    .add-money-card-details {
+      flex: 1;
+    }
+
+    .add-money-card-network {
+      font-size: 12px;
+      font-weight: 600;
+      color: #1a6bb3;
+      text-transform: uppercase;
+    }
+
+    .add-money-card-number {
+      font-size: 14px;
+      color: #374151;
+    }
+
+    .add-money-card-arrow {
+      width: 20px;
+      height: 20px;
+      color: #9ca3af;
+    }
+
+    /* Amount Entry Page */
+    .amount-entry-section {
+      padding: 40px 20px;
+      background: white;
+      text-align: center;
+    }
+
+    .amount-entry-value {
+      font-size: 48px;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 8px;
+    }
+
+    .amount-entry-label {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .amount-numpad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 16px;
+      background: #f0f4f8;
+    }
+
+    .numpad-key {
+      padding: 20px;
+      background: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 24px;
+      font-weight: 500;
+      color: #111827;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .numpad-key:hover {
+      background: #e5e7eb;
+    }
+
+    .numpad-key.delete {
+      background: transparent;
+      font-size: 18px;
+    }
+
+    .amount-continue-section {
+      padding: 16px;
+      background: white;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .amount-continue-btn {
+      width: 100%;
+      padding: 16px;
+      background: #1a6bb3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .amount-continue-btn:hover {
+      background: #155a96;
+    }
+
+    /* Error Banner */
+    .error-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #dc2626;
+      color: white;
+      padding: 16px 20px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      z-index: 500;
+      animation: slideDown 0.3s ease;
+    }
+
+    .error-banner.show {
+      display: flex;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+
+    .error-banner-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .error-banner-text {
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .error-banner-close {
+      background: transparent;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .error-banner-close svg {
+      width: 20px;
+      height: 20px;
+    }
   </style>
 </head>
 <body>
@@ -3556,6 +4124,215 @@
       </div>
     </div>
 
+    <!-- MANAGE CARDS PAGE -->
+    <div class="full-page" id="manageCardsPage">
+      <div class="manage-cards-header">
+        <div class="manage-cards-header-top">
+          <div class="manage-cards-logo">
+            <div class="manage-cards-logo-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+              </svg>
+            </div>
+            <span class="manage-cards-logo-text">LEADCU BANK</span>
+          </div>
+          <button class="close-page-btn" onclick="closeManageCardsPage()" data-testid="button-close-manage-cards">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+        <div class="manage-cards-title">
+          Manage your <strong>debit or<br>ATM card.</strong>
+        </div>
+      </div>
+
+      <div class="manage-cards-content">
+        <!-- Empty State (shown when no cards) -->
+        <div class="cards-empty-state" id="cardsEmptyState">
+          <div class="cards-empty-icon">
+            <div class="cards-empty-icon-inner"></div>
+          </div>
+          <div class="cards-empty-title">No cards added yet</div>
+          <div class="cards-empty-text">Tap "Add Card" to add your first card</div>
+        </div>
+
+        <!-- Saved Cards List (shown when cards exist) -->
+        <div class="saved-cards-list" id="savedCardsList" style="display: none;"></div>
+
+        <button class="add-card-footer-btn" onclick="openAddCardPage()" data-testid="button-add-card">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+          </svg>
+          Add Card
+        </button>
+      </div>
+    </div>
+
+    <!-- ADD CARD PAGE -->
+    <div class="full-page" id="addCardPage">
+      <div class="full-page-header">
+        <button class="back-btn" onclick="closeAddCardPage()" style="color: white;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <span class="full-page-title">Add Card</span>
+        <div style="width: 40px;"></div>
+      </div>
+
+      <!-- Live Card Preview -->
+      <div class="add-card-preview-section">
+        <div class="add-card-live-preview">
+          <div class="add-card-preview-top">
+            <div class="add-card-preview-chip"></div>
+            <div class="add-card-preview-type" id="previewCardType">DEBIT</div>
+          </div>
+          <div class="add-card-preview-number" id="previewCardNumber">**** **** **** ****</div>
+          <div class="add-card-preview-bottom">
+            <div class="add-card-preview-holder-section">
+              <div class="add-card-preview-label">CARD HOLDER</div>
+              <div class="add-card-preview-holder-name" id="previewCardHolder">YOUR NAME</div>
+            </div>
+            <div class="add-card-preview-expiry-section">
+              <div class="add-card-preview-label">EXPIRES</div>
+              <div class="add-card-preview-expiry" id="previewCardExpiry">MM/YY</div>
+            </div>
+          </div>
+          <div class="add-card-preview-network" id="previewCardNetwork">VISA</div>
+        </div>
+      </div>
+
+      <!-- Card Form -->
+      <div class="add-card-form-section">
+        <div class="form-group">
+          <label class="form-label">Cardholder Name</label>
+          <input type="text" class="form-input" id="cardHolderName" placeholder="Enter name on card" oninput="updateCardPreview()" data-testid="input-cardholder-name">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Card Number</label>
+          <input type="text" class="form-input" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCardNumber(this); updateCardPreview()" data-testid="input-card-number">
+        </div>
+
+        <div class="card-form-row">
+          <div class="form-group">
+            <label class="form-label">Expiry Date</label>
+            <input type="text" class="form-input" id="cardExpiry" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this); updateCardPreview()" data-testid="input-card-expiry">
+          </div>
+          <div class="form-group">
+            <label class="form-label">CVV</label>
+            <input type="text" class="form-input" id="cardCvv" placeholder="123" maxlength="4" data-testid="input-card-cvv">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Card Type</label>
+          <div class="card-type-toggle">
+            <button class="card-type-btn active" onclick="selectCardType('debit')" id="btnDebit" data-testid="button-debit">Debit</button>
+            <button class="card-type-btn" onclick="selectCardType('credit')" id="btnCredit" data-testid="button-credit">Credit</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Card Network</label>
+          <div class="card-network-toggle">
+            <button class="card-network-btn visa active" onclick="selectCardNetwork('visa')" id="btnVisa" data-testid="button-visa">VISA</button>
+            <button class="card-network-btn mastercard" onclick="selectCardNetwork('mastercard')" id="btnMastercard" data-testid="button-mastercard">Mastercard</button>
+            <button class="card-network-btn amex" onclick="selectCardNetwork('amex')" id="btnAmex" data-testid="button-amex">AMEX</button>
+          </div>
+        </div>
+
+        <button class="save-card-btn" onclick="saveCard()" data-testid="button-save-card">Save Card</button>
+      </div>
+    </div>
+
+    <!-- ADD MONEY - SELECT CARD PAGE -->
+    <div class="full-page" id="addMoneySelectCardPage">
+      <div class="full-page-header">
+        <span class="full-page-title">Add Money</span>
+        <button class="close-page-btn" onclick="closeAddMoneySelectCardPage()" data-testid="button-close-add-money-select">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="add-money-card-select">
+        <div class="add-money-section-title">Select a card to add money from</div>
+        <div id="addMoneyCardsList"></div>
+        
+        <!-- Empty state if no cards -->
+        <div id="addMoneyNoCards" style="display: none; text-align: center; padding: 40px 20px;">
+          <div class="cards-empty-icon" style="margin: 0 auto 20px;">
+            <div class="cards-empty-icon-inner"></div>
+          </div>
+          <div class="cards-empty-title">No cards available</div>
+          <div class="cards-empty-text">Please add a card first to add money</div>
+          <button class="add-card-footer-btn" onclick="closeAddMoneySelectCardPage(); openManageCardsPage();" style="margin-top: 20px;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+            </svg>
+            Add Card
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADD MONEY - AMOUNT ENTRY PAGE -->
+    <div class="full-page" id="addMoneyAmountPage">
+      <div class="full-page-header">
+        <button class="back-btn" onclick="closeAddMoneyAmountPage()" style="color: white;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <span class="full-page-title">Add Money</span>
+        <div style="width: 40px;"></div>
+      </div>
+
+      <div class="amount-entry-section">
+        <div class="amount-entry-value" id="addMoneyAmountDisplay">$0</div>
+        <div class="amount-entry-label">Enter amount to add</div>
+      </div>
+
+      <div class="amount-numpad">
+        <button class="numpad-key" onclick="addMoneyNumpadPress('1')">1</button>
+        <button class="numpad-key" onclick="addMoneyNumpadPress('2')">2</button>
+        <button class="numpad-key" onclick="addMoneyNumpadPress('3')">3</button>
+        <button class="numpad-key" onclick="addMoneyNumpadPress('4')">4</button>
+        <button class="numpad-key" onclick="addMoneyNumpadPress('5')">5</button>
+        <button class="numpad-key" onclick="addMoneyNumpadPress('6')">6</button>
+        <button class="numpad-key" onclick="addMoneyNumpadPress('7')">7</button>
+        <button class="numpad-key" onclick="addMoneyNumpadPress('8')">8</button>
+        <button class="numpad-key" onclick="addMoneyNumpadPress('9')">9</button>
+        <button class="numpad-key" onclick="addMoneyNumpadPress('.')">.</button>
+        <button class="numpad-key" onclick="addMoneyNumpadPress('0')">0</button>
+        <button class="numpad-key delete" onclick="addMoneyNumpadDelete()">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="amount-continue-section">
+        <button class="amount-continue-btn" onclick="processAddMoney()" data-testid="button-add-money-continue">Add Money</button>
+      </div>
+    </div>
+
+    <!-- ERROR BANNER -->
+    <div class="error-banner" id="errorBanner">
+      <svg class="error-banner-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+      </svg>
+      <span class="error-banner-text">Try again later</span>
+      <button class="error-banner-close" onclick="closeErrorBanner()">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
     <!-- TRY AGAIN LATER PAGE -->
     <div class="full-page" id="tryAgainPage">
       <div class="full-page-header">
@@ -3935,10 +4712,6 @@
     // Current state
     let currentAccountIndex = 0;
     let quickActionsExpanded = false;
-    let selectedCardType = 'debit';
-    let selectedCardNetwork = 'visa';
-    let addMoneyAmount = '0';
-    let selectedCardForMoney = null;
 
     // Toggle quick actions panel
     function toggleQuickActions() {
@@ -4443,13 +5216,322 @@
       // Could add collapse functionality here
     }
 
-    // Add money page
-    function openAddMoneyPage() {
-      document.getElementById('tryAgainPage').classList.add('show');
+    // ========== CARD MANAGEMENT ==========
+    let savedCards = [];
+    let selectedCardType = 'debit';
+    let selectedCardNetwork = 'visa';
+    let selectedCardForAddMoney = null;
+    let addMoneyAmountValue = '';
+
+    // Load saved cards from storage (localStorage fallback, Firestore when available)
+    async function loadSavedCards() {
+      // Try Firestore first if configured
+      if (db && auth && auth.currentUser) {
+        try {
+          const snapshot = await db.collection('users').doc(auth.currentUser.uid).collection('cards').get();
+          savedCards = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          console.log('Cards loaded from Firestore:', savedCards.length);
+          return;
+        } catch (error) {
+          console.error('Error loading cards from Firestore:', error);
+        }
+      }
+      
+      // Fallback to localStorage
+      try {
+        const stored = localStorage.getItem('leadcu_saved_cards');
+        if (stored) {
+          savedCards = JSON.parse(stored);
+          console.log('Cards loaded from localStorage:', savedCards.length);
+        }
+      } catch (error) {
+        console.error('Error loading cards from localStorage:', error);
+        savedCards = [];
+      }
     }
 
+    // Save cards to storage
+    async function persistCards() {
+      // Save to localStorage as backup
+      try {
+        localStorage.setItem('leadcu_saved_cards', JSON.stringify(savedCards));
+      } catch (error) {
+        console.error('Error saving to localStorage:', error);
+      }
+    }
+
+    // Save a single card to Firestore
+    async function saveCardToFirestore(card) {
+      if (db && auth && auth.currentUser) {
+        try {
+          await db.collection('users').doc(auth.currentUser.uid).collection('cards').doc(card.id.toString()).set({
+            holderName: card.holderName,
+            number: card.number,
+            expiry: card.expiry,
+            type: card.type,
+            network: card.network,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          console.log('Card saved to Firestore');
+          return true;
+        } catch (error) {
+          console.error('Error saving card to Firestore:', error);
+          return false;
+        }
+      }
+      return false;
+    }
+
+    // Manage Cards Page
     function openManageCardsPage() {
-      alert('Manage cards feature coming soon!');
+      document.getElementById('manageCardsPage').classList.add('show');
+      updateSavedCardsDisplay();
+    }
+
+    function closeManageCardsPage() {
+      document.getElementById('manageCardsPage').classList.remove('show');
+    }
+
+    function updateSavedCardsDisplay() {
+      const emptyState = document.getElementById('cardsEmptyState');
+      const cardsList = document.getElementById('savedCardsList');
+
+      if (savedCards.length === 0) {
+        emptyState.style.display = 'flex';
+        cardsList.style.display = 'none';
+      } else {
+        emptyState.style.display = 'none';
+        cardsList.style.display = 'block';
+        cardsList.innerHTML = savedCards.map(card => `
+          <div class="saved-card-item">
+            <div class="saved-card-top">
+              <div class="saved-card-chip"></div>
+              <div class="saved-card-type-badge">${card.type}</div>
+            </div>
+            <div class="saved-card-number-display">${maskCardNumber(card.number)}</div>
+            <div class="saved-card-bottom">
+              <div class="saved-card-holder">${card.holderName}</div>
+              <div class="saved-card-network-display">${card.network.toUpperCase()}</div>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function maskCardNumber(number) {
+      const clean = number.replace(/\s/g, '');
+      const last4 = clean.slice(-4);
+      return `**** **** **** ${last4}`;
+    }
+
+    // Add Card Page
+    function openAddCardPage() {
+      // Reset form
+      document.getElementById('cardHolderName').value = '';
+      document.getElementById('cardNumber').value = '';
+      document.getElementById('cardExpiry').value = '';
+      document.getElementById('cardCvv').value = '';
+      selectedCardType = 'debit';
+      selectedCardNetwork = 'visa';
+      
+      // Reset type buttons
+      document.getElementById('btnDebit').classList.add('active');
+      document.getElementById('btnCredit').classList.remove('active');
+      
+      // Reset network buttons
+      document.getElementById('btnVisa').classList.add('active');
+      document.getElementById('btnMastercard').classList.remove('active');
+      document.getElementById('btnAmex').classList.remove('active');
+      
+      // Reset preview
+      updateCardPreview();
+      
+      document.getElementById('addCardPage').classList.add('show');
+    }
+
+    function closeAddCardPage() {
+      document.getElementById('addCardPage').classList.remove('show');
+    }
+
+    function selectCardType(type) {
+      selectedCardType = type;
+      document.getElementById('btnDebit').classList.toggle('active', type === 'debit');
+      document.getElementById('btnCredit').classList.toggle('active', type === 'credit');
+      document.getElementById('previewCardType').textContent = type.toUpperCase();
+    }
+
+    function selectCardNetwork(network) {
+      selectedCardNetwork = network;
+      document.getElementById('btnVisa').classList.toggle('active', network === 'visa');
+      document.getElementById('btnMastercard').classList.toggle('active', network === 'mastercard');
+      document.getElementById('btnAmex').classList.toggle('active', network === 'amex');
+      
+      const networkDisplay = {
+        'visa': 'VISA',
+        'mastercard': 'Mastercard',
+        'amex': 'AMEX'
+      };
+      document.getElementById('previewCardNetwork').textContent = networkDisplay[network];
+    }
+
+    function formatCardNumber(input) {
+      let value = input.value.replace(/\s/g, '').replace(/\D/g, '');
+      let formatted = value.match(/.{1,4}/g)?.join(' ') || '';
+      input.value = formatted;
+    }
+
+    function formatExpiry(input) {
+      let value = input.value.replace(/\D/g, '');
+      if (value.length >= 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+      }
+      input.value = value;
+    }
+
+    function updateCardPreview() {
+      const holderName = document.getElementById('cardHolderName').value || 'YOUR NAME';
+      const cardNumber = document.getElementById('cardNumber').value || '**** **** **** ****';
+      const expiry = document.getElementById('cardExpiry').value || 'MM/YY';
+      
+      document.getElementById('previewCardHolder').textContent = holderName.toUpperCase();
+      document.getElementById('previewCardNumber').textContent = cardNumber || '**** **** **** ****';
+      document.getElementById('previewCardExpiry').textContent = expiry;
+    }
+
+    async function saveCard() {
+      const holderName = document.getElementById('cardHolderName').value.trim();
+      const cardNumber = document.getElementById('cardNumber').value.trim();
+      const expiry = document.getElementById('cardExpiry').value.trim();
+      const cvv = document.getElementById('cardCvv').value.trim();
+
+      if (!holderName || !cardNumber || !expiry || !cvv) {
+        alert('Please fill in all card details');
+        return;
+      }
+
+      if (cardNumber.replace(/\s/g, '').length < 15) {
+        alert('Please enter a valid card number');
+        return;
+      }
+
+      const card = {
+        id: Date.now(),
+        holderName,
+        number: cardNumber,
+        expiry,
+        type: selectedCardType,
+        network: selectedCardNetwork
+      };
+
+      savedCards.push(card);
+      
+      // Persist to storage
+      await saveCardToFirestore(card);
+      await persistCards();
+      
+      closeAddCardPage();
+      updateSavedCardsDisplay();
+    }
+
+    // Add Money Page - Card Selection
+    function openAddMoneyPage() {
+      document.getElementById('addMoneySelectCardPage').classList.add('show');
+      updateAddMoneyCardsList();
+    }
+
+    function closeAddMoneySelectCardPage() {
+      document.getElementById('addMoneySelectCardPage').classList.remove('show');
+    }
+
+    function updateAddMoneyCardsList() {
+      const cardsList = document.getElementById('addMoneyCardsList');
+      const noCards = document.getElementById('addMoneyNoCards');
+
+      if (savedCards.length === 0) {
+        cardsList.style.display = 'none';
+        noCards.style.display = 'block';
+      } else {
+        cardsList.style.display = 'block';
+        noCards.style.display = 'none';
+        cardsList.innerHTML = savedCards.map(card => `
+          <div class="add-money-card-option" onclick="selectCardForAddMoney(${card.id})">
+            <div class="add-money-card-mini">
+              <div class="add-money-card-mini-chip"></div>
+            </div>
+            <div class="add-money-card-details">
+              <div class="add-money-card-network">${card.network.toUpperCase()}</div>
+              <div class="add-money-card-number">${maskCardNumber(card.number)}</div>
+            </div>
+            <svg class="add-money-card-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </div>
+        `).join('');
+      }
+    }
+
+    function selectCardForAddMoney(cardId) {
+      selectedCardForAddMoney = savedCards.find(c => c.id === cardId);
+      if (!selectedCardForAddMoney) return;
+      
+      closeAddMoneySelectCardPage();
+      openAddMoneyAmountPage();
+    }
+
+    // Add Money Amount Page
+    function openAddMoneyAmountPage() {
+      addMoneyAmountValue = '';
+      document.getElementById('addMoneyAmountDisplay').textContent = '$0';
+      document.getElementById('addMoneyAmountPage').classList.add('show');
+    }
+
+    function closeAddMoneyAmountPage() {
+      document.getElementById('addMoneyAmountPage').classList.remove('show');
+    }
+
+    function addMoneyNumpadPress(key) {
+      if (key === '.' && addMoneyAmountValue.includes('.')) return;
+      if (addMoneyAmountValue.includes('.') && addMoneyAmountValue.split('.')[1]?.length >= 2) return;
+      
+      addMoneyAmountValue += key;
+      updateAddMoneyDisplay();
+    }
+
+    function addMoneyNumpadDelete() {
+      addMoneyAmountValue = addMoneyAmountValue.slice(0, -1);
+      updateAddMoneyDisplay();
+    }
+
+    function updateAddMoneyDisplay() {
+      const value = parseFloat(addMoneyAmountValue) || 0;
+      document.getElementById('addMoneyAmountDisplay').textContent = '$' + (addMoneyAmountValue || '0');
+    }
+
+    function processAddMoney() {
+      const amount = parseFloat(addMoneyAmountValue);
+      if (!amount || amount <= 0) {
+        alert('Please enter a valid amount');
+        return;
+      }
+
+      // Close amount page
+      closeAddMoneyAmountPage();
+      
+      // Show error banner
+      showErrorBanner();
+    }
+
+    function showErrorBanner() {
+      document.getElementById('errorBanner').classList.add('show');
+      
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        closeErrorBanner();
+      }, 5000);
+    }
+
+    function closeErrorBanner() {
+      document.getElementById('errorBanner').classList.remove('show');
     }
 
     function closeTryAgainPage() {
@@ -4902,17 +5984,22 @@
     }
 
     // Initialize app
-    function init() {
+    async function init() {
       initFirebase();
       updateGreeting();
       updateDateTime();
       updateUI();
+      
+      // Load saved cards from storage
+      await loadSavedCards();
 
       // Check for auth state changes
       if (auth) {
-        auth.onAuthStateChanged((user) => {
+        auth.onAuthStateChanged(async (user) => {
           if (user) {
             // loadUserData(user.uid);
+            // Reload cards when user signs in (to get Firestore data)
+            await loadSavedCards();
           }
         });
       }
