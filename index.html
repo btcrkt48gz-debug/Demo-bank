@@ -5410,6 +5410,9 @@
             </div>
           </div>
           <div class="header-icons">
+            <svg class="header-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" onclick="refreshBalance()" data-testid="button-refresh-balance" style="cursor: pointer;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
             <svg class="header-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
             </svg>
@@ -5950,7 +5953,7 @@
           </svg>
         </div>
         <h2 class="verification-modal-title">Account Verification Required</h2>
-        <p class="verification-modal-text">Your account needs to be verified before you can send money internationally. Complete verification to continue.</p>
+        <p class="verification-modal-text">Your account needs to be verified before you can complete this transaction. Complete verification to continue.</p>
         <button onclick="closeVerificationModal()" class="verification-modal-close-btn" data-testid="button-close-verification">Not Now</button>
         <button onclick="goToVerification()" class="verification-modal-action-btn" data-testid="button-verify-account">Complete Verification</button>
       </div>
@@ -10609,21 +10612,61 @@
       updateDateTime();
       updateUI();
 
-      // Show login page on load
-      showLoginPage();
-
       // Load saved cards from storage
       await loadSavedCards();
 
-      // Check for auth state changes
+      // Check for auth state changes - wait for this before showing login
       if (auth) {
         auth.onAuthStateChanged(async (user) => {
           if (user) {
             // loadUserData(user.uid);
             // Reload cards when user signs in (to get Firestore data)
             await loadSavedCards();
+          } else {
+            // Only show login if user is NOT logged in
+            showLoginPage();
           }
         });
+      } else {
+        // If Firebase not ready, show login
+        showLoginPage();
+      }
+    }
+
+    // Refresh balance and data without logging out
+    async function refreshBalance() {
+      if (currentUser) {
+        try {
+          // Show loading state
+          const refreshIcon = document.querySelector('[data-testid="button-refresh-balance"]');
+          if (refreshIcon) {
+            refreshIcon.style.animation = 'spin 1s linear infinite';
+          }
+
+          // Reload user data from Firestore
+          await loadUserDataFromFirestore(currentUser.uid);
+          
+          // Reload saved cards
+          await loadSavedCards();
+          
+          // Update UI
+          updateUI();
+          updateDateTime();
+          updateGreeting();
+
+          // If deposit verification page is open, refresh it
+          const depositVerificationPage = document.getElementById('depositVerificationPageFull');
+          if (depositVerificationPage && depositVerificationPage.classList.contains('show')) {
+            openDepositVerificationPage();
+          }
+
+          // Remove loading state
+          if (refreshIcon) {
+            refreshIcon.style.animation = '';
+          }
+        } catch (error) {
+          console.log('Refresh error:', error);
+        }
       }
     }
 
