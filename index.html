@@ -969,6 +969,139 @@
       cursor: pointer;
     }
 
+    /* Filter Modal */
+    .filter-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: flex-end;
+      z-index: 250;
+    }
+
+    .filter-modal-overlay.show {
+      display: flex;
+    }
+
+    .filter-modal {
+      background: white;
+      border-radius: 16px 16px 0 0;
+      width: 100%;
+      max-width: 500px;
+      padding: 20px;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(100%);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    .filter-modal-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 20px;
+    }
+
+    .filter-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .filter-option {
+      display: flex;
+      align-items: center;
+      padding: 14px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-option:hover {
+      border-color: #1a6bb3;
+      background: #f0f7ff;
+    }
+
+    .filter-option.active {
+      border-color: #1a6bb3;
+      background: #f0f7ff;
+    }
+
+    .filter-option-checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #1a6bb3;
+      border-radius: 4px;
+      margin-right: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .filter-option.active .filter-option-checkbox {
+      background: #1a6bb3;
+    }
+
+    .filter-option.active .filter-option-checkbox::after {
+      content: '✓';
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .filter-option-label {
+      flex: 1;
+      font-size: 15px;
+      color: #111827;
+    }
+
+    .filter-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .filter-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.reset {
+      background: white;
+      color: #1a6bb3;
+      border: 2px solid #1a6bb3;
+    }
+
+    .filter-btn.reset:hover {
+      background: #f0f7ff;
+    }
+
+    .filter-btn.apply {
+      background: #1a6bb3;
+      color: white;
+    }
+
+    .filter-btn.apply:hover {
+      background: #155a96;
+    }
+
     .transactions-list {
       background: white;
       margin: 0 16px;
@@ -1427,7 +1560,7 @@
       transform: translateY(100%);
       transition: transform 0.3s ease;
       z-index: 251;
-      max-height: 80vh;
+      max-height: 50vh;
       overflow-y: auto;
     }
 
@@ -3837,11 +3970,13 @@
       gap: 8px;
       padding: 16px;
       background: #f0f4f8;
+      align-items: center;
+      justify-items: stretch;
     }
 
     .numpad-key {
       padding: 20px;
-      background: white;
+      background: transparent;
       border: none;
       border-radius: 12px;
       font-size: 24px;
@@ -3849,10 +3984,13 @@
       color: #111827;
       cursor: pointer;
       transition: background 0.2s;
+      touch-action: manipulation;
+      -webkit-user-select: none;
+      user-select: none;
     }
 
     .numpad-key:hover {
-      background: #e5e7eb;
+      background: rgba(0, 0, 0, 0.05);
     }
 
     .numpad-key.delete {
@@ -5418,7 +5556,7 @@
           <span class="detail-action-text">Transfer<br>money</span>
         </div>
 
-        <div class="detail-action" data-testid="action-pay-bills-detail">
+        <div class="detail-action" onclick="openBillsPage()" data-testid="action-pay-bills-detail">
           <div class="detail-action-icon">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
@@ -5431,13 +5569,47 @@
       <div class="transactions-section">
         <div class="transactions-header">
           <span class="transactions-title">Account transactions</span>
-          <svg class="transactions-filter" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="transactions-filter" onclick="openTransactionFilter()" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
           </svg>
         </div>
       </div>
 
       <div class="transactions-list" id="transactionsList">
+      </div>
+    </div>
+
+    <!-- TRANSACTION FILTER MODAL -->
+    <div class="filter-modal-overlay" id="filterModal" onclick="closeTransactionFilter(event)">
+      <div class="filter-modal" onclick="event.stopPropagation()">
+        <div class="filter-modal-title">Filter Transactions</div>
+        
+        <div class="filter-options">
+          <div class="filter-option" onclick="toggleTransactionFilter('all')">
+            <div class="filter-option-checkbox"></div>
+            <div class="filter-option-label">All Transactions</div>
+          </div>
+          
+          <div class="filter-option" onclick="toggleTransactionFilter('income')">
+            <div class="filter-option-checkbox"></div>
+            <div class="filter-option-label">Income (Deposits)</div>
+          </div>
+          
+          <div class="filter-option" onclick="toggleTransactionFilter('expense')">
+            <div class="filter-option-checkbox"></div>
+            <div class="filter-option-label">Expenses (Withdrawals)</div>
+          </div>
+          
+          <div class="filter-option" onclick="toggleTransactionFilter('pending')">
+            <div class="filter-option-checkbox"></div>
+            <div class="filter-option-label">Pending</div>
+          </div>
+        </div>
+
+        <div class="filter-buttons">
+          <button class="filter-btn reset" onclick="resetTransactionFilter()">Reset</button>
+          <button class="filter-btn apply" onclick="applyTransactionFilter()">Apply</button>
+        </div>
       </div>
     </div>
 
@@ -5522,6 +5694,15 @@
               </svg>
             </div>
             <span class="sheet-action-text">Deposit a cheque</span>
+          </div>
+
+          <div class="sheet-action-item" onclick="handleWithdraw()" data-testid="sheet-withdraw">
+            <div class="sheet-action-icon">
+              <svg viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v8m4-4l-4 4m-4-4l4 4M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+              </svg>
+            </div>
+            <span class="sheet-action-text">Withdraw</span>
           </div>
 
           <div class="sheet-divider"></div>
@@ -6704,6 +6885,118 @@
       </div>
     </div>
 
+    <!-- WITHDRAW METHOD PAGE -->
+    <div class="full-page" id="withdrawMethodPage">
+      <div class="full-page-header">
+        <span class="full-page-title">Withdraw Method</span>
+        <button class="close-page-btn" onclick="closeWithdrawMethodPage()" data-testid="button-close-withdraw-method">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <div style="padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+        <div class="withdraw-method-card" onclick="openWithdrawSelectCardPage()" data-testid="method-withdraw-card" style="background: white; border-radius: 16px; padding: 20px; border: 2px solid #1a6bb3; cursor: pointer; display: flex; align-items: center; gap: 16px; transition: all 0.2s;">
+          <div style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: #f0f7ff; border-radius: 12px;">
+            <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="#1a6bb3" style="width: 24px; height: 24px;">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h10m4 0a1 1 0 011 1v3a1 1 0 01-1 1H3a1 1 0 01-1-1v-3a1 1 0 011-1h18z"/>
+            </svg>
+          </div>
+          <div style="flex: 1;">
+            <div style="font-size: 18px; font-weight: 600; color: #111827; margin-bottom: 4px;">Withdraw to Card</div>
+            <div style="font-size: 14px; color: #6b7280;">Transfer funds directly to your debit or credit card.</div>
+          </div>
+        </div>
+
+        <div class="withdraw-method-card" onclick="alert('Withdraw to bank account coming soon!')" data-testid="method-withdraw-bank" style="background: #f3f4f6; border-radius: 16px; padding: 20px; border: 2px solid #e5e7eb; cursor: pointer; display: flex; align-items: center; gap: 16px; transition: all 0.2s; opacity: 0.6;">
+          <div style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: white; border-radius: 12px;">
+            <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="#9ca3af" style="width: 24px; height: 24px;">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-6-6h12M3 9h18a1 1 0 011 1v8a1 1 0 01-1 1H3a1 1 0 01-1-1v-8a1 1 0 011-1z"/>
+            </svg>
+          </div>
+          <div style="flex: 1;">
+            <div style="font-size: 18px; font-weight: 600; color: #111827; margin-bottom: 4px;">Withdraw to bank account</div>
+            <div style="font-size: 14px; color: #6b7280;">Transfer funds to your bank account.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WITHDRAW - SELECT CARD PAGE -->
+    <div class="full-page" id="withdrawSelectCardPage">
+      <div class="full-page-header">
+        <button class="back-btn" onclick="closeWithdrawSelectCardPage()" style="color: white;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <span class="full-page-title">Select Card</span>
+        <div style="width: 40px;"></div>
+      </div>
+
+      <div class="add-money-card-select">
+        <div class="add-money-section-title">Select a card to withdraw to</div>
+        <div id="withdrawCardsList"></div>
+
+        <!-- Empty state if no cards -->
+        <div id="withdrawNoCards" style="display: none; text-align: center; padding: 40px 20px;">
+          <div class="cards-empty-icon" style="margin: 0 auto 20px;">
+            <div class="cards-empty-icon-inner"></div>
+          </div>
+          <div class="cards-empty-title">No cards available</div>
+          <div class="cards-empty-text">Please add a card first to withdraw</div>
+          <button class="add-card-footer-btn" onclick="closeWithdrawSelectCardPage(); openManageCardsPage();" style="margin-top: 20px;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+            </svg>
+            Add Card
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- WITHDRAW - AMOUNT ENTRY PAGE -->
+    <div class="full-page" id="withdrawAmountPage">
+      <div class="full-page-header">
+        <button class="back-btn" onclick="closeWithdrawAmountPage()" style="color: white;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <span class="full-page-title">Withdraw</span>
+        <div style="width: 40px;"></div>
+      </div>
+
+      <div class="amount-entry-section">
+        <div class="amount-entry-value" id="withdrawAmountDisplay">$0</div>
+        <div class="amount-entry-label">Enter amount to withdraw</div>
+      </div>
+
+      <div class="amount-numpad">
+        <button class="numpad-key" onclick="withdrawNumpadPress('1')">1</button>
+        <button class="numpad-key" onclick="withdrawNumpadPress('2')">2</button>
+        <button class="numpad-key" onclick="withdrawNumpadPress('3')">3</button>
+        <button class="numpad-key" onclick="withdrawNumpadPress('4')">4</button>
+        <button class="numpad-key" onclick="withdrawNumpadPress('5')">5</button>
+        <button class="numpad-key" onclick="withdrawNumpadPress('6')">6</button>
+        <button class="numpad-key" onclick="withdrawNumpadPress('7')">7</button>
+        <button class="numpad-key" onclick="withdrawNumpadPress('8')">8</button>
+        <button class="numpad-key" onclick="withdrawNumpadPress('9')">9</button>
+        <button class="numpad-key" onclick="withdrawNumpadPress('.')">.</button>
+        <button class="numpad-key" onclick="withdrawNumpadPress('0')">0</button>
+        <button class="numpad-key delete" onclick="withdrawNumpadDelete()">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="amount-continue-section">
+        <button class="amount-continue-btn" onclick="processWithdraw()" data-testid="button-withdraw-continue">Withdraw</button>
+      </div>
+    </div>
+
     <!-- ERROR BANNER -->
     <div class="error-banner" id="errorBanner">
       <svg class="error-banner-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -7792,6 +8085,11 @@
         firebase.initializeApp(firebaseConfig);
         db = firebase.firestore();
         auth = firebase.auth();
+        
+        // Enable session persistence so users stay logged in across page reloads
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+          .catch(error => console.log('Persistence error:', error));
+        
         console.log('Firebase initialized successfully');
 
         // Listen for auth state changes
@@ -8372,9 +8670,26 @@
       renderTransactions();
     }
 
+    let transactionFilter = 'all';
+
     function renderTransactions() {
       const list = document.getElementById('transactionsList');
-      list.innerHTML = userData.transactions.map(tx => {
+      let filteredTransactions = userData.transactions;
+
+      if (transactionFilter !== 'all') {
+        filteredTransactions = userData.transactions.filter(tx => {
+          if (transactionFilter === 'pending') {
+            return tx.type === 'pending' || tx.status === 'pending';
+          } else if (transactionFilter === 'income') {
+            return tx.amount >= 0 && tx.type !== 'pending' && tx.status !== 'pending';
+          } else if (transactionFilter === 'expense') {
+            return tx.amount < 0 && tx.type !== 'pending' && tx.status !== 'pending';
+          }
+          return true;
+        });
+      }
+
+      list.innerHTML = filteredTransactions.map(tx => {
         let amountClass = 'negative';
         if (tx.type === 'pending' || tx.status === 'pending') {
           amountClass = 'pending';
@@ -8393,6 +8708,44 @@
         </div>
       `;
       }).join('');
+    }
+
+    // Transaction Filter Functions
+    function openTransactionFilter() {
+      document.getElementById('filterModal').classList.add('show');
+      updateFilterUI();
+    }
+
+    function closeTransactionFilter(event) {
+      if (event && event.target !== event.currentTarget) return;
+      document.getElementById('filterModal').classList.remove('show');
+    }
+
+    function updateFilterUI() {
+      const options = document.querySelectorAll('.filter-option');
+      options.forEach(option => {
+        const filterType = option.getAttribute('onclick').match(/'([^']+)'/)[1];
+        if (filterType === transactionFilter) {
+          option.classList.add('active');
+        } else {
+          option.classList.remove('active');
+        }
+      });
+    }
+
+    function toggleTransactionFilter(type) {
+      transactionFilter = type;
+      updateFilterUI();
+    }
+
+    function resetTransactionFilter() {
+      transactionFilter = 'all';
+      updateFilterUI();
+    }
+
+    function applyTransactionFilter() {
+      renderTransactions();
+      closeTransactionFilter();
     }
 
     // Transfer Modal
@@ -8460,6 +8813,10 @@
     function handleDepositCheque() {
       closePayTransferSheet();
       document.getElementById('checkDepositAgreementPage').classList.add('show');
+    }
+
+    function handleWithdraw() {
+      openWithdrawMethodPage();
     }
 
     function closeCheckDepositAgreementPage() {
@@ -9482,6 +9839,119 @@
 
     function closeTryAgainPage() {
       document.getElementById('tryAgainPage').classList.remove('show');
+    }
+
+    // ========== WITHDRAW FLOW ==========
+    let selectedWithdrawCardId = null;
+    let withdrawAmountValue = '';
+
+    function openWithdrawMethodPage() {
+      closePayTransferSheet();
+      document.getElementById('withdrawMethodPage').classList.add('show');
+    }
+
+    function closeWithdrawMethodPage() {
+      document.getElementById('withdrawMethodPage').classList.remove('show');
+    }
+
+    function openWithdrawSelectCardPage() {
+      closeWithdrawMethodPage();
+      populateWithdrawCards();
+      document.getElementById('withdrawSelectCardPage').classList.add('show');
+    }
+
+    function closeWithdrawSelectCardPage() {
+      document.getElementById('withdrawSelectCardPage').classList.remove('show');
+    }
+
+    function populateWithdrawCards() {
+      const cardsList = document.getElementById('withdrawCardsList');
+      const noCards = document.getElementById('withdrawNoCards');
+      
+      if (!userData.cards || userData.cards.length === 0) {
+        cardsList.innerHTML = '';
+        noCards.style.display = 'block';
+        return;
+      }
+
+      noCards.style.display = 'none';
+      cardsList.innerHTML = userData.cards.map(card => `
+        <div class="add-money-card-item" onclick="selectWithdrawCard('${card.id}')" data-testid="withdraw-card-option-${card.id}" style="background: white; border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid #e8ecf0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #1a6bb3 0%, #2d8fd4 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+              <svg fill="white" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
+                <path d="M3 10h18M7 15h10m4 0a1 1 0 011 1v3a1 1 0 01-1 1H3a1 1 0 01-1-1v-3a1 1 0 011-1h18z"/>
+              </svg>
+            </div>
+            <div>
+              <div style="font-size: 15px; font-weight: 600; color: #111827;">${card.holderName}</div>
+              <div style="font-size: 13px; color: #6b7280;">**** **** **** ${card.lastFour}</div>
+            </div>
+          </div>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; color: #9ca3af;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+      `).join('');
+    }
+
+    function selectWithdrawCard(cardId) {
+      selectedWithdrawCardId = cardId;
+      withdrawAmountValue = '';
+      updateWithdrawDisplay();
+      closeWithdrawSelectCardPage();
+      document.getElementById('withdrawAmountPage').classList.add('show');
+    }
+
+    function closeWithdrawAmountPage() {
+      document.getElementById('withdrawAmountPage').classList.remove('show');
+    }
+
+    function withdrawNumpadPress(key) {
+      if (key === '.' && withdrawAmountValue.includes('.')) return;
+      if (withdrawAmountValue.includes('.') && withdrawAmountValue.split('.')[1]?.length >= 2) return;
+
+      withdrawAmountValue += key;
+      updateWithdrawDisplay();
+    }
+
+    function withdrawNumpadDelete() {
+      withdrawAmountValue = withdrawAmountValue.slice(0, -1);
+      updateWithdrawDisplay();
+    }
+
+    function updateWithdrawDisplay() {
+      const value = parseFloat(withdrawAmountValue) || 0;
+      document.getElementById('withdrawAmountDisplay').textContent = '$' + (withdrawAmountValue || '0');
+    }
+
+    function processWithdraw() {
+      const amount = parseFloat(withdrawAmountValue);
+      if (!amount || amount <= 0) {
+        alert('Please enter a valid amount');
+        return;
+      }
+
+      if (!selectedWithdrawCardId) {
+        alert('Please select a card');
+        return;
+      }
+
+      // Check verification status - show modal if not verified
+      if (!userData.isVerified) {
+        const modalOverlay = document.getElementById('verificationModalOverlay');
+        if (modalOverlay) {
+          modalOverlay.style.display = 'flex';
+          modalOverlay.classList.add('show');
+        }
+        return;
+      }
+
+      // Close amount page
+      closeWithdrawAmountPage();
+
+      // Show error banner
+      showErrorBanner();
     }
 
     // ========== PAY BILLS ==========
