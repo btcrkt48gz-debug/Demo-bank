@@ -4,7 +4,7 @@
   "description": "Secure Banking App - Manage your accounts, transfers, and transactions",
   "start_url": "/",
   "scope": "/",
-  "display": "standalone",
+  "display": "browser",
   "orientation": "portrait",
   "theme_color": "#1a6bb3",
   "background_color": "#ffffff",
